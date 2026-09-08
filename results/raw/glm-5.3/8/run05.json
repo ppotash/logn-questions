@@ -1,0 +1,231 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "glm-5.3",
+ "provider": "zai",
+ "model_id_requested": "glm-5.3",
+ "size": 8,
+ "run": 5,
+ "rounds": 3,
+ "target_id": "w02964",
+ "target_number": 6,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject of the document a person?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Is the subject known for military activity?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a professional athlete?",
+   "answer": true
+  }
+ ],
+ "guess": 6,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "Let me categorize the documents:\n\n- **People**: Glaucias (ancient ruler), Redha Kramdi (footballer), Walter Gaines (scientist), Ebenezer Skellie (soldier) — 4 docs\n- **Non-people**: Vocento (media company), US women's cricket team, St Stephen's Church (building), 1936 BYU Cougars football team — 4 docs\n\nA perfectly balanced split is to ask whether the subject is a person.\n\nQUESTION: Is the subject of the document a person?",
+   "reasoning_text": "Categories: 1 Spanish media company (organization), 2 ancient ruler (person), 3 sports team, 4 church building, 5 sports team, 6 person (football player), 7 person (scientist), 8 person (soldier).\n\nQuestion: \"Is the subject a person?\" — Yes: 2,6,7,8 (4); No: 1,3,4,5 (4). Balanced.",
+   "parsed": "Is the subject of the document a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 19,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 207,
+    "reasoning_tokens": 91
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.417,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 48,
+    "cache_read_tokens": 448,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.321,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "Remaining candidates after the first answer: Glaucias [2], Redha Kramdi [6], Walter Lee Gaines [7], and Ebenezer Skellie [8].\n\nA good split here is military affiliation — Glaucias (ancient warrior king) and Skellie (Civil War Medal of Honor recipient) versus Kramdi (football player) and Gaines (scientist).\n\nQUESTION: Is the subject known for military activity?",
+   "reasoning_text": "Remaining: [2] Glaucias, [6] Redha Kramdi, [7] Walter Lee Gaines, [8] Ebenezer Skellie. Ask something that splits 2-2: e.g., \"Is the person an athlete?\" — Yes: Kramdi; No: Glaucias, Gaines, Skellie. That's 1-3. Better: \"Is the subject a military figure?\" Yes: Glaucias, Skellie; No: Kramdi, Gaines. Good split.",
+   "parsed": "Is the subject known for military activity?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 35,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 208,
+    "reasoning_tokens": 114
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.089,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 47,
+    "cache_read_tokens": 448,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.039,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "Remaining candidates after two rounds: documents 6 (Redha Kramdi, football player) and 7 (Walter Lee Gaines, scientist). Glaucias and Skellie are eliminated by the \"no military activity\" answer.\n\nA question about athletic achievement cleanly separates the two.\n\nQUESTION: Is the subject a professional athlete?",
+   "reasoning_text": "Persons: 2 (Glaucias), 6 (Kramdi), 7 (Gaines), 8 (Skellie — military, eliminated by Q2). Glaucias also military? He was a ruler involved in battles — answerer said No, so eliminated. Remaining: 6 (Kramdi, football player), 7 (Gaines, scientist).\n\nQuestion: \"Is the subject an athlete?\" or \"Is the subject alive?\" Kramdi born 1996, alive. Gaines died 1950. \"Is the subject still alive?\" — answerer judges world knowledge. Safer: \"Is the subject an athlete?\" Yes→Kramdi.",
+   "parsed": "Is the subject a professional athlete?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 52,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 212,
+    "reasoning_tokens": 142
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.582,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 46,
+    "cache_read_tokens": 448,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.192,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The answers narrow it down: the subject is a person, not known for military activity, and is a professional athlete.\n\n- Eliminated non-persons: documents 1, 3, 4, 5 (media group, cricket team, church, football team).\n- Of the persons: Glaucias (military ruler), Walter Gaines (scientist), and Ebenezer Skellie (soldier, Medal of Honor) are not professional athletes. Redha Kramdi is a professional football linebacker in the CFL.\n\nGUESS: 6",
+   "reasoning_text": "Person, not military, professional athlete: Redha Kramdi (6).",
+   "parsed": 6,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 69,
+    "cache_read_tokens": 1216,
+    "cache_write_tokens": 0,
+    "output_tokens": 133,
+    "reasoning_tokens": 16
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.502,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 316,
+  "cache_read_tokens": 7360,
+  "cache_write_tokens": 0,
+  "output_tokens": 769,
+  "reasoning_tokens": 363
+ },
+ "cost_usd": 0.00574,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": []
+ },
+ "started_at": 1788642779.2584763,
+ "duration_s": 17.14,
+ "host": "chunky_monkey"
+}

@@ -1,0 +1,289 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "gpt-5.6-sol",
+ "provider": "openai",
+ "model_id_requested": "gpt-5.6-sol",
+ "size": 16,
+ "run": 0,
+ "rounds": 4,
+ "target_id": "w01562",
+ "target_number": 1,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220",
+  "w00231",
+  "w00771",
+  "w00130",
+  "w02314",
+  "w01061",
+  "w03405",
+  "w03446",
+  "w01482"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject a human individual?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject associated with a sport?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a human-made place?",
+   "answer": false
+  },
+  {
+   "round": 4,
+   "question": "Is the subject a living organism?",
+   "answer": false
+  }
+ ],
+ "guess": 15,
+ "won": false,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "QUESTION: Is the subject a human individual?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a human individual?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2557,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 170,
+    "reasoning_tokens": 152
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 3.128,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 440,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.098,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "QUESTION: Is the subject associated with a sport?",
+   "reasoning_text": "",
+   "parsed": "Is the subject associated with a sport?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2571,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 136,
+    "reasoning_tokens": 117
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.832,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 441,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.832,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "QUESTION: Is the subject a human-made place?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a human-made place?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2588,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 967,
+    "reasoning_tokens": 941
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 22.499,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 441,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.898,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 4,
+   "text": "QUESTION: Is the subject a living organism?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a living organism?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2605,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 476,
+    "reasoning_tokens": 458
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 9.562,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 4,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 440,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.81,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "Tahquitz is a supernatural spirit, not a human individual, sports-related subject, human-made place, or living organism.\n\nGUESS: 15",
+   "reasoning_text": "",
+   "parsed": 15,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2237,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 863,
+    "reasoning_tokens": 818
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 15.174,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 14320,
+  "cache_read_tokens": 0,
+  "cache_write_tokens": 0,
+  "output_tokens": 2628,
+  "reasoning_tokens": 2486
+ },
+ "cost_usd": 0.15044,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null
+ },
+ "started_at": 1788544857.647684,
+ "duration_s": 59.23,
+ "host": "chunky_monkey"
+}

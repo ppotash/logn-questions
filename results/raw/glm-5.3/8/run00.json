@@ -1,0 +1,231 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "glm-5.3",
+ "provider": "zai",
+ "model_id_requested": "glm-5.3",
+ "size": 8,
+ "run": 0,
+ "rounds": 3,
+ "target_id": "w01562",
+ "target_number": 1,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject of the document a person?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a sports team?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a religious building?",
+   "answer": false
+  }
+ ],
+ "guess": 1,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "**Reasoning:** The 8 documents split into subjects that are people (Glaucias, Redha Kramdi, Walter Gaines, Ebenezer Skellie) versus non-person entities (a media company, a national team, a church, a college football team). Asking whether the subject is a person gives a clean 4–4 split.\n\nQUESTION: Is the subject of the document a person?",
+   "reasoning_text": "8 documents. Good first split: is the subject a person? Docs 1 (company), 3 (team), 4 (church) are non-persons; 2,6,7,8 persons; 5 is a team (non-person). That's 5 non-person vs 3 person. Hmm, better balance: person = 4 (2,6,7,8) vs non-person 4 (1,3,4,5).",
+   "parsed": "Is the subject of the document a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1619,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 182,
+    "reasoning_tokens": 96
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.405,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 452,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.135,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "Remaining candidates after \"not a person\": [1] Grupo Vocento, [3] US women's cricket team, [4] St Stephen's Uniting Church, [5] 1936 BYU Cougars football team.\n\nA question that splits these evenly: the sports teams ([3] and [5]) versus the media company and the church ([1] and [4]).\n\nQUESTION: Is the subject a sports team?",
+   "reasoning_text": "Remaining: 1 (Grupo Vocento), 3 (US women's cricket team), 4 (St Stephen's Uniting Church), 5 (1936 BYU Cougars football team). Four docs, one question left after this. Need to split 2-2.\n\nQuestion options: \"Is the subject located in the United States?\" — Vocento (Spain) No, cricket team Yes, church (Australia) No, BYU football Yes. That's 2-2. Good.\n\nOr \"Is the subject a sports team?\" — cricket Yes, BYU Yes; church No, Vocento No — same split but ties to sports. Better: \"Is the subject a sports team?\" splits 2-2 as well. Either works. Location question is also fine. I'll go with sports team.",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 99,
+    "cache_read_tokens": 1536,
+    "cache_write_tokens": 0,
+    "output_tokens": 255,
+    "reasoning_tokens": 165
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 4.403,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 66,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.136,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "With the target not being a person or a sports team, only two documents remain in contention: [1] Grupo Vocento (a Spanish media company) and [4] St Stephen's Uniting Church (a church building in Sydney). A question about being a religious building should cleanly distinguish them.\n\nQUESTION: Is the subject a religious building?",
+   "reasoning_text": "Remaining: [1] Grupo Vocento, [4] St Stephen's Uniting Church. Ask: is the subject a building/church? Better: \"Is the subject a religious building?\" Yes → 4, No → 1.",
+   "parsed": "Is the subject a religious building?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 115,
+    "cache_read_tokens": 1536,
+    "cache_write_tokens": 0,
+    "output_tokens": 120,
+    "reasoning_tokens": 49
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.443,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 66,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.179,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "By process of elimination:\n\n- Documents 2, 6, 7, 8 are about people → excluded by Q1.\n- Documents 3 and 5 are about sports teams → excluded by Q2.\n- Document 4 is a religious building → excluded by Q3.\n\nOnly Document 1, Grupo Vocento (a Spanish mass media group), remains — an organization, not a person, not a sports team, and not a religious building.\n\nGUESS: 1",
+   "reasoning_text": "Not a person, not a sports team, not a religious building. Remaining: Grupo Vocento (1), 1936 BYU Cougars (5, sports team), US women's cricket team (3, sports team). So document 1.",
+   "parsed": 1,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1284,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 152,
+    "reasoning_tokens": 51
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.026,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 3701,
+  "cache_read_tokens": 3840,
+  "cache_write_tokens": 0,
+  "output_tokens": 718,
+  "reasoning_tokens": 361
+ },
+ "cost_usd": 0.009339,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": []
+ },
+ "started_at": 1788639622.1982687,
+ "duration_s": 17.73,
+ "host": "chunky_monkey"
+}

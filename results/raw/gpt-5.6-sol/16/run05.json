@@ -1,0 +1,289 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "gpt-5.6-sol",
+ "provider": "openai",
+ "model_id_requested": "gpt-5.6-sol",
+ "size": 16,
+ "run": 5,
+ "rounds": 4,
+ "target_id": "w00130",
+ "target_number": 11,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220",
+  "w00231",
+  "w00771",
+  "w00130",
+  "w02314",
+  "w01061",
+  "w03405",
+  "w03446",
+  "w01482"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject an individual human being?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject primarily associated with sports?",
+   "answer": true
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a sports team?",
+   "answer": false
+  },
+  {
+   "round": 4,
+   "question": "Is the subject a motorsport event?",
+   "answer": true
+  }
+ ],
+ "guess": 11,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "QUESTION: Is the subject an individual human being?",
+   "reasoning_text": "",
+   "parsed": "Is the subject an individual human being?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 3,
+    "cache_read_tokens": 2554,
+    "cache_write_tokens": 0,
+    "output_tokens": 118,
+    "reasoning_tokens": 99
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.405,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 408,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.708,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "QUESTION: Is the subject primarily associated with sports?",
+   "reasoning_text": "",
+   "parsed": "Is the subject primarily associated with sports?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2572,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 169,
+    "reasoning_tokens": 150
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 3.798,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 408,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.685,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "QUESTION: Is the subject a sports team?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2589,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 115,
+    "reasoning_tokens": 97
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.892,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 407,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.048,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 4,
+   "text": "QUESTION: Is the subject a motorsport event?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a motorsport event?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2605,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 105,
+    "reasoning_tokens": 86
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.454,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 4,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 408,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.203,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The only non-human, sports-related, non-team motorsport event is the 2000 Tenneco Automotive Grand Prix of Detroit.\n\nGUESS: 11",
+   "reasoning_text": "",
+   "parsed": 11,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2238,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 35,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.483,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 11638,
+  "cache_read_tokens": 2554,
+  "cache_write_tokens": 0,
+  "output_tokens": 558,
+  "reasoning_tokens": 432
+ },
+ "cost_usd": 0.076207,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null
+ },
+ "started_at": 1788553117.8588357,
+ "duration_s": 16.68,
+ "host": "chunky_monkey"
+}

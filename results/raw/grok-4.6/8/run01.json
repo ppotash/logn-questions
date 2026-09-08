@@ -1,0 +1,232 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "grok-4.6",
+ "provider": "xai",
+ "model_id_requested": "grok-4.6",
+ "size": 8,
+ "run": 1,
+ "rounds": 3,
+ "target_id": "w00039",
+ "target_number": 5,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject a person?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a sports team?",
+   "answer": true
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a cricket team?",
+   "answer": false
+  }
+ ],
+ "guess": 5,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "The eight subjects split evenly into four individual people (an ancient ruler, a CFL player, a dairy scientist, and a Civil War soldier) and four non-people (a media company, a national sports team, a church building, and a college football team). Asking whether the subject is a person therefore halves the set regardless of the answer and uses a property the answerer can judge from ordinary knowledge of the single document.\n\nQUESTION: Is the subject a person?",
+   "reasoning_text": "The user is playing a deduction game. I need to identify which document is the secretly chosen target by asking exactly 3 yes/no questions.\n",
+   "parsed": "Is the subject a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1710,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 805,
+    "reasoning_tokens": 711
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 12.634,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "The user wants me to answer with exactly one word: Yes or No to the question \"Is the subject a person?\" based on the document.\n",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1054,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 211,
+    "reasoning_tokens": 210
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 3.689,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "The first answer rules out every biographical subject, leaving four candidates: a Spanish media company, a U.S. cricket side, an Australian church, and a 1936 college football team. A question that cleanly splits those four into two pairs is whether the subject is a sports team.\n\nQUESTION: Is the subject a sports team?",
+   "reasoning_text": "The user is playing a deduction game. I need to identify which document is the target by asking yes/no questions.\n",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1723,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 914,
+    "reasoning_tokens": 846
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 14.538,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "The user wants me to answer with exactly one word: Yes or No.\n",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 543,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 94,
+    "reasoning_tokens": 93
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 1.953,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "The remaining candidates after “not a person” and “is a sports team” are only the US women’s cricket side and the 1936 BYU football team. A single unambiguous sport/gender property splits them cleanly.\n\nQUESTION: Is the subject a cricket team?",
+   "reasoning_text": "The documents are:\n\n[1] Grupo Vocento - Spanish mass media group\n",
+   "parsed": "Is the subject a cricket team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1739,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 826,
+    "reasoning_tokens": 772
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 12.586,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "The question is: \"Is the subject a cricket team?\" and I need to answer Yes or No based on the document.\n",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 159,
+    "cache_read_tokens": 896,
+    "cache_write_tokens": 0,
+    "output_tokens": 154,
+    "reasoning_tokens": 153
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 2.725,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The three answers eliminate every document except one.\n\n- “Is the subject a person?” → No. This rules out the four biographical entries (2, 6, 7, 8).\n- “Is the subject a sports team?” → Yes. This rules out the remaining non-team entries (1 and 4).\n- “Is the subject a cricket team?” → No. This rules out document 3.\n\nThe only remaining document is therefore 5 (the 1936 BYU Cougars football team), which is consistent with all three answers.\n\nGUESS: 5",
+   "reasoning_text": "The user is playing a deduction game. There are 8 documents, one is the target. I have answers to 3 yes/no questions, and I need to guess which document it is.\n",
+   "parsed": 5,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1370,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 513,
+    "reasoning_tokens": 392
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 7.363,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 8298,
+  "cache_read_tokens": 3456,
+  "cache_write_tokens": 0,
+  "output_tokens": 3517,
+  "reasoning_tokens": 3177
+ },
+ "cost_usd": 0.039426,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": [],
+  "doc_substitutions": {}
+ },
+ "started_at": 1788653956.8350196,
+ "duration_s": 55.49,
+ "host": "chunky_monkey"
+}

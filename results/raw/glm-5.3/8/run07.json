@@ -1,0 +1,231 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "glm-5.3",
+ "provider": "zai",
+ "model_id_requested": "glm-5.3",
+ "size": 8,
+ "run": 7,
+ "rounds": 3,
+ "target_id": "w01220",
+ "target_number": 8,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject of the document a person?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Did the subject of the document live past the year 1900?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Was the subject born before the year 1000 AD?",
+   "answer": true
+  }
+ ],
+ "guess": 2,
+ "won": false,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "The documents split evenly between people (Glaucias, Kramdi, Gaines, Skellie) and non-people/organizations (Vocento, the cricket team, the church, the football team), so this question should cut the field in half.\n\nQUESTION: Is the subject of the document a person?",
+   "reasoning_text": "8 documents. Need to split roughly. Subjects: company (1), ancient ruler (2), sports team (3), church building (4), sports team (5), athlete (6), scientist (7), soldier (8).\n\nPerson vs non-person: persons: 2,6,7,8 (4 docs); non-persons: 1,3,4,5 (4 docs). Balanced. Ask \"is the subject a person?\"",
+   "parsed": "Is the subject of the document a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 19,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 158,
+    "reasoning_tokens": 91
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.054,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "Yes.",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 154,
+    "cache_read_tokens": 256,
+    "cache_write_tokens": 0,
+    "output_tokens": 5,
+    "reasoning_tokens": 2
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.821,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "The first answer eliminates documents 1, 3, and 4, leaving persons: [2] Glaucias, [6] Redha Kramdi, [7] Walter Lee Gaines, and [8] Ebenezer Skellie. To split these evenly: Kramdi (b. 1996) and Gaines (d. 1950) lived past 1900, while Glaucias (ancient) and Skellie (d. 1898) did not.\n\nQUESTION: Did the subject of the document live past the year 1900?",
+   "reasoning_text": "Remaining persons: 2, 6, 7, 8. Split 2/2. Ask: is the subject American? 6 (Canadian, Algerian parents), 7, 8 American; 2 ancient Illyrian. That's 3-1. Better split: born in 20th century? 6 (1996), 7 (1881), 8 (1842), 2 (ancient). So 1-3. Hmm.\n\nIs the subject an athlete? 6 yes, others no — 1-3.\n\nBetter: \"Did the subject live into the 20th century?\" — 6 yes, 7 yes (died 1950), 8 no (1898), 2 no. 2-2. Or \"was the subject born in the 19th century or earlier\" same. Ask: \"Was the subject born in the 20th century?\" Yes→6, No→2,7,8. Unbalanced.\n\n\"Is the subject associated with the United States?\" 6 Canadian... plays CFL, Montreal — arguably Canadian. 7 American, 8 American. 2 no. 2-2 roughly.\n\nSafer: \"Did the subject live past 1900?\" Yes→6,7; No→2,8. That splits 2-2.",
+   "parsed": "Did the subject of the document live past the year 1900?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 35,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 405,
+    "reasoning_tokens": 281
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 5.786,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 31,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.076,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "The first two answers narrow it to two candidates: Glaucias of Taulantii (ancient ruler) and Ebenezer Skellie (1842–1898). I need one question to separate an ancient figure from a 19th-century American.\n\nQUESTION: Was the subject born before the year 1000 AD?",
+   "reasoning_text": "Q1 Yes: person. Q2 No: died before 1900 (or lived not past 1900). Persons: Glaucias (ancient, d. ~295 BC), Walter Lee Gaines (1881-1950, lived past 1900), Redha Kramdi (born 1996, lived past 1900), Ebenezer Skellie (1842-1898, did not live past 1900). So remaining: Glaucias, Ebenezer Skellie.\n\nDistinguish: ancient vs modern. Ask: \"Did the subject live in ancient times (before 500 AD)?\" or \"Was the subject born before 1000 AD?\" Better: \"Did the subject die before the year 500 AD?\" Glaucias yes, Skellie no. Ask: \"Did the subject fight in the American Civil War?\" — that works for Skellie but is a specific property. Safer: \"Is the subject from antiquity?\" Could be ambiguous. Use \"Was the subject born before the year 1000?\" Glaucias yes, Skellie no.",
+   "parsed": "Was the subject born before the year 1000 AD?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 58,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 307,
+    "reasoning_tokens": 236
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 4.882,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "Yes",
+   "reasoning_text": "1842 — yes, before 1000 AD.",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 29,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 14,
+    "reasoning_tokens": 11
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.219,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "Applying the answers:\n\n1. The subject is a person — eliminates [1] (company) and [3] (team).\n2. The subject did not live past 1900 — eliminates [6] (born 1996), and also [7] (died 1950) and [8] (died 1898... wait, he died in 1898, which is before 1900, so he remains possible at this point).\n3. The subject was born before 1000 AD — eliminates [8] (born 1842) and [7], leaving only [2].\n\nGlaucias of Taulantii (ruled c. 335 – c. 295 BC) is the only person who died before 1900 and was born before 1000 AD.\n\nGUESS: 2",
+   "reasoning_text": "Person, died before 1900, born before 1000 AD → Glaucias (document 2).",
+   "parsed": 2,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 80,
+    "cache_read_tokens": 1216,
+    "cache_write_tokens": 0,
+    "output_tokens": 203,
+    "reasoning_tokens": 24
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.615,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 406,
+  "cache_read_tokens": 7040,
+  "cache_write_tokens": 0,
+  "output_tokens": 1095,
+  "reasoning_tokens": 645
+ },
+ "cost_usd": 0.007217,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": []
+ },
+ "started_at": 1788642813.7494204,
+ "duration_s": 21.45,
+ "host": "chunky_monkey"
+}

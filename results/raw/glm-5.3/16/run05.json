@@ -1,0 +1,290 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "glm-5.3",
+ "provider": "zai",
+ "model_id_requested": "glm-5.3",
+ "size": 16,
+ "run": 5,
+ "rounds": 4,
+ "target_id": "w00130",
+ "target_number": 11,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220",
+  "w00231",
+  "w00771",
+  "w00130",
+  "w02314",
+  "w01061",
+  "w03405",
+  "w03446",
+  "w01482"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject of the document a person?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject of the document a sports event or competition?",
+   "answer": true
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a sports team?",
+   "answer": false
+  },
+  {
+   "round": 4,
+   "question": "Is the subject a motor race?",
+   "answer": true
+  }
+ ],
+ "guess": 11,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "I'll start with a broad question that splits the 16 documents roughly in half. Documents about a person: 2, 6, 7, 8, 12, 13, 14 (7 docs). Documents about a non-person entity: 1, 3, 4, 5, 9, 10, 11, 15, 16 (9 docs). This gives a near-even split.\n\nQUESTION: Is the subject of the document a person?",
+   "reasoning_text": "16 documents. Split into persons vs non-persons? Persons: 2 (Glaucias), 6, 7, 8, 12, 13, 14 — 7 persons. Non-persons: 1, 3, 4, 5, 9, 10, 11, 15, 16 — 9. Tahquitz is a spirit (not a person). That's a good split roughly.\n\nAlternatively ask \"is the subject a person?\" — 7 yes, 9 no. Good first question.",
+   "parsed": "Is the subject of the document a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 38,
+    "cache_read_tokens": 2560,
+    "cache_write_tokens": 0,
+    "output_tokens": 220,
+    "reasoning_tokens": 117
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.382,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "No.",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 157,
+    "cache_read_tokens": 256,
+    "cache_write_tokens": 0,
+    "output_tokens": 5,
+    "reasoning_tokens": 2
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.133,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "The non-person documents remaining are: [1] Grupo Vocento (media company), [3] US women's cricket team, [9] Biathlon IBU Cup, [10] Broughton Skeog railway station, [11] Grand Prix of Detroit, [15] Tahquitz (spirit), [16] Geophilus punicus (centipede).\n\nA good split here is between sporting competitions and everything else. Asking whether the subject is a sports event/competition would leave {3, 9, 11} on Yes and {1, 10, 15, 16} on No — roughly balanced.\n\nQUESTION: Is the subject of the document a sports event or competition?",
+   "reasoning_text": "Remaining: [1] Grupo Vocento, [3] US women's cricket team, [9] 2018-19 Biathlon IBU Cup, [10] Broughton Skeog railway station, [11] 2000 Grand Prix of Detroit, [15] Tahquitz spirit, [16] Geophilus punicus.\n\nDivide: 7 documents. Ask \"Is the subject a sporting event or competition?\" — yes for 3, 9, 11 (3); no for 1, 10, 15, 16 (4). Good split.",
+   "parsed": "Is the subject of the document a sports event or competition?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 54,
+    "cache_read_tokens": 2560,
+    "cache_write_tokens": 0,
+    "output_tokens": 270,
+    "reasoning_tokens": 123
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.444,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 32,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.982,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "After the first two answers, the remaining candidates are:\n\n- [3] United States women's national cricket team (a team)\n- [5] 1936 BYU Cougars football team (a team)\n- [9] 2018–19 Biathlon IBU Cup (a season-long tournament)\n- [11] 2000 Tenneco Automotive Grand Prix of Detroit (a single race)\n\nA clean 2/2 split: ask whether the subject is itself a team, rather than a competition. This is a single property (being a team), so the answerer should judge it correctly for all four documents.\n\nQUESTION: Is the subject a sports team?",
+   "reasoning_text": "Remaining non-person, sports event/competition: [3] US women's cricket team, [5] 1936 BYU football team, [9] 2018-19 Biathlon IBU Cup, [11] 2000 Detroit Grand Prix.\n\nQuestion 3: divide. \"Is the subject a team?\" → 3, 5 yes; 9, 11 no. Good split.",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 75,
+    "cache_read_tokens": 2560,
+    "cache_write_tokens": 0,
+    "output_tokens": 222,
+    "reasoning_tokens": 84
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.164,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 27,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.497,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 4,
+   "text": "The remaining candidates are [9] the 2018–19 Biathlon IBU Cup and [11] the 2000 Grand Prix of Detroit. A question that separates them cleanly: whether it's an auto race.\n\nQUESTION: Is the subject a motor race?",
+   "reasoning_text": "Sports event/competition, not team, not person. Remaining: [9] 2018–19 Biathlon IBU Cup, [11] 2000 Grand Prix of Detroit, [5] 1936 BYU Cougars football team is a team — excluded. [3] team — excluded. So [9] and [11].\n\nDistinguish: is it a motor race? \"Was the subject a motor/car race?\"",
+   "parsed": "Is the subject a motor race?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 91,
+    "cache_read_tokens": 2560,
+    "cache_write_tokens": 0,
+    "output_tokens": 145,
+    "reasoning_tokens": 89
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.12,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 4,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 27,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.117,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The answers narrow this down clearly:\n\n1. Not a person — eliminates the biographies (Glaucias, Redha Kramdi, Walter Gaines, Ebenezer Skellie, Marian Bâcu, Daniella Alonso, Suphachai Chearavanont).\n2. A sports event or competition — among the remaining, candidates are the 1936 BYU Cougars football team (a team, not an event), the 2018–19 Biathlon IBU Cup, and the 2000 Grand Prix of Detroit.\n3. Not a sports team — eliminates the 1936 BYU Cougars and the US women's cricket team.\n4. A motor race — eliminates the Biathlon IBU Cup, leaving the 2000 Tenneco Automotive Grand Prix of Detroit, a CART race.\n\nGUESS: 11",
+   "reasoning_text": "Document 11, the 2000 CART race in Detroit.",
+   "parsed": 11,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 108,
+    "cache_read_tokens": 2176,
+    "cache_write_tokens": 0,
+    "output_tokens": 187,
+    "reasoning_tokens": 13
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.838,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 609,
+  "cache_read_tokens": 13824,
+  "cache_write_tokens": 0,
+  "output_tokens": 1058,
+  "reasoning_tokens": 428
+ },
+ "cost_usd": 0.009102,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": []
+ },
+ "started_at": 1788642594.752382,
+ "duration_s": 21.68,
+ "host": "chunky_monkey"
+}

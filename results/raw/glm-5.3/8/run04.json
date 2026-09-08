@@ -1,0 +1,231 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "glm-5.3",
+ "provider": "zai",
+ "model_id_requested": "glm-5.3",
+ "size": 8,
+ "run": 4,
+ "rounds": 3,
+ "target_id": "w01526",
+ "target_number": 2,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject an individual person?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Is the subject American?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject an athlete?",
+   "answer": false
+  }
+ ],
+ "guess": 2,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "I'll start with a broad split. The eight subjects are: a Spanish media company, an ancient king, a cricket team, a church, a football team, a footballer, a scientist, and a soldier. Exactly four are individual people (2, 6, 7, 8) and four are not (1, 3, 4, 5), so this question should split the set in half.\n\nQUESTION: Is the subject an individual person?",
+   "reasoning_text": "8 documents. Let me find a good split. Categories: [1] Spanish media company, [2] ancient Illyrian ruler, [3] US women's cricket team, [4] church in Sydney, [5] 1936 football team, [6] Canadian footballer, [7] dairy scientist, [8] Medal of Honor Civil War soldier.\n\nQuestion: \"Is the subject a person?\" — Yes: 2,6,7,8 (4 docs). No: 1,3,4,5 (4 docs). Perfect split.",
+   "parsed": "Is the subject an individual person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 19,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 216,
+    "reasoning_tokens": 118
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.083,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 15,
+    "cache_read_tokens": 448,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.119,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "Remaining candidates after the first answer: Glaucias, Redha Kramdi, Walter Lee Gaines, and Ebenezer Skellie.\n\nA good split: Gaines and Skellie are American; Glaucias (Illyrian) and Kramdi (Canadian) are not. This divides the four candidates into two pairs of two, leaving one question to pinpoint the target either way.\n\nQUESTION: Is the subject American?",
+   "reasoning_text": "Remaining people: 2, 6, 7, 8. Need to split 2/2. Glaucias (ancient ruler, BC), Kramdi (footballer), Gaines (scientist), Skellie (soldier).\n\nQuestion: \"Is the subject alive?\" — all dead except Kramdi. That eliminates 3? No, answer Yes leaves only Kramdi; answer No leaves 3. Not balanced but decisive... Actually with one question left after this, we need the final to distinguish. If Yes → Kramdi done. If No → 3 remain, one question can't split 3 reliably.\n\nBetter: split 2/2. Options: \"Is the subject from the United States?\" — Kramdi Canadian, Glaucias Illyrian (no), Gaines American, Skellie American. Yes: 7,8; No: 2,6. Then final question distinguishes each pair. Good split.\n\nOr \"Is the subject known for sports/athletics?\" — Kramdi, Gaines? Gaines is dairy science, not sports. Sports: Kramdi only... unless football team. So Yes→Kramdi, No→3. Bad.\n\n\"Is the subject American?\" — Yes: Gaines, Skellie. No: Glaucias, Kramdi. That's 2/2. Good.",
+   "parsed": "Is the subject American?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 33,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 379,
+    "reasoning_tokens": 288
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 5.111,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 13,
+    "cache_read_tokens": 448,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.774,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "With \"individual person\" and \"not American\" answered, the remaining candidates are [2] Glaucias of Taulantii and [6] Redha Kramdi. Glaucias was an ancient Illyrian king; Kramdi is a Canadian football player. A question about athletics cleanly separates them.\n\nQUESTION: Is the subject an athlete?",
+   "reasoning_text": "Remaining persons non-American: [2] Glaucias (Illyrian), [4]? No, church is not person. Persons: 2, 6 (Canadian, Algerian descent), 7 (American), 8 (American). So remaining: 2 (Glaucias) and 6 (Redha Kramdi).\n\nDistinguish: ancient vs modern. \"Is the subject an athlete?\" or \"Did the subject die more than 1000 years ago?\" or \"Is the subject a sports person?\" Kramdi yes, Glaucias no. Ask \"Is the subject a professional athlete?\"",
+   "parsed": "Is the subject an athlete?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 47,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 206,
+    "reasoning_tokens": 129
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.588,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 14,
+    "cache_read_tokens": 448,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.076,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The answers narrow it down:\n\n1. **Individual person** — eliminates documents [1] (company), [3] (team), [4] (church), [5] (sports team).\n2. **Not American** — eliminates [7] Walter Lee Gaines and [8] Ebenezer Skellie, both Americans.\n3. **Not an athlete** — eliminates [6] Redha Kramdi, a football player.\n\nThat leaves [2] Glaucias of Taulantii, an ancient Illyrian ruler — an individual, not American, and not an athlete.\n\nGUESS: 2",
+   "reasoning_text": "Individuals: 2, 6, 7, 8. American: 7, 8 (Gaines, Skellie). Not American: 2, 6. Not athlete: eliminates 6. Answer: 2, Glaucias.",
+   "parsed": 2,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 63,
+    "cache_read_tokens": 1216,
+    "cache_write_tokens": 0,
+    "output_tokens": 187,
+    "reasoning_tokens": 56
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.617,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 204,
+  "cache_read_tokens": 7360,
+  "cache_write_tokens": 0,
+  "output_tokens": 997,
+  "reasoning_tokens": 591
+ },
+ "cost_usd": 0.006586,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": []
+ },
+ "started_at": 1788642759.885185,
+ "duration_s": 19.37,
+ "host": "chunky_monkey"
+}

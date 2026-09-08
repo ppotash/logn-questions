@@ -1,0 +1,230 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "gpt-5.6-sol",
+ "provider": "openai",
+ "model_id_requested": "gpt-5.6-sol",
+ "size": 8,
+ "run": 4,
+ "rounds": 3,
+ "target_id": "w01526",
+ "target_number": 2,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject an individual person?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Was the subject born before 1850?",
+   "answer": true
+  },
+  {
+   "round": 3,
+   "question": "Was the subject a ruler in antiquity?",
+   "answer": true
+  }
+ ],
+ "guess": 2,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "QUESTION: Is the subject an individual person?",
+   "reasoning_text": "",
+   "parsed": "Is the subject an individual person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 3,
+    "cache_read_tokens": 1587,
+    "cache_write_tokens": 0,
+    "output_tokens": 92,
+    "reasoning_tokens": 74
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.675,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 452,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.789,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "QUESTION: Was the subject born before 1850?",
+   "reasoning_text": "",
+   "parsed": "Was the subject born before 1850?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 3,
+    "cache_read_tokens": 1601,
+    "cache_write_tokens": 0,
+    "output_tokens": 319,
+    "reasoning_tokens": 299
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 5.798,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 454,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.952,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "QUESTION: Was the subject a ruler in antiquity?",
+   "reasoning_text": "",
+   "parsed": "Was the subject a ruler in antiquity?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1622,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 93,
+    "reasoning_tokens": 73
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.73,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 454,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.983,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The only individual born before 1850 who was a ruler in antiquity is Glaucias of Taulantii.\n\nGUESS: 2",
+   "reasoning_text": "",
+   "parsed": 2,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1256,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 33,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.497,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 4244,
+  "cache_read_tokens": 3188,
+  "cache_write_tokens": 0,
+  "output_tokens": 549,
+  "reasoning_tokens": 446
+ },
+ "cost_usd": 0.039284,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null
+ },
+ "started_at": 1788553040.1128733,
+ "duration_s": 14.42,
+ "host": "chunky_monkey"
+}

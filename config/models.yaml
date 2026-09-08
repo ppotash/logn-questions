@@ -1,0 +1,87 @@
+# One frontier model per provider.
+#
+# `id` is the exact API model string. Result files also record whatever the API
+# echoes back, since aliases move underneath a name.
+#
+# The two roles get separate reasoning settings. The questioner partitions a
+# large document set and benefits from as much reasoning as you will buy. The
+# answerer makes one factual judgement about one short document -- but that
+# judgement compounds as p^log2(N), so it is the wrong place to economise. At
+# N=1024, p=0.90 caps you at 35% while p=0.97 gives 74%.
+#
+#   effort            questioner. Anthropic adaptive thinking, one of
+#                     low|medium|high|xhigh|max. Reasoning is ON BY DEFAULT on
+#                     Opus 5 and token budgets are ignored, so effort is the
+#                     only dial.
+#   answerer_effort   same scale, applied to the answerer.
+#   answerer_thinking false disables reasoning for the answerer entirely.
+#                     Observed to bias it toward "No" (21% Yes where ~50% was
+#                     expected, p = 0.003). Leave it true.
+#   reasoning_effort  OpenAI (minimal|low|medium|high).
+#   reasoning_budget  legacy Anthropic and Gemini thinking budgets, in tokens.
+#
+# There is no clean mapping between these schemes across vendors. Whatever you
+# choose, state it in the writeup rather than implying the arms are matched.
+#
+# `rates` are USD per million tokens, for cost reporting only. Verify against
+# current pricing before trusting the cost column.
+
+models:
+  - name: claude-opus-5
+    provider: anthropic
+    id: claude-opus-5
+    rates: {input: 5.00, cache_read: 0.50, cache_write: 6.25, output: 25.00}
+    effort: high
+    answerer_effort: medium
+    answerer_thinking: true
+
+  - name: gpt-5.6-sol
+    provider: openai
+    id: gpt-5.6-sol
+    rates: {input: 5.00, cache_read: 0.50, cache_write: 5.00, output: 30.00}
+    reasoning_effort: high
+
+  - name: gemini-3.8-flash
+    provider: gemini
+    id: gemini-3.8-flash
+    rates: {input: 0.75, cache_read: 0.19, cache_write: 0.75, output: 3.75}
+    # MEDIUM, not HIGH, and the reason matters for the writeup: at HIGH this
+    # model spends 30-61K tokens thinking, which exhausts its own 64K output
+    # budget before it can finish the visible answer. Observed at N>=256:
+    # ~1,280 visible tokens produced, answer cut mid-sentence, 33 of 68 games
+    # corrupted. MEDIUM roughly halves thinking and fits. Every other provider
+    # runs at high; Gemini is the documented exception.
+    effort: medium
+    answerer_effort: medium
+
+  - name: grok-4.6
+    provider: xai
+    id: grok-4.6
+    rates: {input: 2.00, cache_read: 0.50, cache_write: 2.00, output: 6.00}
+
+  - name: glm-5.3
+    provider: zai
+    id: glm-5.3
+    rates: {input: 1.40, cache_read: 0.26, cache_write: 1.40, output: 4.40}
+    effort: high
+    answerer_effort: medium
+    doc_substitutions:
+     w03227: w00001
+
+  - name: kimi-k3
+    provider: moonshot
+    id: kimi-k3
+    rates: {input: 3.00, cache_read: 0.30, cache_write: 3.00, output: 15.00}
+    effort: high
+    answerer_effort: medium
+    doc_substitutions:
+      w00913: w00001
+      w02252: w00002
+      w03227: w00004
+
+  - name: deepseek-v4-pro
+    provider: deepseek
+    id: deepseek-v4-pro
+    rates: {input: 0.55, cache_read: 0.06, cache_write: 0.55, output: 2.20}
+    effort: high
+    answerer_effort: medium

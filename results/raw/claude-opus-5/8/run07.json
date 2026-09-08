@@ -1,0 +1,230 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "claude-opus-5",
+ "provider": "anthropic",
+ "model_id_requested": "claude-opus-5",
+ "size": 8,
+ "run": 7,
+ "rounds": 3,
+ "target_id": "w01220",
+ "target_number": 8,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject of the document an individual human being?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Was the subject alive during the 20th century?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Was the subject a soldier in the American Civil War?",
+   "answer": false
+  }
+ ],
+ "guess": 2,
+ "won": false,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "I'll split people from organizations/things first.\n\nQUESTION: Is the subject of the document an individual human being?",
+   "reasoning_text": "",
+   "parsed": "Is the subject of the document an individual human being?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 32,
+    "cache_read_tokens": 2359,
+    "cache_write_tokens": 0,
+    "output_tokens": 167,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 5.942,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 604,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 11,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 1.184,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "Remaining candidates are the individuals: Glaucias (2), Redha Kramdi (6), Walter Lee Gaines (7), Ebenezer Skellie (8). A question about living in the 20th century splits them 2–2 (Kramdi and Gaines vs. Glaucias and Skellie).\n\nQUESTION: Was the subject alive during the 20th century?",
+   "reasoning_text": "",
+   "parsed": "Was the subject alive during the 20th century?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 57,
+    "cache_read_tokens": 2359,
+    "cache_write_tokens": 0,
+    "output_tokens": 525,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 9.982,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 604,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 13,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 2.099,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "Remaining candidates are Glaucias and Ebenezer Skellie; I need a question separating an ancient Illyrian ruler from a 19th-century American soldier.\n\nQUESTION: Was the subject a soldier in the American Civil War?",
+   "reasoning_text": "",
+   "parsed": "Was the subject a soldier in the American Civil War?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 82,
+    "cache_read_tokens": 2359,
+    "cache_write_tokens": 0,
+    "output_tokens": 210,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 4.694,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 607,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 1.186,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "Individuals: 2, 6, 7, 8. Not alive in the 20th century: Glaucias (2) and Skellie (d. 1898, 8). Not a Civil War soldier: Glaucias.\n\nGUESS: 2",
+   "reasoning_text": "",
+   "parsed": 2,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 109,
+    "cache_read_tokens": 1808,
+    "cache_write_tokens": 0,
+    "output_tokens": 205,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 4.062,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 2095,
+  "cache_read_tokens": 8885,
+  "cache_write_tokens": 0,
+  "output_tokens": 1134,
+  "reasoning_tokens": 0
+ },
+ "cost_usd": 0.043268,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": true,
+  "reasoning_budget": 0
+ },
+ "started_at": 1788402882.350849,
+ "duration_s": 29.15,
+ "host": "chunky_monkey"
+}

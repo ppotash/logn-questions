@@ -1,0 +1,289 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "gpt-5.6-sol",
+ "provider": "openai",
+ "model_id_requested": "gpt-5.6-sol",
+ "size": 16,
+ "run": 6,
+ "rounds": 4,
+ "target_id": "w03839",
+ "target_number": 7,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220",
+  "w00231",
+  "w00771",
+  "w00130",
+  "w02314",
+  "w01061",
+  "w03405",
+  "w03446",
+  "w01482"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject primarily associated with North America?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a human individual?",
+   "answer": true
+  },
+  {
+   "round": 3,
+   "question": "Was the subject born before 1900?",
+   "answer": true
+  },
+  {
+   "round": 4,
+   "question": "Was the subject a recipient of the Medal of Honor?",
+   "answer": false
+  }
+ ],
+ "guess": 7,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "QUESTION: Is the subject primarily associated with North America?",
+   "reasoning_text": "",
+   "parsed": "Is the subject primarily associated with North America?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 3,
+    "cache_read_tokens": 2554,
+    "cache_write_tokens": 0,
+    "output_tokens": 414,
+    "reasoning_tokens": 394
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 6.963,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 443,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.98,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "QUESTION: Is the subject a human individual?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a human individual?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 3,
+    "cache_read_tokens": 2570,
+    "cache_write_tokens": 0,
+    "output_tokens": 186,
+    "reasoning_tokens": 168
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 4.135,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 441,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.929,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "QUESTION: Was the subject born before 1900?",
+   "reasoning_text": "",
+   "parsed": "Was the subject born before 1900?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2589,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 171,
+    "reasoning_tokens": 151
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 4.066,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 443,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.847,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 4,
+   "text": "QUESTION: Was the subject a recipient of the Medal of Honor?",
+   "reasoning_text": "",
+   "parsed": "Was the subject a recipient of the Medal of Honor?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2607,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 101,
+    "reasoning_tokens": 79
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.265,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 4,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 445,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.725,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "Walter Lee Gaines was an American scientist born in 1881 and was not a Medal of Honor recipient. Ebenezer Skellie is excluded because he received that honor.\n\nGUESS: 7",
+   "reasoning_text": "",
+   "parsed": 7,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 2243,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 100,
+    "reasoning_tokens": 52
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.451,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 9217,
+  "cache_read_tokens": 5124,
+  "cache_write_tokens": 0,
+  "output_tokens": 988,
+  "reasoning_tokens": 844
+ },
+ "cost_usd": 0.078287,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null
+ },
+ "started_at": 1788553134.5389516,
+ "duration_s": 24.36,
+ "host": "chunky_monkey"
+}

@@ -1,0 +1,231 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "glm-5.3",
+ "provider": "zai",
+ "model_id_requested": "glm-5.3",
+ "size": 8,
+ "run": 6,
+ "rounds": 3,
+ "target_id": "w03338",
+ "target_number": 4,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject of the document an individual person?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a sports team?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a company?",
+   "answer": false
+  }
+ ],
+ "guess": 4,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "Looking at the set: documents 2, 6, 7, and 8 are about individual people (Glaucias, Redha Kramdi, Walter Lee Gaines, Ebenezer Skellie), while documents 1, 3, 4, and 5 are about an organization, a team, a building, and a sports team season. Asking whether the subject is a person splits the set exactly in half.\n\nQUESTION: Is the subject of the document an individual person?",
+   "reasoning_text": "8 documents. Need to split ~4/4. Categories: person (2,6,7,8) vs non-person (1,3,4,5). \"Is the subject a person?\" — 4/4 split.",
+   "parsed": "Is the subject of the document an individual person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 19,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 153,
+    "reasoning_tokens": 49
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.418,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 170,
+    "cache_read_tokens": 256,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.881,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "Remaining candidates after the first answer: [1] Grupo Vocento (a company), [3] the US women's national cricket team, and [4] St Stephen's Uniting Church (a building).\n\nI'll ask about being a sports team, which cleanly separates [3] from [1] and [4], leaving a final question to distinguish the company from the church if needed.\n\nQUESTION: Is the subject a sports team?",
+   "reasoning_text": "Remaining after \"not a person\": 1 (Grupo Vocento), 3 (US women's cricket team), 4 (St Stephen's church). Need to split: ask something separating company/media from sports team or church. Ask \"Is the subject a building?\" — church only (1 of 3). Better: ask \"Is the subject a sports team?\" splits 3 vs 1,4 — if yes, done; if no, two remain, but we have a final question. Balanced: one question left after this, so 3-way split: ask something about sports team: yes→3, no→{1,4}, then next question distinguishes. Good.\n\nAlternatively ask \"is the subject a media company?\" yes→1, no→{3,4}. Either works. Ask \"Is the subject a sports team?\"",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 36,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 263,
+    "reasoning_tokens": 173
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 4.694,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 39,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.535,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "With the answers so far, the remaining candidates are [1] Grupo Vocento and [4] St Stephen's Uniting Church. A question about whether the subject is a business organization should cleanly separate these two.\n\nQUESTION: Is the subject a company?",
+   "reasoning_text": "Remaining: [1] Grupo Vocento, [4] St Stephen's Uniting Church. Ask something to distinguish: \"Is the subject a company?\" or \"Is the subject a building?\" Ask: is the subject a church/building? Better: \"Is the subject a commercial company?\" Yes → 1, No → 4.",
+   "parsed": "Is the subject a company?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 52,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 122,
+    "reasoning_tokens": 69
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.475,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "No.",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 38,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 5,
+    "reasoning_tokens": 2
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.078,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "By process of elimination: the target is not an individual person (eliminating documents 2, 6, 7, 8), not a sports team (eliminating 3 and 5), and not a company (eliminating 1). The only remaining document is St Stephen's Uniting Church, whose subject is a heritage-listed church building — neither a person, a sports team, nor a company.\n\nGUESS: 4",
+   "reasoning_text": "Not a person, not a sports team, not a company. Remaining: [4] church (building) — yes. St Stephen's Uniting Church is a heritage-listed church, not a company. Target = 4.",
+   "parsed": 4,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 68,
+    "cache_read_tokens": 1216,
+    "cache_write_tokens": 0,
+    "output_tokens": 140,
+    "reasoning_tokens": 47
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.256,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 422,
+  "cache_read_tokens": 7040,
+  "cache_write_tokens": 0,
+  "output_tokens": 689,
+  "reasoning_tokens": 340
+ },
+ "cost_usd": 0.005453,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": []
+ },
+ "started_at": 1788642796.4075377,
+ "duration_s": 17.34,
+ "host": "chunky_monkey"
+}

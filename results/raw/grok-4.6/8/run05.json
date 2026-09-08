@@ -1,0 +1,232 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "grok-4.6",
+ "provider": "xai",
+ "model_id_requested": "grok-4.6",
+ "size": 8,
+ "run": 5,
+ "rounds": 3,
+ "target_id": "w02964",
+ "target_number": 6,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject a person?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Is the subject from the United States?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject from Canada?",
+   "answer": true
+  }
+ ],
+ "guess": 6,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "The eight subjects split evenly into four people (an ancient ruler, a CFL player, a dairy scientist, and a Civil War soldier) and four non-people (a media company, a national cricket team, a church, and a college football team). Asking whether the subject is a person therefore halves the set regardless of the answer and uses a single unambiguous property the answerer can judge from ordinary knowledge of the document alone.\n\nQUESTION: Is the subject a person?",
+   "reasoning_text": "The user wants me to play a deduction game. There are 8 documents, one is the target. I need to ask exactly 3 yes/no questions to identify it.\n",
+   "parsed": "Is the subject a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1710,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 776,
+    "reasoning_tokens": 682
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 13.798,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "The user wants me to answer with exactly one word: Yes or No.\n",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 232,
+    "cache_read_tokens": 896,
+    "cache_write_tokens": 0,
+    "output_tokens": 88,
+    "reasoning_tokens": 87
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 1.865,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "The first answer restricts the target to the four person-subjects (Glaucias, Kramdi, Gaines, Skellie). A geographically clean 2-2 split among them is whether the person is from the United States.\n\nQUESTION: Is the subject from the United States?",
+   "reasoning_text": "The user is playing a deduction game. I need to identify which document is the target by asking yes/no questions.\nIs the subject from the ancient world (like a historical ruler from the 4th century BC)?  That would split Glaucias (Yes) from the other three (No). Not balanced.\n\nBetter idea: \"Is the subject American?\"  \n- Glaucias: No (Illyrian ruler)  \n- Kramdi: No (Canadian)  \n- Gaines: Yes (University of Illinois professor)  \n- Skellie: Yes (New York native)  \n\nThat gives a clean 2 2 split.  \n\nOr \"Did the subject die before 1900?\"  \n- Glaucias: Yes  \n- Skellie: Yes (1898)  \n- Gaines: No (1950)  \n- Kramdi: No (still alive)  \n\nAlso 2 2.",
+   "parsed": "Is the subject from the United States?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1723,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 2585,
+    "reasoning_tokens": 2528
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 45.161,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "The question is: \"Is the subject from the United States?\" and I need to answer Yes or No based on the document about Redha Kramdi.\n",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 618,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 226,
+    "reasoning_tokens": 225
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 3.997,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "The first two answers leave only two people: the ancient Illyrian ruler Glaucias and the modern Canadian football player Redha Kramdi. A single geographic property cleanly separates them.\n\nQUESTION: Is the subject from Canada?",
+   "reasoning_text": "The user is playing a deduction game. I need to identify the target document from the numbered set.\nIs the subject from North America?   (If the answer is yes, it's Redha Kramdi; if no, it's Glaucias of Taulantii.",
+   "parsed": "Is the subject from Canada?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1740,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 1744,
+    "reasoning_tokens": 1697
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 28.969,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "Yes",
+   "reasoning_text": "The question is: \"Is the subject from Canada?\" and I need to answer Yes or No based on the document.\nYes, the subject is from Canada.",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 616,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 352,
+    "reasoning_tokens": 351
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 6.978,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The first answer restricts the target to a biographical article about a person, which immediately eliminates the media group, cricket team, church, and football team (documents 1, 3, 4 and 5).  \n\nThe remaining candidates are therefore 2, 6, 7 and 8.  \nThe second answer states that the person is not from the United States, which eliminates the two American subjects (Walter Lee Gaines and Ebenezer Skellie).  \n\nOnly Glaucias of Taulantii and Redha Kramdi remain. The third answer states that the person is from Canada, which matches Kramdi (a Montreal-born CFL player) and rules out the ancient Illyrian ruler.  \n\nThus the only document consistent with all three answers is 6.\n\nGUESS: 6",
+   "reasoning_text": "The problem is a deduction game. I need to find which document was secretly chosen based on the yes/no questions.\n[8] Ebenezer Skellie\n\nThe target document is [8] Ebenezer Skellie. It is consistent with all three answers:\n\n- It is about a person (Ebenezer Skellie), so question 1 is Yes.",
+   "parsed": 6,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1242,
+    "cache_read_tokens": 640,
+    "cache_write_tokens": 0,
+    "output_tokens": 829,
+    "reasoning_tokens": 666
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 12.516,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 7881,
+  "cache_read_tokens": 4096,
+  "cache_write_tokens": 0,
+  "output_tokens": 6600,
+  "reasoning_tokens": 6236
+ },
+ "cost_usd": 0.05741,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": [],
+  "doc_substitutions": {}
+ },
+ "started_at": 1788654275.6997607,
+ "duration_s": 113.29,
+ "host": "chunky_monkey"
+}

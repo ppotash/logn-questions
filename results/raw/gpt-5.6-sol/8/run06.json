@@ -1,0 +1,230 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "gpt-5.6-sol",
+ "provider": "openai",
+ "model_id_requested": "gpt-5.6-sol",
+ "size": 8,
+ "run": 6,
+ "rounds": 3,
+ "target_id": "w03338",
+ "target_number": 4,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject an individual person?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a sports team?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a Christian church?",
+   "answer": true
+  }
+ ],
+ "guess": 4,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "QUESTION: Is the subject an individual person?",
+   "reasoning_text": "",
+   "parsed": "Is the subject an individual person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 3,
+    "cache_read_tokens": 1587,
+    "cache_write_tokens": 0,
+    "output_tokens": 101,
+    "reasoning_tokens": 83
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.564,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 413,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.884,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "QUESTION: Is the subject a sports team?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 3,
+    "cache_read_tokens": 1601,
+    "cache_write_tokens": 0,
+    "output_tokens": 92,
+    "reasoning_tokens": 74
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.697,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 413,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.817,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "QUESTION: Is the subject a Christian church?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a Christian church?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1620,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 122,
+    "reasoning_tokens": 104
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.549,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 413,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.95,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The only non-person subject that is a Christian church is document 4, St Stephen's Uniting Church.\n\nGUESS: 4",
+   "reasoning_text": "",
+   "parsed": 4,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1252,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 30,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.276,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 4117,
+  "cache_read_tokens": 3188,
+  "cache_write_tokens": 0,
+  "output_tokens": 357,
+  "reasoning_tokens": 261
+ },
+ "cost_usd": 0.032889,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null
+ },
+ "started_at": 1788553067.3005116,
+ "duration_s": 10.74,
+ "host": "chunky_monkey"
+}

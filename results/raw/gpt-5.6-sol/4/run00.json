@@ -1,0 +1,175 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "gpt-5.6-sol",
+ "provider": "openai",
+ "model_id_requested": "gpt-5.6-sol",
+ "size": 4,
+ "run": 0,
+ "rounds": 2,
+ "target_id": "w01562",
+ "target_number": 1,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject primarily associated with an English-speaking country?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a company?",
+   "answer": true
+  }
+ ],
+ "guess": 1,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "QUESTION: Is the subject primarily associated with an English-speaking country?",
+   "reasoning_text": "",
+   "parsed": "Is the subject primarily associated with an English-speaking country?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1048,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 139,
+    "reasoning_tokens": 117
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.96,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 444,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.991,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "The remaining possibilities are Grupo Vocento and Glaucias of Taulantii. Corporate status distinguishes them clearly.\n\nQUESTION: Is the subject a company?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a company?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1066,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 139,
+    "reasoning_tokens": 99
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 3.283,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 439,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.779,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The subject is a company not primarily associated with an English-speaking country. Grupo Vocento is a Spanish mass media company, so document 1 is the only match.\n\nGUESS: 1",
+   "reasoning_text": "",
+   "parsed": 1,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 697,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 41,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.131,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 3694,
+  "cache_read_tokens": 0,
+  "cache_write_tokens": 0,
+  "output_tokens": 327,
+  "reasoning_tokens": 216
+ },
+ "cost_usd": 0.02828,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null
+ },
+ "started_at": 1788553093.7327461,
+ "duration_s": 11.44,
+ "host": "chunky_monkey"
+}

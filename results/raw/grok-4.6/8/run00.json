@@ -1,0 +1,230 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "grok-4.6",
+ "provider": "xai",
+ "model_id_requested": "grok-4.6",
+ "size": 8,
+ "run": 0,
+ "rounds": 3,
+ "target_id": "w01562",
+ "target_number": 1,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject a person?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a sports team?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a church?",
+   "answer": false
+  }
+ ],
+ "guess": 1,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "The eight documents split evenly into four whose subjects are individual people (an ancient ruler, a CFL player, a dairy scientist, and a Civil War soldier) and four that are not (a media company, two sports teams, and a church). A single-property question about personhood should therefore cut the field in half with little risk of the answerer misjudging.\n\nQUESTION: Is the subject a person?",
+   "reasoning_text": "The user wants me to play a deduction game. There are 8 documents, one is secretly chosen as the target. I need to ask exactly 3 yes/no questions to identify it.\n",
+   "parsed": "Is the subject a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 46,
+    "cache_read_tokens": 2176,
+    "cache_write_tokens": 0,
+    "output_tokens": 1180,
+    "reasoning_tokens": 1096
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 18.642,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "The question is: \"Is the subject a person?\" and I need to answer Yes or No based on the document.\n",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 563,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 116,
+    "reasoning_tokens": 115
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 2.637,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "The first answer rules out every biographical subject, leaving four candidates: a Spanish media company, a U.S. women’s cricket side, a Sydney church, and a 1936 college football team. A clean binary that splits those four evenly is whether the subject is itself a sports team.\n\nQUESTION: Is the subject a sports team?",
+   "reasoning_text": "The user is playing a deduction game. I need to identify which document is the target by asking yes/no questions.\n",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 59,
+    "cache_read_tokens": 2176,
+    "cache_write_tokens": 0,
+    "output_tokens": 980,
+    "reasoning_tokens": 913
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 17.199,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "The user wants me to answer with exactly one word: Yes or No to the question \"Is the subject a sports team?\" based on the document about Grupo Vocento.\n",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1076,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 222,
+    "reasoning_tokens": 221
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 3.98,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "Remaining candidates after “not a person” and “not a sports team” are only Grupo Vocento (a Spanish media company) and St Stephen’s Uniting Church (a heritage church in Sydney). A single property that cleanly separates them is whether the subject is a church.\n\nQUESTION: Is the subject a church?",
+   "reasoning_text": "The user is playing a deduction game. I need to identify the target document from 8 documents by asking yes/no questions. This is round 3 of 3, so after this question, I'll have to name the target.\n",
+   "parsed": "Is the subject a church?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 75,
+    "cache_read_tokens": 2176,
+    "cache_write_tokens": 0,
+    "output_tokens": 944,
+    "reasoning_tokens": 880
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 14.656,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "The user wants me to answer with exactly one word: Yes or No, about whether the subject of the document is a church.\n",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 563,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 169,
+    "reasoning_tokens": 168
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 3.379,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The three answers establish that the target document’s subject is not a person, not a sports team, and not a church.  \n\n- Documents 2, 6, 7 and 8 are biographies of individuals, so they are eliminated by the first answer.  \n- Documents 3 and 5 describe sports teams, so they are eliminated by the second answer.  \n- Document 4 is a church, so it is eliminated by the third answer.  \n\nThe sole remaining document is 1 (a media company).  \n\nGUESS: 1",
+   "reasoning_text": "The problem is a deduction game. There are 8 documents, one is the target. I asked 3 yes/no questions and got answers. Now I need to guess which document it is.\n",
+   "parsed": 1,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1369,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 652,
+    "reasoning_tokens": 541
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 10.467,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 3751,
+  "cache_read_tokens": 8064,
+  "cache_write_tokens": 0,
+  "output_tokens": 4263,
+  "reasoning_tokens": 3934
+ },
+ "cost_usd": 0.037112,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null
+ },
+ "started_at": 1788629885.0297554,
+ "duration_s": 70.96,
+ "host": "chunky_monkey"
+}

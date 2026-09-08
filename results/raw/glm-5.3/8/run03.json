@@ -1,0 +1,231 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "glm-5.3",
+ "provider": "zai",
+ "model_id_requested": "glm-5.3",
+ "size": 8,
+ "run": 3,
+ "rounds": 3,
+ "target_id": "w03839",
+ "target_number": 7,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject a person?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Is the subject American?",
+   "answer": true
+  },
+  {
+   "round": 3,
+   "question": "Is the subject known for work in science?",
+   "answer": true
+  }
+ ],
+ "guess": 7,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "Let me analyze the documents:\n- [1] Grupo Vocento — a media company\n- [2] Glaucias of Taulantii — an ancient ruler (person)\n- [3] US women's cricket team — a sports team\n- [4] St Stephen's Uniting Church — a church building\n- [5] 1936 BYU Cougars football team — a sports team\n- [6] Redha Kramdi — a football player (person)\n- [7] Walter Lee Gaines — a scientist (person)\n- [8] Ebenezer Skellie — a soldier (person)\n\nA perfect 4/4 split: ask whether the subject is a person.\n\nQUESTION: Is the subject a person?",
+   "reasoning_text": "8 documents. Categories: [1] Spanish media group (company), [2] ancient ruler (person, male, European/Illyrian), [3] sports team, [4] church building (Australia), [5] sports team (football), [6] football player, [7] scientist, [8] soldier.\n\nQuestion 1: \"Is the subject a person?\" — Yes: 2,6,7,8 (4). No: 1,3,4,5 (4). Perfect split.",
+   "parsed": "Is the subject a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 19,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 265,
+    "reasoning_tokens": 109
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.255,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 63,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.043,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "Remaining candidates after \"person\": documents 2 (Glaucias), 6 (Kramdi), 7 (Gaines), 8 (Skellie). A national origin question splits these 2–2: Gaines and Skellie are American, while Glaucias (ancient Illyrian) and Kramdi (Canadian) are not.\n\nQUESTION: Is the subject American?",
+   "reasoning_text": "Remaining: 2, 6, 7, 8. Ask something splitting 2/2. Options: \"Is the subject from the United States?\" — 6 Canadian, 7 American, 8 American, 2 Illyrian/ancient. Yes: 7,8; No: 2,6. Good.\n\nOr \"Is the subject deceased?\" — all but 6 deceased. Yes: 2,7,8 (3). Less balanced.\n\n\"Born in 19th century or earlier?\" — 2 (~4th c BC), 7 (1881), 8 (1842) yes; 6 no. Not balanced.\n\n\"Is the subject American?\" gives 7,8 vs 2,6 — balanced and clean.",
+   "parsed": "Is the subject American?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 32,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 245,
+    "reasoning_tokens": 160
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.895,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 62,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.806,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "The answers so far narrow it to American individuals, leaving Walter Lee Gaines [7] and Ebenezer Skellie [8]. I'll ask a question that distinguishes the dairy scientist from the Civil War soldier.\n\nQUESTION: Is the subject known for work in science?",
+   "reasoning_text": "American persons: [3] team — no, person; remaining persons: 2 (Glaucias, not American), 6 (Redha Kramdi, Canadian), 7 (Walter Lee Gaines, American), 8 (Ebenezer Skellie, American). So target is 7 or 8.\n\nDistinguish: is the subject a 19th-century historical figure? Or: did the subject receive the Medal of Honor? Or: is the subject deceased? Both deceased. Is the subject a scientist? Gaines yes, Skellie no. Or born before 1900 — Skellie born 1842, Gaines 1881. Better: \"Is the subject known for contributions to science?\" Gaines yes.",
+   "parsed": "Is the subject known for work in science?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 46,
+    "cache_read_tokens": 1600,
+    "cache_write_tokens": 0,
+    "output_tokens": 209,
+    "reasoning_tokens": 152
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.861,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 66,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.086,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The answers narrow it down: the subject is a person, American, and known for science.\n\n- Documents 2, 3, 4, 5 are not individual persons (or not American persons).\n- Document 6 (Redha Kramdi) is a person but Canadian, not American.\n- Document 8 (Ebenezer Skellie) is an American person, but known for military gallantry, not science.\n- Document 7 (Walter Lee Gaines) is an American person known for pioneering work in dairy science and neuroendocrinology — all three answers fit.\n\nGUESS: 7",
+   "reasoning_text": "Person, American, science — Walter Lee Gaines. Ebenezer Skellie is American but Civil War soldier, not science.",
+   "parsed": 7,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 65,
+    "cache_read_tokens": 1216,
+    "cache_write_tokens": 0,
+    "output_tokens": 155,
+    "reasoning_tokens": 26
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.883,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 353,
+  "cache_read_tokens": 7168,
+  "cache_write_tokens": 0,
+  "output_tokens": 883,
+  "reasoning_tokens": 447
+ },
+ "cost_usd": 0.006243,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": []
+ },
+ "started_at": 1788642742.0486763,
+ "duration_s": 17.83,
+ "host": "chunky_monkey"
+}

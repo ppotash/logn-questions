@@ -1,0 +1,175 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "gpt-5.6-sol",
+ "provider": "openai",
+ "model_id_requested": "gpt-5.6-sol",
+ "size": 4,
+ "run": 3,
+ "rounds": 2,
+ "target_id": "w03338",
+ "target_number": 4,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject European?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a sports team?",
+   "answer": false
+  }
+ ],
+ "guess": 4,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "QUESTION: Is the subject European?",
+   "reasoning_text": "",
+   "parsed": "Is the subject European?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 3,
+    "cache_read_tokens": 1045,
+    "cache_write_tokens": 0,
+    "output_tokens": 164,
+    "reasoning_tokens": 148
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 3.115,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 411,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 1.455,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "QUESTION: Is the subject a sports team?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 3,
+    "cache_read_tokens": 1057,
+    "cache_write_tokens": 0,
+    "output_tokens": 92,
+    "reasoning_tokens": 74
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.019,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 413,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 0.742,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The only non-European subject that is not a sports team is St Stephen's Uniting Church in Australia.\n\nGUESS: 4",
+   "reasoning_text": "",
+   "parsed": 4,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 692,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 92,
+    "reasoning_tokens": 57
+   },
+   "model_id": "gpt-5.6-sol",
+   "stop_reason": "stop",
+   "latency_s": 2.147,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 1522,
+  "cache_read_tokens": 2102,
+  "cache_write_tokens": 0,
+  "output_tokens": 356,
+  "reasoning_tokens": 279
+ },
+ "cost_usd": 0.019341,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null
+ },
+ "started_at": 1788553124.0193133,
+ "duration_s": 9.48,
+ "host": "chunky_monkey"
+}

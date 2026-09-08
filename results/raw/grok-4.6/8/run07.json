@@ -1,0 +1,232 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "grok-4.6",
+ "provider": "xai",
+ "model_id_requested": "grok-4.6",
+ "size": 8,
+ "run": 7,
+ "rounds": 3,
+ "target_id": "w01220",
+ "target_number": 8,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject a person?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Is the subject American?",
+   "answer": true
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a scientist?",
+   "answer": false
+  }
+ ],
+ "guess": 8,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "The eight subjects split evenly into four people (an ancient ruler, a CFL player, a dairy scientist, and a Civil War soldier) and four non-people (a media company, a national cricket team, a church, and a college football team). Asking whether the subject is a person therefore halves the search space regardless of the answer, and the property is unambiguous for an answerer who sees only the target.\n\nQUESTION: Is the subject a person?",
+   "reasoning_text": "The user wants me to play a deduction game. There are 8 documents, one is secretly chosen as the target. I need to ask exactly 3 yes/no questions to identify it.\n",
+   "parsed": "Is the subject a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1710,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 842,
+    "reasoning_tokens": 750
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 14.349,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "The user wants me to answer with exactly one word: Yes or No, about whether the subject of the document is a person.\n",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 519,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 120,
+    "reasoning_tokens": 119
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 2.455,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "The first answer restricts the target to the four people among the eight documents (Glaucias, Kramdi, Gaines, Skellie). Those four split evenly on nationality: two are American and two are not. A single-property nationality question therefore halves the remaining set cleanly and uses only ordinary world knowledge the answerer can apply to the one document it sees.\n\nQUESTION: Is the subject American?",
+   "reasoning_text": "The user is playing a deduction game. I need to identify which document is the target by asking yes/no questions.\nIs the subject from the 19th century or earlier?  That would split Glaucias (yes) and Skellie (yes) from Gaines (no) and Kramdi (no).",
+   "parsed": "Is the subject American?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 59,
+    "cache_read_tokens": 2176,
+    "cache_write_tokens": 0,
+    "output_tokens": 1738,
+    "reasoning_tokens": 1656
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 29.528,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "The question is: \"Is the subject American?\" and I need to answer Yes or No based on the document about Ebenezer Skellie.\n",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 518,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 164,
+    "reasoning_tokens": 163
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 2.804,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "The remaining candidates after “person” and “American” are Walter Lee Gaines and Ebenezer Skellie. A single property that cleanly separates a dairy-science professor from a Civil War infantryman is needed.\n\nQUESTION: Is the subject a scientist?",
+   "reasoning_text": "The documents are:\n\n[1] Grupo Vocento - Spanish media group\nWalter Lee Gaines – American dairy scientist and professor at the University of Illinois. 1881–1950.  \nEbenezer Skellie – American Civil War soldier awarded the Medal of Honor. 1842–1898.  \n\nIs the subject a scientist or professor? (Walter Lee Gaines)  \nYes.",
+   "parsed": "Is the subject a scientist?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1737,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 1317,
+    "reasoning_tokens": 1266
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 22.59,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "The task is to answer Yes or No to the question: \"Is the subject a scientist?\" based on the document about Ebenezer Skellie.\n",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1031,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 257,
+    "reasoning_tokens": 256
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 4.562,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The three answers require a biographical article whose subject is a person, is American, and is not a scientist.\n\nNon-persons are immediately eliminated (1, 3, 4, 5).  \nOf the remaining people, Glaucias (2) is an ancient Illyrian and Kramdi (6) is Canadian, so both fail the “American” test.  \nThat leaves Gaines (7) and Skellie (8). Gaines is a dairy-science professor and neuroendocrine pioneer, so he fails the “not a scientist” test.  \nOnly Skellie satisfies all three constraints.\n\nGUESS: 8",
+   "reasoning_text": "The problem is a deduction game. I need to find which document was secretly chosen based on the yes/no questions.\n[2] Glaucias of Taulantii is not American.\n\n[6] Redha Kramdi is Canadian, not American.\n\n[7] Walter Lee Gaines is American (University of Illinois).\n\n[8] Ebenezer Skellie is American (New York).\n\nSo only [7] and [8] remain after the American question.\n\n[7] is a scientist (dairy science, neuroendocrinology, professor), but the answer is No, so [7] is eliminated.\n\n[8] is a soldier (Medal of Honor, Civil War), not a scientist, so it matches all three answers.",
+   "parsed": 8,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1239,
+    "cache_read_tokens": 640,
+    "cache_write_tokens": 0,
+    "output_tokens": 1009,
+    "reasoning_tokens": 883
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 16.52,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 6813,
+  "cache_read_tokens": 4864,
+  "cache_write_tokens": 0,
+  "output_tokens": 5447,
+  "reasoning_tokens": 5093
+ },
+ "cost_usd": 0.04874,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": [],
+  "doc_substitutions": {}
+ },
+ "started_at": 1788654459.3759584,
+ "duration_s": 92.81,
+ "host": "chunky_monkey"
+}

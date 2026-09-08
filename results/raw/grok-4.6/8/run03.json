@@ -1,0 +1,232 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "grok-4.6",
+ "provider": "xai",
+ "model_id_requested": "grok-4.6",
+ "size": 8,
+ "run": 3,
+ "rounds": 3,
+ "target_id": "w03839",
+ "target_number": 7,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject a person?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Is the subject from the United States?",
+   "answer": true
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a scientist?",
+   "answer": true
+  }
+ ],
+ "guess": 7,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "The eight subjects split evenly into four individual people and four non-persons (a media company, two sports teams, and a church). Asking whether the subject is a person therefore halves the search space regardless of the answer, and the property is unambiguous for an answerer who sees only the target.\n\nQUESTION: Is the subject a person?",
+   "reasoning_text": "The user wants me to play a deduction game. There are 8 documents, one is secretly chosen as the target. I need to ask exactly 3 yes/no questions to identify it.\n",
+   "parsed": "Is the subject a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 46,
+    "cache_read_tokens": 2176,
+    "cache_write_tokens": 0,
+    "output_tokens": 844,
+    "reasoning_tokens": 777
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 14.546,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "The question is: \"Is the subject a person?\" and I need to answer with exactly Yes or No.\n",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 169,
+    "cache_read_tokens": 896,
+    "cache_write_tokens": 0,
+    "output_tokens": 103,
+    "reasoning_tokens": 102
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 2.241,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "The first answer restricts the target to the four biographical subjects (Glaucias, Kramdi, Gaines, Skellie). A nationality split of those four is even and unambiguous for the answerer.\n\nQUESTION: Is the subject from the United States?",
+   "reasoning_text": "The user is playing a deduction game. I need to identify which document is the target by asking yes/no questions.\n",
+   "parsed": "Is the subject from the United States?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1723,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 1500,
+    "reasoning_tokens": 1449
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 23.168,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "The question is: \"Is the subject from the United States?\" I need to answer Yes or No based on the document about Walter Lee Gaines.\nYes, Walter Lee Gaines was from the United States. He was a professor at the University of Illinois, a major institution in the country, and his name and career align with American origins.",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 555,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 536,
+    "reasoning_tokens": 535
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 8.352,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "The first two answers leave only two people who are from the United States: Walter Lee Gaines (a dairy scientist and professor) and Ebenezer Skellie (a Civil War soldier). A single-property question about scientific work cleanly separates them.\n\nQUESTION: Is the subject a scientist?",
+   "reasoning_text": "The user is playing a deduction game. I need to identify the target document from the numbered set.\n[7] Walter Lee Gaines - person, US professor.  \n[8] Ebenezer Skellie - person, US Civil War soldier.  \n\nRemaining possibilities: [7] and [8].  \n\nAsk your question for this round.  **Question:** Did the subject receive the Medal of Honor? (Yes for [8], No for [7].",
+   "parsed": "Is the subject a scientist?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1740,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 1536,
+    "reasoning_tokens": 1479
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 23.312,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "Yes",
+   "reasoning_text": "The user wants me to answer with exactly one word: Yes or No, about whether the subject of the document is a scientist.\n",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1065,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 174,
+    "reasoning_tokens": 173
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 2.969,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The three answers require a biographical article whose subject is (1) an individual person, (2) from the United States, and (3) a scientist.\n\n- Documents 1, 3, 4 and 5 are organizations, teams or buildings, so they fail the first filter.\n- Remaining person articles are 2, 6, 7 and 8.\n- Glaucias (2) is an ancient Illyrian ruler and Kramdi (6) is Canadian, so both fail the second filter.\n- Of the two remaining U.S. persons, Skellie (8) is a Civil-War soldier, not a scientist.\n- Only Gaines (7) satisfies all three constraints.\n\nGUESS: 7",
+   "reasoning_text": "The problem is a deduction game. I need to find which document was secretly chosen based on the yes/no questions.\nWalter Lee Gaines is the target document. He was a professor at the University of Illinois, so he’s from the United States, and his work on pituitary extracts and oxytocin makes him a scientist. The other candidates don’t fit all three criteria.",
+   "parsed": 7,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1370,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 964,
+    "reasoning_tokens": 814
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 14.468,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 6668,
+  "cache_read_tokens": 5120,
+  "cache_write_tokens": 0,
+  "output_tokens": 5657,
+  "reasoning_tokens": 5329
+ },
+ "cost_usd": 0.049838,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": [],
+  "doc_substitutions": {}
+ },
+ "started_at": 1788654071.6268497,
+ "duration_s": 89.06,
+ "host": "chunky_monkey"
+}

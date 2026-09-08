@@ -1,0 +1,289 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "claude-opus-5",
+ "provider": "anthropic",
+ "model_id_requested": "claude-opus-5",
+ "size": 16,
+ "run": 6,
+ "rounds": 4,
+ "target_id": "w03839",
+ "target_number": 7,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220",
+  "w00231",
+  "w00771",
+  "w00130",
+  "w02314",
+  "w01061",
+  "w03405",
+  "w03446",
+  "w01482"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject of the document an individual human being?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject related to sport?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a man-made physical structure?",
+   "answer": false
+  },
+  {
+   "round": 4,
+   "question": "Is the subject a living organism?",
+   "answer": false
+  }
+ ],
+ "guess": 15,
+ "won": false,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "I'll start by splitting people from non-people.\n\nQUESTION: Is the subject of the document an individual human being?",
+   "reasoning_text": "",
+   "parsed": "Is the subject of the document an individual human being?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 32,
+    "cache_read_tokens": 3853,
+    "cache_write_tokens": 0,
+    "output_tokens": 246,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 4.578,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 681,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 1.564,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "Remaining candidates after \"No\": organizations, teams, buildings, events, a spirit, and a species — [1], [3], [4], [5], [9], [10], [11], [15], [16]. A sports question splits these 4 vs 5.\n\nQUESTION: Is the subject related to sport?",
+   "reasoning_text": "",
+   "parsed": "Is the subject related to sport?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 55,
+    "cache_read_tokens": 3853,
+    "cache_write_tokens": 0,
+    "output_tokens": 326,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 5.289,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 677,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 7,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 2.077,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "Remaining candidates (non-human, non-sport): Vocento media group [1], St Stephen's Uniting Church [4], Broughton Skeog railway station [10], Tahquitz spirit [15], Geophilus punicus centipede [16]. A question about being a built structure splits these {4,10} vs {1,15,16}.\n\nQUESTION: Is the subject a man-made physical structure?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a man-made physical structure?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 76,
+    "cache_read_tokens": 3853,
+    "cache_write_tokens": 0,
+    "output_tokens": 1468,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 21.478,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 681,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 1.658,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 4,
+   "text": "Remaining candidates: Grupo Vocento (media company), Tahquitz (spirit), and Geophilus punicus (centipede). A question about being a living organism cleanly separates the centipede.\n\nQUESTION: Is the subject a living organism?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a living organism?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 101,
+    "cache_read_tokens": 3853,
+    "cache_write_tokens": 0,
+    "output_tokens": 1227,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 18.32,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 4,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 677,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 110,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 3.052,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "Working through the constraints:\n\n- **Q1 (individual human? No)** eliminates 2, 6, 7, 8, 12, 13, 14.\n- **Q2 (sport-related? No)** eliminates 3, 5, 9, 11.\n- **Q3 (man-made physical structure? No)** eliminates 4 (church) and 10 (railway station).\n- **Q4 (living organism? No)** eliminates 16 (centipede).\n\nThat leaves Vocento (a media corporation) and Tahquitz (a legendary spirit). A corporation is a human-made entity of sorts, but the sharper fit for \"not a person, not sport, not a structure, not an organism\" is the mythological spirit.\n\nGUESS: 15",
+   "reasoning_text": "",
+   "parsed": 15,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 121,
+    "cache_read_tokens": 3302,
+    "cache_write_tokens": 0,
+    "output_tokens": 1368,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 18.528,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 3101,
+  "cache_read_tokens": 18714,
+  "cache_write_tokens": 0,
+  "output_tokens": 4758,
+  "reasoning_tokens": 0
+ },
+ "cost_usd": 0.143812,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": true,
+  "reasoning_budget": 0
+ },
+ "started_at": 1788403146.413909,
+ "duration_s": 76.55,
+ "host": "chunky_monkey"
+}

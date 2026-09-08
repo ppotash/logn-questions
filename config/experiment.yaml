@@ -1,0 +1,27 @@
+# Experiment-level settings. The manifest holds up to 64 targets per size;
+# `runs` selects how many of them to actually play. Raising it later re-uses
+# every completed game, because targets[:8] is a prefix of targets[:16].
+runs: 8
+
+# Rounds are log2(N) by definition. A multiplier > 1 gives the questioner a
+# larger budget, as a deliberate manipulation rather than the default.
+round_budget_multiplier: 1
+
+# Cap on model output. Note this INCLUDES reasoning tokens on most APIs, so a
+# small value with reasoning enabled can return an empty completion. Set
+# reasoning_budget separately per model in models.yaml.
+max_output_tokens: 60000
+
+temperature: 0.0
+
+# One reformat attempt on an unparseable reply, then the game is scored lost.
+# Unlimited retries would hide format-compliance differences between models.
+max_repair_attempts: 1
+
+# Store prompts by reference (doc set id + history) rather than verbatim.
+# Verbatim logging costs ~620 MB across the sweep and is fully reconstructible
+# from the manifest plus prompts.py.
+log_prompts_verbatim: false
+log_reasoning_traces: true
+
+concurrency: 4

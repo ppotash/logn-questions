@@ -1,0 +1,176 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "glm-5.3",
+ "provider": "zai",
+ "model_id_requested": "glm-5.3",
+ "size": 4,
+ "run": 1,
+ "rounds": 2,
+ "target_id": "w03750",
+ "target_number": 3,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject European?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a sports team?",
+   "answer": true
+  }
+ ],
+ "guess": 3,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "I can split the four documents evenly with a geographic question: Vocento (Spain) and Glaucias (ancient Illyria) are European, while the US cricket team and the Sydney church are not.\n\nQUESTION: Is the subject European?",
+   "reasoning_text": "4 documents. Ask something splitting 2-2. E.g., \"Is the subject a person?\" Yes: doc 2 (Glaucias) — well, a group vs team vs church vs person. Person: only doc 2. Better: \"Is the subject a building or physical structure?\" Yes: doc 4. That's 1-3.\n\nSplit 2-2: \"Is the subject located in Europe?\" — Vocento (Spain, yes), Glaucias (Illyria, yes), US cricket team (no), church in Australia (no). That's 2-2. Good.",
+   "parsed": "Is the subject European?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 49,
+    "cache_read_tokens": 1024,
+    "cache_write_tokens": 0,
+    "output_tokens": 183,
+    "reasoning_tokens": 130
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.718,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 46,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.513,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "With \"European\" answered No, documents [1] (Spanish media group) and [2] (Illyrian ruler) are eliminated. The remaining candidates are [3] the US women's cricket team and [4] St Stephen's Uniting Church in Sydney. A question separating a sports team from a church building will settle it.\n\nQUESTION: Is the subject a sports team?",
+   "reasoning_text": "Non-European: [3] US cricket team, [4] Australian church. Ask distinguishing question: \"Is the subject a sports team?\" or \"Is the subject located in Australia?\" Both work. \"Is the subject a building?\" eliminates cricket team.",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 61,
+    "cache_read_tokens": 1024,
+    "cache_write_tokens": 0,
+    "output_tokens": 131,
+    "reasoning_tokens": 51
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.337,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 48,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.423,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The answer to question 1 rules out documents 1, 2, and 4 (Spain, ancient Illyria/Europe, and Australia are all European or European-related subjects). Document 3, the United States women's national cricket team, is non-European and is a sports team, matching both answers.\n\nGUESS: 3",
+   "reasoning_text": "European: No → excludes 1 (Spain), 2 (Illyria/Europe), 4 (Australia). Sports team: doc 3.",
+   "parsed": 3,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 78,
+    "cache_read_tokens": 640,
+    "cache_write_tokens": 0,
+    "output_tokens": 103,
+    "reasoning_tokens": 31
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.044,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 282,
+  "cache_read_tokens": 3456,
+  "cache_write_tokens": 0,
+  "output_tokens": 423,
+  "reasoning_tokens": 212
+ },
+ "cost_usd": 0.003155,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": []
+ },
+ "started_at": 1788642857.5365279,
+ "duration_s": 11.04,
+ "host": "chunky_monkey"
+}

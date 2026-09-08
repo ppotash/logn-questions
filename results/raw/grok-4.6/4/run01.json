@@ -1,0 +1,177 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "grok-4.6",
+ "provider": "xai",
+ "model_id_requested": "grok-4.6",
+ "size": 4,
+ "run": 1,
+ "rounds": 2,
+ "target_id": "w03750",
+ "target_number": 3,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject European?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a sports team?",
+   "answer": true
+  }
+ ],
+ "guess": 3,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "The four documents split cleanly on geography: two are European (a Spanish media group and an ancient Illyrian ruler) and two are not (a U.S. sports team and an Australian church). A single-property question about that distinction should therefore cut the set in half regardless of which document is the target.\n\nQUESTION: Is the subject European?",
+   "reasoning_text": "The user wants me to play a deduction game. There are 4 documents, one is secretly chosen as the target. I need to ask exactly 2 yes/no questions to identify it.\n",
+   "parsed": "Is the subject European?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 16,
+    "cache_read_tokens": 1664,
+    "cache_write_tokens": 0,
+    "output_tokens": 1205,
+    "reasoning_tokens": 1133
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 20.27,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "The user wants me to answer with exactly one word: Yes or No.\n",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 541,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 244,
+    "reasoning_tokens": 243
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 4.294,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "The first answer (not European) eliminates the Spanish media group and the Illyrian ruler, leaving only the US cricket team and the Sydney church. A single clear property that splits those two is needed.\n\nQUESTION: Is the subject a sports team?",
+   "reasoning_text": "The user is playing a deduction game. There are 4 documents, one is the target. I need to ask yes/no questions to identify it.\n",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 1180,
+    "cache_read_tokens": 512,
+    "cache_write_tokens": 0,
+    "output_tokens": 925,
+    "reasoning_tokens": 875
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 15.671,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "The question is: \"Is the subject a sports team?\" and I must answer with exactly Yes or No.\n",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 159,
+    "cache_read_tokens": 896,
+    "cache_write_tokens": 0,
+    "output_tokens": 92,
+    "reasoning_tokens": 91
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 1.809,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The two answers require a subject that is not European and that is a sports team.\n\n- Document 1 is a Spanish media company (European, not a sports team).\n- Document 2 is an ancient Illyrian ruler (European, not a sports team).\n- Document 3 is the United States women's cricket team (not European, is a sports team).\n- Document 4 is a church in Sydney (not European, not a sports team).\n\nOnly document 3 is consistent with both answers.\n\nGUESS: 3",
+   "reasoning_text": "The problem is a deduction game. There are 4 documents, one is the target. I asked two yes/no questions and got answers. I need to figure out which document is consistent with both answers.\n",
+   "parsed": 3,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 683,
+    "cache_read_tokens": 640,
+    "cache_write_tokens": 0,
+    "output_tokens": 449,
+    "reasoning_tokens": 339
+   },
+   "model_id": "grok-4.6",
+   "stop_reason": "stop",
+   "latency_s": 7.933,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 2579,
+  "cache_read_tokens": 4224,
+  "cache_write_tokens": 0,
+  "output_tokens": 2915,
+  "reasoning_tokens": 2681
+ },
+ "cost_usd": 0.02476,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": [],
+  "doc_substitutions": {}
+ },
+ "started_at": 1788654608.0428655,
+ "duration_s": 49.98,
+ "host": "chunky_monkey"
+}

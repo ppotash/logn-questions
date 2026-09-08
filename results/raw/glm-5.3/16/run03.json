@@ -1,0 +1,290 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "glm-5.3",
+ "provider": "zai",
+ "model_id_requested": "glm-5.3",
+ "size": 16,
+ "run": 3,
+ "rounds": 4,
+ "target_id": "w01061",
+ "target_number": 13,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220",
+  "w00231",
+  "w00771",
+  "w00130",
+  "w02314",
+  "w01061",
+  "w03405",
+  "w03446",
+  "w01482"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject of the document a person?",
+   "answer": true
+  },
+  {
+   "round": 2,
+   "question": "Is the subject of the document American?",
+   "answer": true
+  },
+  {
+   "round": 3,
+   "question": "Is the subject of the document a woman?",
+   "answer": true
+  },
+  {
+   "round": 4,
+   "question": "Is the subject of the document an actress?",
+   "answer": true
+  }
+ ],
+ "guess": 13,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "I'll start with a broad split: is the subject a person or not? Seven documents (2, 6, 7, 8, 12, 13, 14) are about individual people, while nine are about organizations, teams, places, events, or concepts. This gives a near-even division.\n\nQUESTION: Is the subject of the document a person?",
+   "reasoning_text": "16 documents. Try to split roughly in half.\n\nCategories: person vs non-person? Persons: 2 (Glaucias), 6 (Kramdi), 7 (Gaines), 8 (Skellie), 12 (Bâcu), 13 (Alonso), 14 (Suphachai) — 7 persons. Non-persons: 1,3,4,5,9,10,11,15,16 — 9. Tahquitz is a spirit (not person). Could ask \"is the subject a person?\" — 7 vs 9, decent split. Answerer judging: Tahquitz spirit — No. Good.\n\nAlternatively \"is the subject alive/present-day\"? Hmm. Person question is fine.",
+   "parsed": "Is the subject of the document a person?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 38,
+    "cache_read_tokens": 2560,
+    "cache_write_tokens": 0,
+    "output_tokens": 237,
+    "reasoning_tokens": 158
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 3.366,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 53,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.244,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "After the first answer, the remaining candidates are: Glaucias (2), Redha Kramdi (6), Walter Lee Gaines (7), Ebenezer Skellie (8), Marian Bâcu (12), Daniella Alonso (13), and Suphachai Chearavanont (14) — seven people.\n\nTo split these roughly evenly, I can ask about nationality: Alonso, Gaines, and Skellie are American (3), while Glaucias, Kramdi, Bâcu, and Suphachai are not (4). That's a near-even split with no ambiguity.\n\nQUESTION: Is the subject of the document American?",
+   "reasoning_text": "Remaining after \"person\": [2] Glaucias, [6] Redha Kramdi, [7] Walter Gaines, [8] Ebenezer Skellie, [12] Marian Bâcu, [13] Daniella Alonso, [14] Suphachai. That's 7. Balanced question: is the person alive? Kramdi, Alonso, Suphachai alive; Glaucias, Gaines, Skellie, Bâcu (born 1960, likely alive actually—former footballer born 1960, could be alive). Hmm, \"alive\" is uncertain for Bâcu. Better: is the subject an athlete? Kramdi, Bâcu, (Glaucias - ancient ruler, not athlete). Athletes: Kramdi, Bâcu = 2; non-athletes: Glaucias, Gaines, Skellie, Alonso, Suphachai = 5. Not balanced.\n\nNationality/region: American? Alonso (American), Skellie (American), Gaines (American) = 3; Kramdi Canadian, Glaucias Illyrian, Bâcu Romanian, Suphachai Thai = 4. Good split: \"Is the subject American?\" — 3 yes, 4 no. Then follow-ups. Alternatively \"is the subject still alive as of 2024?\" — Kramdi, Alonso, Suphachai yes; Glaucias, Gaines, Skellie no; Bâcu unknown (no death date given, likely alive). Risky. Go with American.",
+   "parsed": "Is the subject of the document American?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 54,
+    "cache_read_tokens": 2560,
+    "cache_write_tokens": 0,
+    "output_tokens": 477,
+    "reasoning_tokens": 337
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 5.344,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 52,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.121,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "With two Yes answers, the remaining candidates are:\n\n- [7] Walter Lee Gaines (American scientist, 1881–1950)\n- [8] Ebenezer Skellie (American Civil War soldier, 1842–1898)\n- [13] Daniella Alonso (American actress)\n\nOther person-documents are eliminated (Glaucias was Illyrian, Marian Bâcu Romanian, Suphachai Thai, Redha Kramdi Canadian). A gender question splits this cleanly: Yes leaves only Daniella Alonso; No leaves Gaines and Skellie, which I can separate by era in the final round.\n\nQUESTION: Is the subject of the document a woman?",
+   "reasoning_text": "Remaining persons who are American: [5] BYU Cougars team (not a person), [6] Redha Kramdi (Canadian), [7] Walter Lee Gaines (American), [8] Ebenezer Skellie (American), [13] Daniella Alonso (American). Also [4] is a church. [15] is a spirit. So candidates: 7, 8, 13.\n\nAlso consider: [3] is a team, not a person. So candidates: 7, 8, 13.\n\nQuestion to split: alive? Daniella Alonso is alive; Gaines and Skellie are dead. Ask \"Was the subject born after 1950?\" — Daniella 1978 yes. Or \"Is the subject a woman?\" Yes → 13, No → 7/8. Then round 4 split 7 vs 8. Better: ask gender first.\n\nQUESTION: Is the subject of the document a woman?",
+   "parsed": "Is the subject of the document a woman?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 71,
+    "cache_read_tokens": 2560,
+    "cache_write_tokens": 0,
+    "output_tokens": 343,
+    "reasoning_tokens": 200
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 5.251,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 53,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.087,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 4,
+   "text": "The answers so far point to an American woman. Among the documents, the only one about a person (Q1) who is American (Q2) and a woman (Q3) is Daniella Alonso. I'll confirm with one final check.\n\nQUESTION: Is the subject of the document an actress?",
+   "reasoning_text": "Remaining: American women. Daniella Alonso is an American actress. US women's cricket team — not a person? Q1 answered Yes (person), so the team is out. Daniella Alonso is the only American woman. But ask a confirming question anyway? We must ask question 4 then name the target. Just ask something like \"Is the subject an actress?\" — answer likely Yes, then name Daniella Alonso.",
+   "parsed": "Is the subject of the document an actress?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 89,
+    "cache_read_tokens": 2560,
+    "cache_write_tokens": 0,
+    "output_tokens": 149,
+    "reasoning_tokens": 85
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 2.78,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 4,
+   "text": "Yes",
+   "reasoning_text": "",
+   "parsed": true,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 53,
+    "cache_read_tokens": 384,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.094,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "The answers narrow it down: a person, American, a woman, and an actress. Reviewing the documents, only one fits all criteria — Daniella Alonso, the American actress and former fashion model (document 13).\n\nGUESS: 13",
+   "reasoning_text": "American woman actress: Daniella Alonso (13).",
+   "parsed": 13,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 108,
+    "cache_read_tokens": 2176,
+    "cache_write_tokens": 0,
+    "output_tokens": 63,
+    "reasoning_tokens": 10
+   },
+   "model_id": "glm-5.3",
+   "stop_reason": "stop",
+   "latency_s": 1.732,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 571,
+  "cache_read_tokens": 13952,
+  "cache_write_tokens": 0,
+  "output_tokens": 1281,
+  "reasoning_tokens": 790
+ },
+ "cost_usd": 0.010063,
+ "settings": {
+  "max_output_tokens": 60000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": null,
+  "reasoning_budget": null,
+  "dropped_params": []
+ },
+ "started_at": 1788642547.8871417,
+ "duration_s": 23.02,
+ "host": "chunky_monkey"
+}

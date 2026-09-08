@@ -1,0 +1,230 @@
+{
+ "schema_version": 2,
+ "prompt_version": "dee6f82834a1",
+ "pool_sha256": "43d9fb5d4157db5233ec8df42eaea758c97c63e0ae36000acf95d854b186fb73",
+ "model": "claude-opus-5",
+ "provider": "anthropic",
+ "model_id_requested": "claude-opus-5",
+ "size": 8,
+ "run": 0,
+ "rounds": 3,
+ "target_id": "w01562",
+ "target_number": 1,
+ "doc_ids": [
+  "w01562",
+  "w01526",
+  "w03750",
+  "w03338",
+  "w00039",
+  "w02964",
+  "w03839",
+  "w01220"
+ ],
+ "history": [
+  {
+   "round": 1,
+   "question": "Is the subject an individual human being?",
+   "answer": false
+  },
+  {
+   "round": 2,
+   "question": "Is the subject a sports team?",
+   "answer": false
+  },
+  {
+   "round": 3,
+   "question": "Is the subject a building?",
+   "answer": false
+  }
+ ],
+ "guess": 1,
+ "won": true,
+ "aborted": "",
+ "calls": [
+  {
+   "role": "questioner",
+   "round": 1,
+   "text": "Splitting on person vs. non-person gives a clean 4–4 division: documents about Glaucias, Kramdi, Gaines, and Skellie are individuals, while Vocento, the US women's cricket team, St Stephen's Church, and the 1936 BYU team are not.\n\nQUESTION: Is the subject an individual human being?",
+   "reasoning_text": "",
+   "parsed": "Is the subject an individual human being?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 32,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 2359,
+    "output_tokens": 269,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 5.04,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 1,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 684,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 7,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 2.886,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 2,
+   "text": "Remaining candidates are the non-person subjects: [1] Vocento, [3] US women's cricket team, [4] St Stephen's Uniting Church, [5] 1936 BYU Cougars football team. A question about sports teams splits them 2–2.\n\nQUESTION: Is the subject a sports team?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a sports team?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 52,
+    "cache_read_tokens": 2359,
+    "cache_write_tokens": 0,
+    "output_tokens": 236,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 5.355,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 2,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 683,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 7,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 3.067,
+   "attempts": 1
+  },
+  {
+   "role": "questioner",
+   "round": 3,
+   "text": "Remaining candidates are the media group and the church building. One question separates them.\n\nQUESTION: Is the subject a building?",
+   "reasoning_text": "",
+   "parsed": "Is the subject a building?",
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 73,
+    "cache_read_tokens": 2359,
+    "cache_write_tokens": 0,
+    "output_tokens": 128,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 3.527,
+   "attempts": 1
+  },
+  {
+   "role": "answerer",
+   "round": 3,
+   "text": "No",
+   "reasoning_text": "",
+   "parsed": false,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "medium",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 681,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 3,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 1.35,
+   "attempts": 1
+  },
+  {
+   "role": "guesser",
+   "round": 0,
+   "text": "Non-person entries are 1 (media group), 3 (team), 4 (building), 5 (team). Excluding teams and buildings leaves Vocento.\n\nGUESS: 1",
+   "reasoning_text": "",
+   "parsed": 1,
+   "parse_mode": "strict",
+   "truncated": false,
+   "repaired": false,
+   "effort": "high",
+   "thinking": true,
+   "usage": {
+    "input_tokens": 91,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 1808,
+    "output_tokens": 120,
+    "reasoning_tokens": 0
+   },
+   "model_id": "claude-opus-5",
+   "stop_reason": "end_turn",
+   "latency_s": 3.658,
+   "attempts": 1
+  }
+ ],
+ "usage_total": {
+  "input_tokens": 2296,
+  "cache_read_tokens": 4718,
+  "cache_write_tokens": 4167,
+  "output_tokens": 770,
+  "reasoning_tokens": 0
+ },
+ "cost_usd": 0.059133,
+ "settings": {
+  "max_output_tokens": 32000,
+  "temperature": 0.0,
+  "max_repair_attempts": 1,
+  "questioner_effort": "high",
+  "answerer_effort": "medium",
+  "answerer_thinking": true,
+  "answerer_max_tokens": 4000,
+  "supports_effort": true,
+  "supports_thinking_toggle": true,
+  "send_temperature": true,
+  "reasoning_budget": 0
+ },
+ "started_at": 1788402576.701799,
+ "duration_s": 24.88,
+ "host": "chunky_monkey"
+}
