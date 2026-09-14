@@ -34,20 +34,33 @@ adjacent pair is. **The ordering inverts published general-intelligence
 leaderboards** — see §8 of the paper for where independent benchmarks agree and
 where they don't.
 
-Three findings the paper argues for:
+Kimi K3 won every one of its 36 games at *N* ≤ 64, the only model to play the
+first five sizes without a loss.
+
+Findings the paper argues for:
 
 - **Win rate follows *p*^log₂*N* with a single reliability parameter.** Pooling
   the five leading models, *p* = 0.928 reproduces performance across nine set
-  sizes spanning three orders of magnitude (*r* = −0.973). What degrades with
-  scale is not the difficulty of any inference but the number of chances to
-  fail.
-- **Losses are ~52% answer errors, ~45% discrimination failures, ~3% prediction
-  errors.** Models almost never name a document their own evidence excludes.
-  Failure is upstream of the final inference. Validated across three
-  independent judges with a measured self-preference discount of 40–46%.
-- **Two China-hosted providers refused three ordinary Wikipedia paragraphs** —
-  on Taiwan's navy, a purged Chinese intellectual, and a detained Hong Kong
-  activist — located by bisection, out of 1,024 randomly sampled documents.
+  sizes (*r* = −0.973). The per-round independence this presumes is tested, not
+  assumed: the failure rate is flat across the horizon (χ² = 10.5, df = 9,
+  *p* = 0.31) and failures do not cluster. Inverting the fit, coin-flip success
+  needs *p* ≥ 0.933 at ten steps and ≥ 0.986 at fifty, so the measured 0.900–0.994
+  spread separates a 9-step horizon from a 115-step one.
+- **Losses divide between answer errors and discrimination failures in roughly
+  equal measure** — 47–55% and 42–49% depending on the judge — with 2–4%
+  prediction errors. Models almost never name a document their own evidence
+  excludes. Validated across three judges with a measured self-preference
+  discount of 40–46% and inter-judge agreement of 97.8–98.7%.
+- **The weakest model's answerer has a strong "No" bias.** Of its 34 unanimous
+  answer errors, 32 are "No" answers, on properties stated in the document's
+  first sentence, under an instruction that explicitly warns against defaulting
+  to "No".
+- **Reasoning traces grow as the candidate set shrinks**, roughly doubling from
+  round 1 to round 9 at *N* = 1024, without a matching gain in reliability.
+- **Two China-hosted providers refused documents in the corpus.** Moonshot
+  rejected three of the 1,024 paragraphs — on Taiwan's navy, a purged Chinese
+  intellectual and a detained Hong Kong activist — and Z.ai rejected the third
+  of these. Located by bisection.
 
 ---
 
@@ -96,19 +109,41 @@ in-flight work finishes. At *N*=1024 that can overshoot by a few games' worth.
 
 ## Analyse
 
+Everything below reads from `results/` and makes no API calls, except
+`errors.py` when a cache is missing.
+
 ```bash
-python scripts/review.py --summary                                # win rates, cost, tokens
-python scripts/review.py --model kimi-k3 --size 32 --run 0 --docs  # one game, with documents
-python scripts/aggregation.py --round 1                           # partition quality
-python scripts/signatures.py                                      # answer-signature collapse
-python scripts/errors.py --judge gemini-3.8-flash --workers 12    # error decomposition
-python scripts/openers.py 1024 0 1 2                              # round-1 questions side by side
+python scripts/review.py --summary                       # win rates, cost, tokens
+python scripts/review.py --model kimi-k3 --size 32 --run 0 --docs
+python scripts/openers.py 1024 0 1 2                     # round-1 questions side by side
+python scripts/aggregation.py --round 1                  # partition quality
+python scripts/signatures.py                             # answer-signature collapse
+python scripts/tokens_by_round.py --balanced             # trace length by round
+python scripts/by_round.py --balanced                    # agreement by round
+python scripts/clustering.py --balanced                  # do errors cluster?
+python scripts/answer_errors.py --model claude-opus-5 --unanimous
 ```
 
-`errors.py` adjudicates each game's target and guess against a judge model to
-separate answer errors from discrimination and prediction failures. Judgments
-cache to `results/adjudicated/`, so re-running is free. Use a judge that isn't
-one of the evaluated models where possible — self-preference is worth ~40–46%.
+Error decomposition needs judgements. Run one judge per cache, then compare:
+
+```bash
+python scripts/errors.py --judge gemini-3.8-flash --workers 12
+# rename results/adjudicated/judgments.json to judgments_gemini.json, repeat
+python scripts/errors.py --all-judges                    # every cache at once
+python scripts/errors.py --report --cache judgments_gpt.json
+```
+
+`errors.py` adjudicates each game's target and guess to separate answer errors
+from discrimination and prediction failures. Judgements cache under
+`results/adjudicated/` and are reused, so re-running is free. Use judges that
+are not among the evaluated models where possible: self-preference is worth
+40–46%, and `--all-judges` excludes each model's self-judgement from its own
+row.
+
+Two things about the decomposition worth knowing. It attributes each loss to
+the **first** thing that went wrong, so the categories are shares of games, not
+counts of errors. And a game can contain an answer error and still be won; those
+are reported separately as `win+err` rather than binned with losses.
 
 ---
 
@@ -177,7 +212,8 @@ case-insensitively against all known spellings and warns on anything
 unrecognised.
 
 **Content filtering.** Two providers refused documents in the frozen corpus.
-`scripts/kimi_probe.py` locates triggers by bisection using an asymmetric
+`scripts/kimi_probe.py` and `scripts/filter_probe.py` locate triggers by
+bisection using an asymmetric
 decision rule — a block is trusted immediately, a pass only after *k*
 consecutive passes — because the filtering is heavily biased toward blocking
 without being fully deterministic. Blocked documents are substituted per-model
@@ -194,10 +230,32 @@ scripts/        CLI entry points and analysis
 config/         experiment.yaml, models.yaml
 data/           pool.jsonl and docsets/manifest.json — frozen, committed
 results/raw/    one JSON per game
-results/adjudicated/  judge caches, one per judge model
+results/adjudicated/  judgement caches, one per judge model
 paper/          main.tex, main.pdf
 analysis/       ad-hoc transcript dumps (gitignored, regenerable)
 ```
+
+### Scripts
+
+| | |
+|---|---|
+| `build_corpus.py` | sample Wikipedia, freeze pool and doc sets |
+| `inspect_pool.py` | read the corpus; `--all --run N` marks the target |
+| `run.py` | play games |
+| `review.py` | win rates, cost, tokens; single-game transcripts |
+| `openers.py` | round-1 questions across models, side by side |
+| `aggregation.py` | answer balance and information per question |
+| `signatures.py` | answer-signature uniqueness and collapse |
+| `errors.py` | error decomposition against one or more judges |
+| `answer_errors.py` | list individual answer errors for inspection |
+| `by_round.py` | agreement by round index |
+| `tokens_by_round.py` | trace length by round, split by role |
+| `clustering.py` | whether errors cluster within a game |
+| `kimi_probe.py` | locate content-filter triggers by bisection |
+| `dump_prompt.py` | reconstruct the exact prompt sent for any logged game |
+
+`build_corpus.py` and `inspect_pool.py` import nothing from `logn`, so they run
+on a bare checkout before `pip install -e .`.
 
 ## Reproducing
 
