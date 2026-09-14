@@ -3,6 +3,10 @@
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{amssymb}
+% allow line breaks inside long \texttt identifiers so API
+% parameter names do not overflow a column
+\usepackage[htt]{hyphenat}
+\sloppy
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{xcolor}
@@ -15,8 +19,7 @@
 \title{Playing $\log(N)$-Questions over Wikipedia Abstracts:\\
 Communication Efficiency Between Paired Frontier Models\\
 \large A Technical Report}
-\author{P.\ Potvin\thanks{Independent, self-funded. Six complete model arms,
-408 games, \$363.15 total API spend (\S\ref{sec:cost}).}}
+\author{Peter Potash}
 \date{\today}
 
 \begin{document}
@@ -36,41 +39,44 @@ One model finishes well behind the others: Claude Opus 5 wins 28 of 68 games,
 against 45 to 56 for GLM-5.3, GPT-5.6 Sol, Grok 4.6, Gemini 3.8 Flash and Kimi
 K3. The leading five are only marginally separable. Pooling those five, win rate
 declines with set size at $r=-0.973$ and is fit by a single per-round
-reliability parameter, $\text{win}=p^{\log_2 N}$ with $p=0.928$. We read this
-as evidence that scale degrades performance by adding failure opportunities,
-not by making any individual inference harder.
+reliability parameter, $\text{win}=p^{\log_2 N}$ with $p=0.928$. That form
+presumes each round fails independently, which we test rather than assume: the
+per-round failure rate is flat across the horizon ($\chi^2=10.5$,
+$\mathrm{df}=9$, $p=0.31$), and a failure at one round does not raise the chance
+of one at the next. Inverting the fit, coin-flip success needs $p \ge 0.933$ at
+ten steps and $\ge 0.986$ at fifty, so the measured spread from 0.900 to 0.994
+separates a 9-step horizon from a 115-step one.
 
 We adjudicate each game's target and guess against three independent judges,
-2{,}931 judgements each. Losses divide into answer errors and discrimination failures in roughly equal
-measure, 47--55\% and 42--49\% depending on the judge, with 2--4\% prediction
-errors. Models almost never name a document their own evidence excludes, and
-the split does not shift detectably with set size. Measured per-round agreement rates, 0.900
-to 0.994, reconcile with the fitted $p$; the residual is the discrimination
-failures. Inter-judge agreement on individual judgements is 97.8--98.7\%.
-Inspecting every unanimous answer error from the weakest model finds 32 of 34
-are ``No'' answers, on properties stated in the document's first sentence, under
-an instruction that explicitly warns against defaulting to ``No''. Information per question, estimated from answer balance, correlates
-with win rate at $r=+0.88$. The only two models to extract a full bit per
-question are the only two that partition on document titles, a strategy absent
-below $N{=}32$ and used in a quarter of questions above it.
+2{,}931 judgements each. Losses divide into answer errors and discrimination
+failures in roughly equal measure, 47--55\% and 42--49\% depending on the judge,
+with 2--4\% prediction errors: models almost never name a document their own
+evidence excludes, and the split does not shift detectably with set size.
+Measured per-round agreement, 0.900 to 0.994, reconciles with the fitted $p$,
+the residual being the discrimination failures. Inter-judge agreement on
+individual judgements is 97.8--98.7\%. Every unanimous answer error from the
+weakest model was inspected: 32 of 34 are ``No'' answers, on properties stated
+in the document's first sentence, under an instruction that explicitly warns
+against defaulting to ``No''.
 
-Reasoning-token expenditure varies $4.5\times$ across models with little
-relation to success. Cost is uncorrelated with performance at $r=-0.05$: the
-two cheapest arms win at \$0.36 and \$0.39 each, against \$2.46 for the most
-expensive. Two China-hosted providers refused documents in our corpus. Moonshot rejected
-three of the 1024 paragraphs, on Taiwan's navy, a purged Chinese intellectual,
+Information per question, estimated from answer balance, correlates with win
+rate at $r=+0.88$. The only two models to extract a full bit per question are
+the only two that partition on document titles, a strategy absent below
+$N{=}32$ and used in a quarter of questions above it. Reasoning-token
+expenditure varies $4.5\times$ across models with little relation to success,
+and the trace grows as the candidate set shrinks without a matching gain in
+reliability. Cost is uncorrelated with performance at $r=-0.05$: the two
+cheapest arms win at \$0.36 and \$0.39 each, against \$2.46 for the most
+expensive.
+
+Two China-hosted providers refused documents in our corpus. Moonshot rejected
+three of the 1024 paragraphs, on Taiwan's navy, a purged Chinese intellectual
 and a detained Hong Kong activist; Z.ai rejected the third of these. We located
 them by bisection and report the refusals as a practical limit on assembled
-long contexts. Our per-model ordering inverts published
-general-intelligence leaderboards, on which the model finishing last here ranks
-at or near the top. \S\ref{sec:external} sets out where independent benchmarks
-agree with our result and where they do not.
-
-\medskip
-\noindent\textbf{Scope.} This is an exploratory report, not a conference
-submission. Every cell is eight games, so per-size comparisons are suggestive.
-The durable findings are those pooled across sizes, the mechanisms identified
-by hand-adjudication, and the engineering account.
+long contexts. Our per-model ordering inverts published general-intelligence
+leaderboards, on which the model finishing last here ranks at or near the top.
+\S\ref{sec:external} sets out where independent benchmarks agree with our
+result and where they do not.
 \end{abstract}
 
 \section{Introduction}
@@ -202,14 +208,38 @@ dichotomy is suggested rather than established. We note also that NSA and MoBA
 both build in explicit global-recovery mechanisms, so citing them as evidence
 of an inherent aggregation deficit would overstate the case.
 
+It is worth being explicit about what each family predicts for the opening
+question, since the predictions differ in \emph{sign} and our data can
+distinguish them. Dense attention recovers the proportion in one pass, so
+balance is limited only by whether the model computes the statistic.
+Fixed-pattern sparsity gives each query a subset fixed in advance with a random
+component, so a proportion estimated from the attended blocks should behave like
+a sample proportion: correct on average, noisy in any instance. The prediction
+is scatter around 50\%, not displacement from it. Learned top-$k$ selection
+inverts this: selection is query-conditioned, so a query about property $X$
+preferentially retrieves blocks matching $X$, the retrieved sample is enriched,
+and the estimated fraction should be biased \emph{upward}. Linear or recurrent
+state carries aggregate statistics cheaply, predicting good round-1 balance
+paired with weak late-round recovery of specific survivors.
+
+Our measurements fit none of these. The observed deficit is \emph{downward} for
+all six models, with round-1 yes rates of 49, 49, 44, 41, 34 and 22\%, where
+top-$k$ predicts upward bias and fixed-pattern predicts unbiased scatter. It is
+also scale-invariant, as large at $N{=}8$ — where the whole set fits inside any
+window any of these mechanisms would use — as at $N{=}1024$
+(\S\ref{sec:aggregation}). A mechanism that engages only at long context cannot
+explain a deficit already complete at a thousand-token prompt. The parsimonious
+reading is that we are measuring a prior over what makes a good question, not a
+limit on access to context.
+
 Two further cautions. The architectures of the four proprietary models we
 evaluate are undisclosed, so no observed behaviour can be attributed to a
 specific attention mechanism; only Kimi K3 \citep{kimi2026k3} and GLM-5
-\citep{zhipu2026glm5} have published technical reports. And our results below
-show partition-quality deficits that are present at $N{=}8$ as strongly as at
-$N{=}1024$ (\S\ref{sec:aggregation}), which no attention-mechanism account
-predicts. We therefore present this section as motivation for the task design,
-not as a hypothesis the results confirm.
+\citep{zhipu2026glm5} have published technical reports. And the experiment that
+would settle this needs open weights: run the same round-1 probe on one model
+served under dense attention and under a sparse variant at matched context, and
+compare the sign of the balance error. We present this section as motivation for
+the task design, not as a hypothesis the results confirm.
 
 $\log(N)$-Questions has the opposite structure. To ask a well-balanced opening
 question over 1024 documents, the questioner must estimate what \emph{fraction}
@@ -248,7 +278,7 @@ eight randomly chosen parquet shards. Acceptance requires the article's
 \emph{first} paragraph block to pass a filter chain: 60--140 words, at least 2.0
 sentence terminators per 100 words, no disambiguation or list-page markers, no
 stripped-template artefacts, limited parenthetical clutter. The first-block
-restriction is load-bearing: an earlier version scanned forward for the first
+restriction matters: an earlier version scanned forward for the first
 substantial block and silently fell into body sections whenever the lead was
 short, producing documents that open with a section header glued to the text and
 never state what the subject is. Roughly 15\% of a pilot sample was degraded
@@ -306,8 +336,8 @@ expected ($p=0.003$). The frozen prompt instead opens with ``Use ordinary world
 knowledge'', states that the document will not always contain the answer
 outright, and gives the Spain/Europe inference as a worked example.
 \item \textbf{Answerer reasoning.} Reasoning had been disabled for the answerer
-as a cost saving. One reply read \texttt{"No... wait. The document concerns
-biathlon, a winter sport. Yes"} --- a reflexive No corrected only when the model
+as a cost saving. One reply read ``No\dots\ wait. The document concerns
+biathlon, a winter sport. Yes'' --- a reflexive No corrected only when the model
 had room to think. Reasoning was restored.
 \item \textbf{Presupposition prohibition.} The questioner produced questions of
 the form ``is it X rather than Y'' where $Y$ appeared nowhere in the target
@@ -370,7 +400,7 @@ Moonshot & --- & --- & no exposed control \\
 \end{table}
 
 Two changed under us mid-project. Claude Opus 5 rejects
-\texttt{thinking.type:"enabled"} in favour of an adaptive mode with a separate
+\texttt{thinking.type}\,=\,\texttt{enabled} in favour of an adaptive mode with a separate
 effort field; token budgets are ignored. Gemini 3 deprecates the integer
 \texttt{thinkingBudget} for a \texttt{thinkingLevel} enum, and --- critically ---
 a request sending only the deprecated budget receives the model's \emph{default}
@@ -399,13 +429,13 @@ accounting normalises all usage fields to be disjoint.
 This cost an arm. Truncated replies must be treated as parse failures, since a
 reply cut off mid-sentence still satisfies a format regex --- the fragment ends
 its line. Our guard compared against the literal string \texttt{"max\_tokens"},
-Anthropic's spelling. The observed vocabulary is
-$\{\texttt{stop}, \texttt{end\_turn}, \texttt{STOP}, \texttt{MAX\_TOKENS}\}$,
-with \texttt{length} on OpenAI-compatible endpoints. Gemini's
+Anthropic's spelling. The observed vocabulary is \texttt{stop},
+\texttt{end\_turn}, \texttt{STOP} and \texttt{MAX\_TOKENS}, with
+\texttt{length} on OpenAI-compatible endpoints. Gemini's
 \texttt{MAX\_TOKENS} never matched; the guard never fired; and a loose-parse
 fallback lifted rhetorical questions out of abandoned reasoning and played them
-as moves. Recorded examples include \texttt{"How many of those are there?"} and
-two truncated guesses parsed as the integers \texttt{30} and \texttt{959}.
+as moves. Recorded examples include the question ``How many of those are
+there?'' and two truncated guesses parsed as the integers 30 and 959.
 
 The corruption affected 96 calls across 33 of 68 games, concentrated at large
 $N$: all eight $N{=}1024$ games were contaminated and all eight were losses. The
@@ -575,7 +605,7 @@ throughput.
 \addlegendentry{Claude Opus 5 (28/68)}
 \addplot[dashed,black,very thick,domain=2:10,samples=50] {0.928^x};
 \addlegendentry{$p^{\log_2 N}$ fit, $p=0.928$}
-\addplot[dotted,gray,domain=2:10,samples=9] {2^(-x)};
+\addplot[thick,dashdotted,black!70,domain=2:10,samples=60] {2^(-x)};
 \addlegendentry{chance $=1/N$}
 \end{axis}
 \end{tikzpicture}
@@ -736,9 +766,41 @@ available; Grok's 34\% is a $2.6\sigma$ departure. Under a balanced question,
 one or fewer of eight targets falling on the ``yes'' side has probability
 $0.035$; Opus hit that on six of nine sizes.
 
-Round-1 balance is the better predictor of the two. Across the six arms, $H(p)$
-from round 1 correlates with win rate at $r=+0.88$, from later rounds at
-$r=+0.81$, and the round-1/later gap itself at $r=-0.75$. Six points cannot
+\paragraph{Later rounds carry the residue of earlier errors.} The six models
+split evenly on round-1 versus later balance, but part of the later-round figure
+has a mechanical source. Once a wrong answer has eliminated the target, the
+questioner partitions a set that no longer contains it, so a ``Yes'' requires
+the target to happen to satisfy a predicate chosen for other documents.
+Splitting rounds at the first adjudicated error shows this:
+
+\begin{center}\small
+\begin{tabular}{lrrr}
+\toprule
+Model & before (n) & after (n) & change \\
+\midrule
+Claude Opus 5    & 40.5\% (84) & 15.1\% (126) & $-25.4$ \\
+GPT-5.6 Sol      & 53.8\% (13) & 31.8\% (44)  & $-22.0$ \\
+Gemini 3.8 Flash & 37.5\% (16) & 19.2\% (26)  & $-18.3$ \\
+Kimi K3          & 30.8\% (13) & 20.4\% (49)  & $-10.4$ \\
+Grok 4.6         & 12.5\% (16) & 21.7\% (23)  & $+9.2$ \\
+GLM-5.3          & 24.0\% (25) & 47.5\% (40)  & $+23.5$ \\
+\midrule
+Pooled           & 35.3\% (167) & 23.4\% (308) & $-12.0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The pooled drop is $z=2.78$, $p=0.005$. Only the Opus row is individually
+significant, the per-model cells run from 13 to 126 rounds, and two models move
+the other way, so the pooled figure is a property of the aggregate rather than
+an effect established for each model. It does not account for the deficit
+either: the pre-error rate is itself 14.7 points below balanced. Later-round
+balance therefore mixes partitioning with how long the game has been dead, which
+makes the opening the cleaner measure.
+
+Round-1 balance is also the better predictor. Across the six arms, $H(p)$ from
+round 1 correlates with win rate at $r=+0.88$, from later rounds at $r=+0.81$,
+and the round-1/later gap itself at $r=-0.75$. Six points cannot
 establish a functional form. Nor is balance sufficient: Gemini has a lower yes
 rate than GPT and a higher win rate. Partition quality is necessary without
 exhausting what determines success.
@@ -842,7 +904,8 @@ categories impose on finite sets.
 
 
 
-\paragraph{The deficit does not scale with $N$.} The round-1 result invites a long-context reading. The opening question is the
+\paragraph{The deficit does not scale with $N$.} The round-1 result invites a
+long-context reading. The opening question is the
 only round that demands an unconstrained survey of the whole input
 (\S\ref{sec:longctx}). The data rule this out. Opus's
 round-1 yes rate by set size runs 75, 12, 12, 50, 12, 12, 12, 12, 25 percent
@@ -855,7 +918,8 @@ difficulty is set by how many documents a partition must balance, so that
 round 1 at $N{=}8$ and round 4 at $N{=}64$ should be equally hard. Comparing
 cells at matched candidate count $N/2^{r-1}$, Opus's round-1 balance is worse
 than its later-round balance by 19 points on average, against $-1$ for GPT and
-$+6$ for Gemini --- suggesting round position matters independently. This comparison is confounded. The candidate count assumes even splits, which
+$+6$ for Gemini --- suggesting round position matters independently. This
+comparison is confounded. The candidate count assumes even splits, which
 is what Opus fails to achieve, so its true later-round candidate sets are
 larger than the matched cells imply. Resolving it needs the partition
 adjudication described in \S\ref{sec:future}.
@@ -863,7 +927,12 @@ adjudication described in \S\ref{sec:future}.
 \paragraph{Summary.} Two models ask systematically narrow opening
 questions --- covering roughly a fifth of the candidate set rather than half ---
 at every scale tested, and this costs them a quarter of a bit per round in a
-game that provides no slack. Neither context length nor candidate-set size accounts for it. The measurement itself is cheap, judge-free, and computable from
+game that provides no slack. Neither context length nor candidate-set size
+accounts for it, and no
+sparse-attention mechanism we can construct predicts it either: top-$k$
+retrieval should bias estimates toward the queried property, and fixed-pattern
+sparsity should give unbiased scatter rather than a one-sided deficit
+(\S\ref{sec:longctx}). The measurement itself is cheap, judge-free, and computable from
 any run of this task, which is what we offer.
 
 
@@ -879,6 +948,13 @@ to $O(1)$, which is what makes the analysis affordable at $N{=}1024$. A total of
 judgements covers every game in the study, at roughly \$2 per judge.
 
 We define:
+
+The three are mutually exclusive and each loss is attributed to the
+\emph{first} thing that went wrong in it, so what follows are shares of games,
+not counts of errors: a game with an answer error at round 2 is attributed there
+whatever happens afterwards. Discrimination is labelled over a game's rounds
+jointly rather than round by round, so per-type error totals are not recoverable
+from these labels.
 
 \begin{description}
 \item[Answer error] An independent adjudication of (question, target)
@@ -906,7 +982,8 @@ output and the strength of its self-preference.
 
 Inter-judge agreement on individual judgements is high and consistent across
 all three pairs: 97.8\%, 98.7\% and 97.8\% (Gemini--GPT, Gemini--Grok,
-GPT--Grok), over roughly 2{,}900 shared pairs each. We do not read this as evidence that the judgements are correct. \citet{panickssery2024} show that
+GPT--Grok), over roughly 2{,}900 shared pairs each. We do not read this as
+evidence that the judgements are correct. \citet{panickssery2024} show that
 frontier models recognise and favour their own generations, and the
 LLM-as-judge literature more generally warns that agreement between two models
 of the same generation may reflect shared systematic bias rather than access to
@@ -934,6 +1011,8 @@ Grok 4.6         &  0 &  5 &  5 &  5  &  2.5 & 0.994 \\
 \bottomrule
 \end{tabular}
 \caption{Games (of 68) containing at least one answer error, under each judge.
+Each judge adjudicated the 124 losses; the GPT judge returned verdicts for 121,
+the remaining three having failed with API errors.
 Counts include games won despite an error, since those are agreement failures
 even though they are not losses; 5 to 9 such games occur per judge. Opus is
 invariant across all three at 32--34, roughly $3.4\times$ the next model.
@@ -946,8 +1025,8 @@ an outlier, not self-agreement: Grok scored 5 under its own judgement.}
 judge contain an adjudicated answer error and are nonetheless won: the
 questioner eliminated the target on the record and named it anyway. These are
 agreement failures but not losses, and we count them separately. Binning them
-with losses, as an earlier version of our analysis did, inflates the loss total
-by four percent and misattributes wins.
+with losses would inflate the
+loss total by four percent and misattribute wins.
 
 \paragraph{Losses are split between two causes; the third barely exists.}
 Aggregated over all models and sizes, and stable across judges:
@@ -979,8 +1058,7 @@ rather than ranking them.
 
 \paragraph{Why one model's answerer fails so much more often.} Opus's 32--34
 answer errors against Grok's 2.5 is the largest single per-model difference in
-the study. Inspecting all 34 of its unanimous errors under the frozen prompt
-identifies the pattern, and rules out the explanation we first proposed.
+the study. We inspected all 34 of its unanimous errors under the frozen prompt.
 
 \textbf{The errors are overwhelmingly ``No''.} Of 34 errors on which all three
 judges agree the answerer was wrong, \textbf{32 are ``No'' answers} and two are
@@ -1020,19 +1098,17 @@ Was the subject formerly an administrative municipality that has since been
 in seven separate games. No inference beyond the text is required in any of
 these cases.
 
-\textbf{This falsifies a hypothesis we had proposed.} An earlier reading
-attributed the gap to context-faithfulness: models differ in how strictly they
-ground answers in provided text \citep{longpre2021,xie2024conflict}, and
-Anthropic's public posture is unusually far toward the grounding end, with a
-Citations API built so that answers are anchored in source documents,
-hallucination guidance instructing users to restrict the model to provided
-material, and a published constitution setting an elevated honesty bar
-\citep{bai2022cai}. That account predicts refusal to make inferences \emph{one
-step outside} the document. It does not predict contradicting the document's
-own first sentence, which is what these errors do. We record it because the
-prediction was specific enough to be wrong.
+\textbf{Context-faithfulness does not account for them.} Models differ in how
+strictly they ground answers in provided text
+\citep{longpre2021,xie2024conflict}, and Anthropic's public posture sits far
+toward the grounding end: a Citations API built so that answers are anchored in
+source documents, hallucination guidance instructing users to restrict the model
+to provided material, and a published constitution setting an elevated honesty
+bar \citep{bai2022cai}. Such a posture predicts declining inferences \emph{one
+step outside} the document. These errors are the opposite case. They contradict
+the document's own first sentence, where no inference is required at all.
 
-\textbf{What we can state.} One model's answerer carries a strong bias toward
+\textbf{What the data show.} One model's answerer carries a strong bias toward
 ``No'', which persists under an instruction that says verbatim: ``Yes and No
 are equally acceptable answers: do not fall back on No when uncertain.'' The
 bias is visible in three independent measurements: a 22\% round-1 yes rate
@@ -1135,19 +1211,58 @@ best read as the small-$N$ consequence of the information deficit in
 \S\ref{sec:bits} rather than as an independent explanation.
 
 \subsection{Reasoning expenditure does not track performance}
+\label{sec:trace}
 
 At nominally equivalent settings, per-game output tokens at $N{=}8$ span
 $11\times$: GPT 446, GLM 950, Opus 824, Kimi 2{,}644, Gemini 4{,}272, Grok
 5{,}054. At $N{=}1024$ the spread is $4.5\times$: GPT 29{,}574, Opus 38{,}334,
-Kimi 101{,}800, Gemini 103{,}286, GLM 110{,}674, Grok 134{,}138. At $N{=}512$ Grok emits 160{,}261 output tokens against GPT's 22{,}325 on the
-same game; on one measured call 99.2\% of Grok's output was reasoning rather
-than visible answer.
-Gemini, run at MEDIUM for the reasons in \S\ref{sec:reasoning}, outperforms two
-models run at HIGH. The data are inconsistent with a simple
-more-reasoning-is-better account of the kind that motivates test-time compute
-scaling \citep{wei2022cot,snell2024}, and are consistent with the
-information-theoretic account of \S\ref{sec:bits}, under which what matters is
-the \emph{partition} a question induces rather than the deliberation behind it.
+Kimi 101{,}800, Gemini 103{,}286, GLM 110{,}674, Grok 134{,}138. Gemini, run at
+MEDIUM for the reasons in \S\ref{sec:reasoning}, outperforms two models run at
+HIGH. The data are inconsistent with a simple more-reasoning-is-better account
+of the kind that motivates test-time compute scaling
+\citep{wei2022cot,snell2024}, and consistent with \S\ref{sec:bits}: what matters
+is the partition a question induces, not the deliberation behind it.
+
+\paragraph{The trace grows as the candidate set shrinks.} Across the ten rounds
+of an $N{=}1024$ game, mean questioner output rises from 5{,}713 tokens at round
+1 to 11{,}413 at round 9 ($r=+0.69$), while the answerer moves only from 43 to
+49. That direction is what a rational agent would produce. The candidate set
+shrinks but the work of finding it grows: at round 9 the questioner re-applies
+eight predicates across 1024 unmarked documents to recover two survivors, while
+the answerer's job is one document and one question at every round.
+
+The growth does not convert into outcomes, and the per-model profiles diverge
+without sorting the ordering:
+
+\begin{center}\small
+\begin{tabular}{lrrl}
+\toprule
+Model & R1 & R9 & profile \\
+\midrule
+GLM-5.3          &  1.9k & 29.2k & ramps $15\times$ \\
+Claude Opus 5    &  0.3k &  4.8k & ramps $18\times$ from a very low base \\
+Kimi K3          &  5.9k &  8.5k & ramps $2.4\times$ \\
+Grok 4.6         &  8.3k & 12.6k & flat and high \\
+GPT-5.6 Sol      &  1.9k &  2.0k & flat and low \\
+Gemini 3.8 Flash & 16.0k & 11.4k & starts high, falls \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The pooled $+434$ tokens per round is an average over qualitatively different
+policies, not a shared law. For an agent budgeting its own trace, elapsed rounds
+are a poor proxy for how much thinking helps.
+
+\paragraph{Two observations we flag as suggestive.} Opus spends 296 tokens on
+the round-1 survey of 1024 documents against Gemini's 16{,}021, and has the
+study's worst round-1 partition at $H(p)=0.760$. Across all six models the
+correlation between round-1 log tokens and round-1 $H(p)$ is $r=+0.69$, but it
+is driven entirely by that one point and reverses to $r=-0.49$ without it. With
+six models this establishes nothing beyond the observation about Opus itself.
+Separately, GPT-5.6 Sol reaches $H(p)=1.000$ on the smallest traces in the
+study, consistent with the lexical-bisection strategy of
+\S\ref{sec:aggregation}: an exactly-even partition on first letters is cheap to
+compute where a balanced semantic category is not.
 
 \section{Communication failure as the dominant failure mode}
 \label{sec:comm}
@@ -1206,8 +1321,8 @@ Ambiguity & ``Is the main subject primarily associated with a country in
 Europe?'' --- asked of the same document. Answered No, but under our first
 answerer instruction, which forbade world knowledge (\S\ref{sec:prompts}).
 Included to show the failure mode; it is not evidence about the model. \\
-Self-correction & \texttt{"No... wait. The document concerns biathlon, a winter
-sport. Yes"} --- the answerer's reflexive No, corrected only because it had room
+Self-correction & ``No\dots\ wait. The document concerns biathlon, a
+winter sport. Yes'' --- the answerer's reflexive No, corrected only because it had room
 to reason. Our parser initially recorded the \emph{first} match and stored the
 opposite of the model's conclusion. \\
 \bottomrule
@@ -1319,7 +1434,8 @@ than 50\% horizons --- the signature of compounding per-step reliability.
 with context-window occupancy, pointing at reliability rather than memory.
 
 \paragraph{Overthinking is documented.} Our finding that reasoning expenditure
-varies $4.5\times$ at $N{=}1024$ with little relation to success, and that Gemini at MEDIUM
+varies $4.5\times$ at $N{=}1024$ with little relation to success, and that
+Gemini at MEDIUM
 outperformed models at HIGH, is consistent with \citet{gema2025inverse}, who
 construct tasks where extending reasoning length \emph{degrades} accuracy.
 
@@ -1394,7 +1510,8 @@ Every pilot game was played on Claude Opus 5, and all four revisions were
 driven by observations from its games. Two of the four corrected defects in our
 own instructions rather than model behaviour: the first answerer prompt forbade
 world knowledge, and the first questioner prompt permitted questions that
-presupposed the candidate set. The revisions were: the world-knowledge licence came from its answer to the
+presupposed the candidate set. The revisions were: the world-knowledge licence
+came from its answer to the
 Vocento/Europe question, the contrastive prohibition and its generalisation
 from two of its questions, and the restoration of answerer reasoning from its
 21\% Yes rate. The frozen prompts are therefore tuned to compensate for one
@@ -1607,9 +1724,7 @@ Every result file records the prompt version hash, schema version, corpus hash,
 the model identifier echoed by the API, per-call token usage including cached
 and reasoning tokens, raw response text, reasoning traces, and the reasoning
 configuration actually used. The runner refuses to treat a game as complete if
-its prompt or schema version differs from the current one.
-
-\todo{repository URL}
+its prompt or schema version differs from the current one. See \url{https://github.com/ppotash/logn-questions}.
 
 \begin{thebibliography}{99}
 
