@@ -46,7 +46,10 @@ measure, 47--55\% and 42--49\% depending on the judge, with 2--4\% prediction
 errors. Models almost never name a document their own evidence excludes, and
 the split does not shift detectably with set size. Measured per-round agreement rates, 0.900
 to 0.994, reconcile with the fitted $p$; the residual is the discrimination
-failures. Inter-judge agreement on individual judgements is 97.8--98.7\%. Information per question, estimated from answer balance, correlates
+failures. Inter-judge agreement on individual judgements is 97.8--98.7\%.
+Inspecting every unanimous answer error from the weakest model finds 32 of 34
+are ``No'' answers, on properties stated in the document's first sentence, under
+an instruction that explicitly warns against defaulting to ``No''. Information per question, estimated from answer balance, correlates
 with win rate at $r=+0.88$. The only two models to extract a full bit per
 question are the only two that partition on document titles, a strategy absent
 below $N{=}32$ and used in a quarter of questions above it.
@@ -293,12 +296,15 @@ assume about one another. We list them because \S\ref{sec:comm} argues this is
 the substantive finding:
 
 \begin{enumerate}
-\item \textbf{World-knowledge licence.} The answerer was initially told to
-answer ``on the basis of the document alone''. A document describing a Spanish
-media group does not contain the sentence ``Spain is in Europe'', so a literal
-reading answered No to a Europe question and eliminated the target. Measured
-answer balance under this wording was 21\% Yes across 24 calls where
-$\approx$50\% was expected ($p=0.003$).
+\item \textbf{World-knowledge licence.} Our first answerer instruction told it
+to answer ``on the basis of the document alone''. This was a defect in the
+prompt, not a model failure. A document describing a Spanish media group does
+not contain the sentence ``Spain is in Europe'', so answering No to a Europe
+question is the correct output of the instruction as written. Answer balance
+under this wording was 21\% Yes across 24 calls where $\approx$50\% was
+expected ($p=0.003$). The frozen prompt instead opens with ``Use ordinary world
+knowledge'', states that the document will not always contain the answer
+outright, and gives the Spain/Europe inference as a worked example.
 \item \textbf{Answerer reasoning.} Reasoning had been disabled for the answerer
 as a cost saving. One reply read \texttt{"No... wait. The document concerns
 biathlon, a winter sport. Yes"} --- a reflexive No corrected only when the model
@@ -662,9 +668,9 @@ information rate.}
 A low answer balance has two possible causes that this statistic cannot
 separate: a questioner asking narrow questions, or an answerer wrongly replying
 ``No''. \S\ref{sec:errors} separates them by adjudication and finds the latter
-dominates for Opus, with a candidate explanation in disclosed training toward
-strict document grounding. The figures below should therefore be read as an
-upper bound on questioner-side deficit.
+dominates for Opus: 32 of its 34 unanimous answer errors are ``No'' answers on
+properties stated in the document. The figures below should therefore be read
+as an upper bound on questioner-side deficit.
 
 Opus is short by 2.4 bits at $N=1024$, leaving $\approx$5 candidates on average
 --- a one-in-five lottery at the final guess, by construction, however well it
@@ -973,51 +979,72 @@ rather than ranking them.
 
 \paragraph{Why one model's answerer fails so much more often.} Opus's 32--34
 answer errors against Grok's 2.5 is the largest single per-model difference in
-the study, and it has a plausible differential explanation in disclosed
-training posture rather than in architecture.
+the study. Inspecting all 34 of its unanimous errors under the frozen prompt
+identifies the pattern, and rules out the explanation we first proposed.
 
-The knowledge-conflict literature documents large per-model variation in how
-strictly a model grounds an answer in provided context versus its own
-parametric knowledge \citep{longpre2021,xie2024conflict}. Anthropic's public
-posture is unusually far toward the grounding end: a Citations API built
-specifically so that answers are anchored in source documents, hallucination
-guidance instructing users to ``explicitly instruct Claude to only use
-information from provided documents and not its general knowledge'', and a
-published constitution setting an honesty bar its authors describe as
-substantially higher than standard human ethical norms; the underlying method
-is Constitutional AI \citep{bai2022cai}.
+\textbf{The errors are overwhelmingly ``No''.} Of 34 errors on which all three
+judges agree the answerer was wrong, \textbf{32 are ``No'' answers} and two are
+``Yes'' ($p = 3.5\times10^{-8}$ against a balanced null). This is a directional
+bias, not a scatter of mistakes.
 
-The claim has to be differential to do any work. Post-training damages
-calibration in general: base models are well calibrated and RLHF policies much
-less so \citep{kadavath2022}. But all six models here are post-trained, so a
-generic account cannot explain why one sits at 22\% opening balance and another
-at 49\%. What distinguishes Anthropic is the direction of its post-training,
-not the fact of it.
+\textbf{They are not edge cases.} The property asked about is usually stated in
+the document's first sentence:
 
-That posture predicts the failure we observe. Asked whether the subject of
-``Vocento, S.A.\ \dots is a Spanish mass media group'' is associated with a
-country in Europe, a model trained toward document-only grounding answers No,
-because the document does not say that Spain is in Europe. This is not a
-reasoning failure. It is the correct output of a strict grounding rule applied
-to a question requiring one inferential step outside the text.
+\begin{center}\small
+\begin{tabular}{p{5.2cm}p{7.2cm}}
+\toprule
+Question, answered ``No'' & Document opens \\
+\midrule
+Is the subject an individual human being? &
+  ``Walter Lee Gaines (17 March 1881 -- 20 November 1950) was a pioneer of dairy
+  science\dots'' \\
+Is the subject a woman? &
+  ``Daniella Alonso is an American actress and former fashion model.'' \\
+Is the subject Spanish? &
+  ``Vocento, S.A.\ \dots is a Spanish mass media group.'' \\
+Is the subject a musician or singer? &
+  ``Liu Yuning \dots is a Chinese singer, actor, and the lead singer of Modern
+  Brothers.'' \\
+Is the subject a sports team? &
+  ``The United States women's cricket team is the team that represents the
+  country\dots'' \\
+Was the subject formerly an administrative municipality that has since been
+  dissolved? &
+  ``H\o{}v\aa{}g \dots is a former municipality \dots existed from 1865 until its
+  dissolution.'' \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-Our own prompt history supplies evidence. The first version of the answerer
-instruction told it to ``answer on the basis of the document alone''. Under
-that wording, answer balance was 21\% Yes across 24 measured calls where
-$\approx$50\% was expected ($p=0.003$). We replaced it with an explicit licence
-to apply ordinary world knowledge and changed nothing else. The Vocento
-judgement moved to Yes and the balance moved toward 50\% for every model. The
-prompt fix was an unplanned ablation of this hypothesis. Some literalism
-persists for Opus under the corrected wording, which is consistent with a
-trained prior that one instruction only partly overrides.
+``Is the subject an individual human being?'' is answered ``No'' about a person
+in seven separate games. No inference beyond the text is required in any of
+these cases.
 
-This resolves an apparent tension between \S\ref{sec:bits} and this section. A
-literal answerer that says ``No'' more often depresses the measured yes rate,
-which mimics a questioner asking narrow questions. The two are
-indistinguishable in the balance statistic and separable only by adjudication.
-Our adjudication favours the answerer-side reading. Opus's 22\% opening balance
-is therefore at least partly an artefact of its answerer, not an independent
-questioning pathology.
+\textbf{This falsifies a hypothesis we had proposed.} An earlier reading
+attributed the gap to context-faithfulness: models differ in how strictly they
+ground answers in provided text \citep{longpre2021,xie2024conflict}, and
+Anthropic's public posture is unusually far toward the grounding end, with a
+Citations API built so that answers are anchored in source documents,
+hallucination guidance instructing users to restrict the model to provided
+material, and a published constitution setting an elevated honesty bar
+\citep{bai2022cai}. That account predicts refusal to make inferences \emph{one
+step outside} the document. It does not predict contradicting the document's
+own first sentence, which is what these errors do. We record it because the
+prediction was specific enough to be wrong.
+
+\textbf{What we can state.} One model's answerer carries a strong bias toward
+``No'', which persists under an instruction that says verbatim: ``Yes and No
+are equally acceptable answers: do not fall back on No when uncertain.'' The
+bias is visible in three independent measurements: a 22\% round-1 yes rate
+(\S\ref{sec:bits}), the lowest agreement rate of any model at $p=0.900$, and
+the 32:2 direction of its errors. We have no mechanism to offer. Generic
+accounts of post-training damaging calibration \citep{kadavath2022} apply to
+all six models and cannot explain a difference between them, and the
+architecture of this model is undisclosed (\S\ref{sec:limits}).
+
+We note the bias is not confined to the weakest model: round-1 yes rates are
+below 50\% for all six (49, 49, 44, 41, 34, 22\%), so some pull toward ``No''
+appears general and differs across models by degree.
 
 \paragraph{Reconciling with the compounding fit.} \S\ref{sec:decay} fits
 $\text{win}=p^{\log_2 N}$ with $p=0.928$ from outcomes alone. The per-round
@@ -1170,9 +1197,15 @@ and exists only because another candidate is Italian. Answered No. \\
 Presupposition & ``Is the subject related to human behavior, management, or
 leadership (as opposed to equipment or machinery)?'' --- asked of
 \emph{Task-oriented and relationship-oriented leadership}. Answered No. \\
+Stated property & ``Is the subject Spanish?'' --- asked of a document opening
+``Vocento, S.A.\ \dots is a Spanish mass media group''. Answered No under the
+frozen prompt, all three judges unanimous. One of 34 such errors from this
+model, 32 of which are ``No'' answers on properties stated in the text
+(\S\ref{sec:errors}). \\
 Ambiguity & ``Is the main subject primarily associated with a country in
-Europe?'' --- asked of ``a Spanish mass media group''. Answered No under an
-instruction to use the document alone. \\
+Europe?'' --- asked of the same document. Answered No, but under our first
+answerer instruction, which forbade world knowledge (\S\ref{sec:prompts}).
+Included to show the failure mode; it is not evidence about the model. \\
 Self-correction & \texttt{"No... wait. The document concerns biathlon, a winter
 sport. Yes"} --- the answerer's reflexive No, corrected only because it had room
 to reason. Our parser initially recorded the \emph{first} match and stored the
@@ -1213,7 +1246,13 @@ The questioner cannot detect this. There is no contradiction to notice: rounds
 3, 4 and 5 were spent bisecting a set that could no longer contain the target,
 and every question in them was well chosen.
 \end{minipage}}
-\caption{The failure mode that motivates \S\ref{sec:comm}. Round-of-death: 2.}
+\caption{The failure mode that motivates \S\ref{sec:comm}. Round-of-death: 2.
+This game was played during the pilot, under the first answerer instruction,
+which forbade world knowledge; the round-2 answer is what that instruction
+requires, and the game is shown to illustrate how a single answer propagates,
+not as evidence about the model. Under the frozen prompt the same document
+still drew a wrong answer, to the simpler question ``Is the subject Spanish?''
+(\S\ref{sec:errors}).}
 \end{figure}
 
 All three are silent. A wrong answer is indistinguishable from a right one, and
@@ -1352,7 +1391,10 @@ before any reported arm was run. Several pilot instances involved the same
 document, so overfitting to them is possible.
 
 Every pilot game was played on Claude Opus 5, and all four revisions were
-driven by its failures: the world-knowledge licence came from its answer to the
+driven by observations from its games. Two of the four corrected defects in our
+own instructions rather than model behaviour: the first answerer prompt forbade
+world knowledge, and the first questioner prompt permitted questions that
+presupposed the candidate set. The revisions were: the world-knowledge licence came from its answer to the
 Vocento/Europe question, the contrastive prohibition and its generalisation
 from two of its questions, and the restoration of answerer reasoning from its
 21\% Yes rate. The frozen prompts are therefore tuned to compensate for one
@@ -1429,12 +1471,14 @@ sparse architecture underperforms the linear-hybrid one specifically on
 aggregation but not retrieval, \S\ref{sec:longctx}'s sharpened claim is
 supported.
 
-\paragraph{Testing the literalism account.} Run the answerer under two
-instructions --- strict document-only grounding versus explicit world-knowledge
-licence --- holding everything else fixed, and measure the change in answer-error
-rate per model. Our prompt history supplies an accidental version of this
-experiment (\S\ref{sec:errors}); a controlled one would establish whether the
-per-model differences in answer error are a trained prior or a prompt artefact.
+\paragraph{Locating the ``No'' bias.} The answerer task can be run standalone,
+without the game: present one document and one question whose answer is stated
+in the text, and vary the question's polarity so that half the items have
+ground-truth Yes and half No. Per-model error rates by polarity would establish
+whether the bias reported in \S\ref{sec:errors} is specific to this task
+framing, to the one-word output constraint, or to the model. It would also
+scale to far more items than 34, which is all our logs contain for the affected
+model.
 
 \paragraph{Effort measured rather than declared.} Vendor effort labels are not
 comparable (\S\ref{sec:limits}). Plotting accuracy against \emph{emitted}
