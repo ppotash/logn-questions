@@ -13,7 +13,7 @@ models. Where the original studied whether a communication protocol could be
 and must coordinate zero-shot.
 
 **Paper:** [`paper/main.pdf`](paper/main.pdf) · **Data:** 408 games, six models,
-$363 total API spend.
+$363 total API spend · **Repo:** <https://github.com/ppotash/logn-questions>
 
 ---
 
