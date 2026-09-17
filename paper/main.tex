@@ -16,7 +16,7 @@
 
 
 \title{Playing $\log(N)$-Questions over Wikipedia Abstracts:\\
-Communication Efficiency Between Paired Frontier Models\\
+How Per-Round Errors Compound Under Information Asymmetry\\
 \large A Technical Report}
 \author{Peter Potash\\
 \normalsize\url{https://github.com/ppotash/logn-questions}}
@@ -53,9 +53,11 @@ failures in roughly equal measure overall, 47--55\% and 42--49\% depending on
 the judge, with 2--4\% prediction errors. That aggregate describes no individual
 model: Claude Opus 5's failures are $82\%$ answer errors ($4.6{:}1$,
 $p=7\times10^{-5}$), while across the five leading arms discrimination leads by
-a milder $1.73{:}1$ (63\%, 95\% CI $[53\%,73\%]$). Models almost never name
-a document their own evidence excludes. Both failure types are constant-rate
-processes: the per-round answer rate is flat across the horizon, and the
+a milder $1.73{:}1$ (63\%, 95\% CI $[53\%,73\%]$). Models almost never name a document their own evidence excludes. Neither
+dominant failure is a breakdown of the channel between the agents: both are
+single-agent mistakes, and what the two-agent structure supplies is the
+conditions under which ordinary errors become undetectable, unrecoverable and
+compounding. Both failure types are constant-rate processes: the per-round answer rate is flat across the horizon, and the
 per-round probability that a question separates the target moves only from 0.974
 to 0.968 between $N{=}16$ and $N{=}1024$, so failures accumulate because more
 rounds must go right rather than because rounds get harder.
@@ -108,13 +110,14 @@ rounds without external scaffolding. A wrong final guess is consistent with
 failure in any of the three, so decomposing the failure is the substantive
 analytical problem.
 
-The communication requirement is the aspect the original design could not
-isolate. Because both roles run on the same underlying model, failures cannot
-be attributed to a capability gap between agents. They arise from the context
-asymmetry and from each agent's model of the other. The questioner receives no
-feedback: a mistaken answer is indistinguishable from a correct one, and
+Because both roles run on the same underlying model, failures cannot be
+attributed to a capability gap between agents. What the arrangement supplies is
+an information asymmetry with no feedback channel. The questioner never sees the
+target, so a mistaken answer is indistinguishable from a correct one and
 silently eliminates the target while the questioner continues to reason over a
-set that no longer contains it.
+set that no longer contains it. \S\ref{sec:comm} argues that the failures we can
+categorise are single-agent mistakes, and that the asymmetry is what makes a low
+per-call error rate expensive.
 
 
 
@@ -147,10 +150,9 @@ per round, showing that the two dominant failure types are constant-rate
 processes and that the aggregate split masks two distinct failure profiles, validated across three judges, with a measured
 self-preference discount of 40 to 46\% and inter-judge agreement of
 97.8--98.7\%.
-\item The finding that inter-agent failures are wrong answers to questions that
-admit clear answers, not breakdowns of a shared protocol, and that all four
-prompt revisions which improved play were fixes to communication rather than to
-either agent's reasoning.
+\item The finding that failures are single-agent mistakes rather than
+breakdowns of a shared protocol, with one exception we can attribute to the
+channel: questions encoding context the answerer cannot decode.
 \item A judge-free measure of partition quality that correlates with win rate at
 $r=+0.88$, and the observation that two models' opening questions are
 systematically narrow at every scale we test.
@@ -259,8 +261,8 @@ window any of these mechanisms would use — as at $N{=}1024$
 explain a deficit already complete at a thousand-token prompt. The parsimonious
 reading is that we are measuring a prior over what makes a good question, not a
 limit on access to context: the models can see the whole set and choose to
-partition it unevenly. That places the deficit with the communication failures
-of \S\ref{sec:comm} rather than with the hardware.
+partition it unevenly. That places the deficit with how a model
+chooses to partition a set, not with its access to one.
 
 Two further cautions. The architectures of the four proprietary models we
 evaluate are undisclosed, so no observed behaviour can be attributed to a
@@ -342,10 +344,9 @@ differ only in transport. Prompts split into system/cacheable/tail with the
 document block in the cacheable segment, byte-identical across every round.
 
 Prompts were revised four times during a pilot phase and then frozen before any
-reported arm. \textbf{Every revision was a communication fix.} None altered what
-either agent was asked to reason about; each altered what the agents could
-assume about one another. We list them because \S\ref{sec:comm} argues this is
-the substantive finding:
+reported arm. None altered what either agent was asked to
+reason about. Two corrected defects in our own instructions, and two altered
+what the agents could assume about one another:
 
 \begin{enumerate}
 \item \textbf{World-knowledge licence.} Our first answerer instruction told it
@@ -1389,122 +1390,86 @@ study, consistent with the lexical-bisection strategy of
 \S\ref{sec:aggregation}: an exactly-even partition on first letters is cheap to
 compute where a balanced semantic category is not.
 
-\section{Communication failure as the dominant failure mode}
+\section{How single-agent errors compound under asymmetry}
 \label{sec:comm}
 
-Because both roles run on the same model, failures cannot be attributed to a
-capability gap. They arise from context asymmetry and from each agent's model of
-the other. This is the classical setting of a Lewis signalling game
-\citep{lewis1969}, and of the emergent-communication literature that followed
-\citep{foerster2016,lazaridou2020}, with one difference: our agents do not
-co-adapt. They arrive with a shared prior from pretraining and must succeed
-without a learned protocol, which makes the failures interpretable in natural
-language rather than opaque as in \citet{kottur2017}. The demand that the
-questioner model an interlocutor's restricted epistemic state is a
-theory-of-mind requirement in the sense studied by \citet{kosinski2024} and
-critiqued by \citet{ullman2023}.
+\S\ref{sec:errors} attributes losses to two causes, and neither is a failure of
+communication in the ordinary sense. A discrimination failure is the questioner
+choosing questions that do not separate the target from a competitor; every
+answer in such a game is correct, and the answerer plays no part in it. An
+answer error is the answerer reading one short paragraph and judging it wrongly;
+the questions admit clear answers, so no meaning is lost in transit. Both are
+single-agent mistakes. So is the third, and rarest: a questioner naming a
+document its own evidence excludes.
 
-\paragraph{The questions admit clear answers.} In every error we examined, the
-question as asked had a determinable answer and the answerer gave the other one.
-Independent judges agree with each other on 97.8--98.7\% of individual
-judgements (\S\ref{sec:errors}). The 34 unanimous errors from the weakest model
-are on properties stated in the document's first sentence: ``Is the subject a
-woman?'' answered No about ``an American actress''; ``Is the subject an
-individual human being?'' answered No about a person, in seven separate games.
+What the two-agent structure supplies is not a new kind of error but the
+conditions under which ordinary errors become expensive.
 
-Phrasing is sometimes poor without making the answer unclear. ``Is the subject
-primarily associated with Spain rather than Italy?'' mentions Italy only because
-a different candidate is Italian, and the answerer cannot know why the
-alternative was raised. ``Is the subject related to human behavior, management,
-or leadership (as opposed to equipment or machinery)?'' carries the same
-intrusion, and was asked of a document titled \emph{Task-oriented and
+\paragraph{Errors are undetectable.} The questioner never sees the target, so a
+wrong answer is indistinguishable from a right one. There is no contradiction to
+notice, no confidence signal to read, and no later evidence that conflicts:
+subsequent answers are about a document that was already eliminated, and they
+arrive as ordinary Yes/No replies. In a single-agent formulation of the same
+task, a model that mistakenly judged an actress not to be a woman would have the
+document in front of it and might catch the error on re-reading. Here it cannot.
+
+\paragraph{Errors are unrecoverable.} The game has exactly $\log_2 N$ questions
+and no mechanism for revisiting an answer. Once an answer eliminates the target,
+every remaining round partitions a set that cannot contain it. The questions
+asked in those rounds are often good ones, and \S\ref{sec:errors} shows the
+target dies at 0.27 to 0.62 of the round budget depending on the model, so
+roughly half the work in a lost game is expended after the game is already
+decided.
+
+\paragraph{Errors compound.} \S\ref{sec:decay} fits
+$\text{win}=p^{\log_2 N}$ with $p=0.928$, and \S\ref{sec:errors} shows both
+failure types are constant-rate processes: the per-round answer rate is flat
+across the horizon, and the per-round separating power $q$ moves only from 0.974
+to 0.968 between $N{=}16$ and $N{=}1024$. A per-call error rate of 2--3\%, which
+is low by the standards of published grounded-task benchmarks
+(\S\ref{sec:errors}), becomes a 25\% per-game failure rate at $N{=}1024$ purely
+because ten rounds must all go right. The asymmetry does not make any individual
+judgement harder. It removes every opportunity to catch one.
+
+\paragraph{One failure is communicative.} The exception is a question that
+encodes context the answerer cannot decode. ``Is the subject primarily
+associated with Spain rather than Italy?'' mentions Italy only because a
+different candidate is Italian; ``Is the subject related to human behavior,
+management, or leadership (as opposed to equipment or machinery)?'' carries the
+same intrusion, and was asked of a document titled \emph{Task-oriented and
 relationship-oriented leadership}. Both were answered No. Neither is
 unanswerable: a reader holding only the target document can determine that a
 Spanish company is Spanish, and that an article about leadership concerns
-leadership. The questioner leaked its own context into the utterance, which is a
-theory-of-mind lapse worth noting, but it does not excuse the answer.
+leadership. But the questioner has leaked its own view of the candidate set into
+an utterance for an interlocutor who cannot interpret it, which is a
+theory-of-mind lapse in the sense studied by \citet{kosinski2024} and critiqued
+by \citet{ullman2023}.
 
-\paragraph{The failures are silent.} A wrong answer is indistinguishable from a
-right one. It eliminates the target while the questioner continues to reason
-confidently over a set that no longer contains it, and there is no contradiction
-for the questioner to notice. \S\ref{sec:errors} quantifies the cost: roughly
-half of all losses, against 3\% for errors of inference at the final step. In
-one hand-adjudicated $N{=}32$ game the questioner bisected perfectly, $32 \to 16
-\to 8 \to 4 \to 2 \to 1$ with an exact 16/16 first split verified against all 32
-documents, and lost solely because of a single wrong answer at round 2.
+Prohibiting the construction in the questioner prompt eliminated it: 0 of 12
+sampled questions were contrastive afterwards (\S\ref{sec:prompts}). This is the
+one prompt revision that changed agent behaviour rather than correcting an error
+in our own instructions, and the only failure in the study we can attribute to
+the channel rather than to an agent.
 
-\paragraph{A gallery.} Three utterances that cost games:
+\paragraph{Relation to emergent communication.} The setting is a Lewis
+signalling game \citep{lewis1969} of the kind studied in the
+emergent-communication literature \citep{foerster2016,lazaridou2020}, with one
+difference that matters for interpreting the above: our agents do not co-adapt.
+They arrive with a shared prior from pretraining rather than a learned protocol.
+That the protocol largely works, and that failures are individual rather than
+communicative, is itself the result. Where \citet{kottur2017} find that agents
+trained to co-adapt develop opaque codes, two instances of a pretrained model
+coordinate in natural language well enough that we could not identify a
+systematic class of miscommunication beyond the contrastive questions above.
 
-\begin{center}\small
-\begin{tabular}{p{3.1cm}p{9.6cm}}
-\toprule
-Stated property & ``Is the subject Spanish?'' --- asked of a document opening
-``Vocento, S.A.\ \dots is a Spanish mass media group''. Answered No under the
-frozen prompt, all three judges unanimous. One of 34 such errors from this
-model, 32 of which are ``No'' answers on properties stated in the text
-(\S\ref{sec:errors}). \\
-Leaked context & ``Is the subject related to human behavior, management, or
-leadership (as opposed to equipment or machinery)?'' --- asked of
-\emph{Task-oriented and relationship-oriented leadership}. The contrast with
-machinery exists only because other candidates are machinery. Answered No. \\
-Self-correction & ``No\dots\ wait. The document concerns biathlon, a winter
-sport. Yes'' --- a reflexive No, corrected because the model had room to
-reason. Our parser initially recorded the \emph{first} match and stored the
-opposite of the model's conclusion. \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\begin{figure}[tbp]
-\centering\small
-\fbox{\begin{minipage}{0.93\textwidth}
-\textbf{A perfectly played game, lost to one wrong answer.} Claude Opus 5,
-$N{=}32$, target [1] \emph{Grupo Vocento} (``a Spanish mass media group'').
-Split sizes are the true partitions, adjudicated by hand against all 32
-documents.
-
-\medskip
-\begin{tabular}{clrl}
-\toprule
-R & Question & Split & Answer \\
-\midrule
-1 & Is the subject associated with the United States?  & \textbf{16 / 16} & No \quad$\checkmark$ \\
-2 & Is the subject associated with a country in Europe? & 8 / 8 & \textbf{No} \quad$\times$ \\
-3 & Is the subject associated with Asia or Oceania?     & 4 / 3 & No \\
-4 & Is the subject a species?                            & 2 / 2 & No \\
-5 & Is the subject an individual human?                  & 1 / 1 & No \\
-\bottomrule
-\end{tabular}
-
-\medskip
-The questioner executed a textbook binary search: $32 \to 16 \to 8 \to 4 \to 2
-\to 1$, with an exact 16/16 first split. Its final guess, \emph{Sea Shepherd
-II}, is the \emph{uniquely correct} document given the five answers it
-received. It lost because Vocento is Spanish, Spain is in Europe, and the
-answerer --- the same model, holding only that one document --- said No.
-
-The questioner cannot detect this. There is no contradiction to notice: rounds
-3, 4 and 5 were spent bisecting a set that could no longer contain the target,
-and every question in them was well chosen.
-\end{minipage}}
-\caption{An \textbf{answer error}: the model incorrectly excludes the target at
-round 2, and every later round partitions a set that cannot contain it.
-Round-of-death: 2.
-This game was played during the pilot, under the first answerer instruction,
-which forbade world knowledge, so the round-2 answer is what that instruction
-required. It is shown to illustrate how one answer propagates through the
-remaining rounds, not as evidence about the model. Under the frozen prompt the same document
-still drew a wrong answer, to the simpler question ``Is the subject Spanish?''
-(\S\ref{sec:errors}).}
-\end{figure}
-
-The practical evidence for this framing is the prompt history in
-\S\ref{sec:prompts}. Four revisions were made during the pilot; all four
-concerned what the agents could assume about each other, and none changed what
-either was asked to reason about. Win rates moved substantially across them. If
-agreement probability is $p$ per round, achievable accuracy is bounded by
-$p^{\log_2 N}$: at $N=1024$, $p=0.90$ caps accuracy at 35\% while $p=0.97$ gives
-74\%. Communication reliability compounds where reasoning quality does not.
+\paragraph{What we did not measure.} Our adjudication compares each answer to a
+third-party judge, which tests whether the answer is \emph{correct}. It does not
+test whether the answerer's judgement matches the \emph{questioner's intent},
+which is the quantity a communication account would need. The questioner's
+reasoning traces frequently state the intended partition, so this is computable
+from the existing logs and would distinguish an answerer that is wrong from an
+answerer that understood a different question. We flag it in
+\S\ref{sec:future}.
 
 \section{Relation to published benchmarks}
 \label{sec:external}
@@ -1582,8 +1547,8 @@ used as a benchmark with the same clue-giver/guesser asymmetry
 when agents do not co-adapt. On theory-of-mind benchmarks, frontier models
 trail humans substantially \citep{xu2024tombench}, and interactive
 coordination tasks separate far more sharply than static belief probes ---
-consistent with our finding that failures concentrate in communication rather
-than inference.
+consistent with our finding that failures concentrate upstream of the final
+inference (\S\ref{sec:errors}).
 
 \paragraph{Content filtering on China-hosted APIs is well documented.}
 \citet{pan2026censorship} measure refusal rates across 145 political prompts:
@@ -1739,10 +1704,10 @@ what the partition must be built from. This makes it a natural multimodal
 reasoning benchmark, and one with a property such benchmarks usually lack: the
 questioner must form a \emph{global} judgement over the whole candidate set,
 not merely describe individual items. A mixed-modality variant, where the
-questioner sees images and the answerer receives captions or vice versa, would
-push directly on the communication asymmetry that \S\ref{sec:comm} argues is
-the dominant failure mode, by adding a representational gap to the
-informational one.
+questioner sees images and the answerer receives captions or vice versa, would add a
+representational gap to the informational one, and would test whether the
+contrastive failures of \S\ref{sec:comm} become more common when the two agents
+do not share a modality.
 
 \paragraph{Adjudicating the full partition.} \S\ref{sec:errors} adjudicates two
 documents per game, which suffices to separate answer errors from
@@ -1751,6 +1716,13 @@ each question divides the viable set. That needs the full partition, which is
 $O(N)$ per round and therefore roughly 400$\times$ more adjudications at
 $N{=}1024$. It would settle whether the round-position effect of
 \S\ref{sec:aggregation} is real or an artefact of assuming even splits.
+
+\paragraph{Measuring agreement with intent rather than with truth.} Our
+adjudication asks whether an answer is correct. A communication account needs
+whether the answerer's judgement matches what the questioner meant. The
+questioner's reasoning traces often state the intended partition, so the two can
+be compared from existing logs, distinguishing an answerer that is wrong from
+one that answered a different question than the one asked.
 
 \paragraph{Context-asymmetry ablation.} Ask the same model the same question
 about the same document twice: once as answerer (document only) and once with

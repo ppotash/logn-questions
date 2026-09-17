@@ -3,8 +3,10 @@
 A questioner sees *N* Wikipedia lead paragraphs and must identify a secretly
 chosen target using exactly log₂(*N*) yes/no questions. An answerer sees only
 the target and the question, and replies with a single word. Both roles run on
-the same provider, so the game measures how well a model communicates with
-*itself* across an information asymmetry.
+the same provider, so failures cannot be a capability gap between agents — what
+the setup supplies is an information asymmetry with no feedback channel, under
+which a 2–3% per-call error rate becomes a 25% per-game failure rate at
+*N* = 1024.
 
 After Potash and Suleman, [*Playing log(N)-Questions over Sentences*](https://arxiv.org/abs/1908.04660)
 (arXiv:1908.04660) — ported from purpose-trained agents to pretrained frontier
