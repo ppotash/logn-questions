@@ -49,9 +49,16 @@ separates a 9-step horizon from a 115-step one.
 
 We adjudicate each game's target and guess against three independent judges,
 2{,}931 judgements each. Losses divide into answer errors and discrimination
-failures in roughly equal measure, 47--55\% and 42--49\% depending on the judge,
-with 2--4\% prediction errors: models almost never name a document their own
-evidence excludes, and the split does not shift detectably with set size.
+failures in roughly equal measure overall, 47--55\% and 42--49\% depending on
+the judge, with 2--4\% prediction errors. That aggregate describes no individual
+model: Claude Opus 5's failures are $82\%$ answer errors ($4.6{:}1$,
+$p=7\times10^{-5}$), while across the five leading arms discrimination leads by
+a milder $1.73{:}1$ (63\%, 95\% CI $[53\%,73\%]$). Models almost never name
+a document their own evidence excludes. Both failure types are constant-rate
+processes: the per-round answer rate is flat across the horizon, and the
+per-round probability that a question separates the target moves only from 0.974
+to 0.968 between $N{=}16$ and $N{=}1024$, so failures accumulate because more
+rounds must go right rather than because rounds get harder.
 Measured per-round agreement, 0.900 to 0.994, reconciles with the fitted $p$,
 the residual being the discrimination failures. Inter-judge agreement on
 individual judgements is 97.8--98.7\%. Every unanimous answer error from the
@@ -136,7 +143,8 @@ which makes every cross-model comparison paired.
 \item An empirical fit of win rate to $p^{\log_2 N}$ with a single per-round
 reliability parameter $p=0.928$ across nine set sizes.
 \item An error decomposition requiring $O(1)$ rather than $O(N)$ adjudications
-per round, validated across three judges, with a measured
+per round, showing that the two dominant failure types are constant-rate
+processes and that the aggregate split masks two distinct failure profiles, validated across three judges, with a measured
 self-preference discount of 40 to 46\% and inter-judge agreement of
 97.8--98.7\%.
 \item The finding that inter-agent failures are wrong answers to questions that
@@ -590,16 +598,19 @@ with no accuracy penalty. Wall clock varies more sharply still: Grok's arm took
 25 hours against Gemini's 3.6, driven by reasoning volume rather than
 throughput.
 
-\begin{center}
+\begin{center}\makebox[\textwidth][c]{%
 \begin{tikzpicture}
 \begin{axis}[
-  width=13cm, height=8cm,
+  width=11.5cm, height=7.5cm,
   xlabel={$\log_2 N$}, ylabel={win rate},
   xtick={2,3,4,5,6,7,8,9,10},
   xticklabels={4,8,16,32,64,128,256,512,1024},
   ymin=0, ymax=1.05, grid=major,
-  legend pos=south west, legend cell align=left,
-  legend style={font=\scriptsize, at={(0.02,0.02)}, anchor=south west},
+  % legend outside the axes: with six curves plus two reference lines it
+  % occludes the data wherever it is placed inside
+  legend style={font=\small, at={(1.02,1.0)}, anchor=north west,
+                draw=black!30, cells={anchor=west}},
+  legend cell align=left,
 ]
 \addplot[thick,mark=pentagon*,brown] coordinates
   {(2,1.0)(3,1.0)(4,1.0)(5,1.0)(6,1.0)(7,0.625)(8,0.75)(9,0.625)(10,0.5)};
@@ -624,7 +635,7 @@ throughput.
 \addplot[thick,dashdotted,black!70,domain=2:10,samples=60] {2^(-x)};
 \addlegendentry{chance $=1/N$}
 \end{axis}
-\end{tikzpicture}
+\end{tikzpicture}}
 \end{center}
 
 Because chance falls three orders of magnitude across this range, lift over
@@ -1075,14 +1086,73 @@ excluded. Little goes wrong at the final inference step. The failures occur
 upstream: either the answerer contradicts the question's intended partition, or
 the questions never distinguish the target from a competitor.
 
-Answer errors and discrimination failures are comparable in size, and which is
-larger depends on the judge: under Gemini and Grok the answer share leads,
-under GPT it does not. We therefore treat them as roughly equal contributors
-rather than ranking them.
+\paragraph{The pooled split describes no individual model.} Claude Opus 5
+supplies 40 of the 124 losses and roughly half of all answer errors. Separating
+it from the rest gives two different pictures:
 
-\paragraph{Why one model's answerer fails so much more often.} Opus 5's 32--34
-answer errors against Grok's 2.5 is the largest single per-model difference in
-the study. We inspected all 34 of its unanimous errors under the frozen prompt.
+\begin{center}\small
+\begin{tabular}{lrrrr}
+\toprule
+& Losses & Answer error & Discrimination & Prediction \\
+\midrule
+Five leading models & 84 & 30 (36\%) & 52 (62\%) & 2 \\
+Claude Opus 5       & 40 & 32 (80\%) & \phantom{0}7 (18\%) & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The two groups are asymmetric in how strongly they separate. Opus 5's answer
+errors outnumber its discrimination failures $4.6{:}1$, a share of 82\% among
+the two ($p = 7\times10^{-5}$, two-sided binomial). Among the five leading
+models the imbalance runs the other way but is much milder: discrimination
+leads $1.73{:}1$, a 63\% share with a 95\% interval of $[53\%, 73\%]$
+($p=0.020$). Discrimination is therefore the more common failure for those five
+rather than the overwhelming one, and with roughly sixteen losses each the
+per-model splits are too thin to report separately.
+
+What the aggregate obscures is the contrast, not the magnitudes. A pooled
+51/46 split implies a single population failing two ways in equal measure. The
+data are one model failing predominantly at answering and five failing somewhat
+more often at discriminating.
+
+\paragraph{Both failure types are constant-rate processes.} Expressed per game,
+both rise steeply with $N$: among the five leading models, discrimination
+failures grow from 10\% of games at $N{=}16$ to 27.5\% at $N{=}1024$. The
+relevant question is whether a \emph{round} gets worse, or whether there are
+simply more of them.
+
+For discrimination, write $q$ for the per-round probability that a question
+separates the target from its remaining competitors. A game avoids
+discrimination failure only by succeeding at every round, so $q = (1-d)^{1/R}$
+with $d$ the per-game failure rate and $R=\log_2 N$:
+
+\begin{center}\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+$N$ & 16 & 32 & 64 & 128 & 256 & 512 & 1024 \\
+\midrule
+Discrimination, per game & 10.0\% & 9.2\% & 11.7\% & 15.8\% & 24.2\% & 21.7\% & 27.5\% \\
+$q$, per round           & 0.974 & 0.981 & 0.980 & 0.976 & 0.966 & 0.973 & 0.968 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Per-game failure rises $2.8\times$ across this range while $q$ moves
+by 0.006, from 0.974 to 0.968. A question separates about as well over 1024
+documents as over 16. Discrimination failures accumulate because ten rounds must
+go right instead of four, not because the questions degrade. The correlation
+between $q$ and $\log_2 N$ is $r=-0.82$, but that is a correlation along a
+nearly flat line; the per-game contrast between $N{=}16$ and $N{=}1024$ reaches
+only $p=0.083$ (4/40 against 11/40).
+
+Answer errors behave the same way, established directly rather than by
+inference: the per-round rate is flat across the ten rounds of an $N{=}1024$
+game (\S\ref{sec:decay}). Both halves of the decomposition are therefore
+constant-rate processes compounding over a longer horizon, which is what
+$p^{\log_2 N}$ requires.
+
+\paragraph{What the errors of the outlying model look like.} We inspected all
+34 of Claude Opus 5's unanimous errors under the frozen prompt.
 
 \textbf{The errors are overwhelmingly ``No''.} Of 34 errors on which all three
 judges agree the answerer was wrong, \textbf{32 are ``No'' answers} and two are
@@ -1129,42 +1199,78 @@ toward the grounding end: a Citations API built so that answers are anchored in
 source documents, hallucination guidance instructing users to restrict the model
 to provided material, and a published constitution setting an elevated honesty
 bar \citep{bai2022cai}. Such a posture predicts declining inferences \emph{one
-step outside} the document. These errors are the opposite case. They contradict
+step outside} the document. These errors are the opposite case: they contradict
 the document's own first sentence, where no inference is required at all.
 
 \textbf{What the data show.} One model's answerer carries a strong bias toward
-``No'', which persists under an instruction that says verbatim: ``Yes and No
-are equally acceptable answers: do not fall back on No when uncertain.'' The
-bias is visible in three independent measurements: a 22\% round-1 yes rate
-(\S\ref{sec:bits}), the lowest agreement rate of any model at $p=0.900$, and
-the 32:2 direction of its errors. We have no mechanism to offer. Generic
-accounts of post-training damaging calibration \citep{kadavath2022} apply to
-all six models and cannot explain a difference between them, and the
-architecture of this model is undisclosed (\S\ref{sec:limits}).
+``No'', which persists under an instruction that says verbatim: ``Yes and No are
+equally acceptable answers: do not fall back on No when uncertain.'' The bias is
+visible in three independent measurements: a 22\% round-1 yes rate
+(\S\ref{sec:bits}), the lowest agreement rate of any model at $p=0.900$, and the
+32:2 direction of its errors. We have no mechanism to offer. Generic accounts of
+post-training damaging calibration \citep{kadavath2022} apply to all six models
+and cannot explain a difference between them, and the architecture of this model
+is undisclosed (\S\ref{sec:limits}).
 
-We note the bias is not confined to the weakest model: round-1 yes rates are
-below 50\% for all six (49, 49, 44, 41, 34, 22\%), so some pull toward ``No''
-appears general and differs across models by degree.
+The bias is not confined to the weakest model: round-1 yes rates are below 50\%
+for all six (49, 49, 44, 41, 34, 22\%), so some pull toward ``No'' appears
+general and differs across models by degree.
 
-\paragraph{Reconciling with the compounding fit.} \S\ref{sec:decay} fits
-$\text{win}=p^{\log_2 N}$ with $p=0.928$ from outcomes alone. The per-round
-agreement measured here is higher for every leading model, 0.967 to 0.994. The
-two figures are consistent. Answer agreement alone is too high to explain the
-observed decay, and the remainder is discrimination failure. The
-outcome-fitted parameter sits below every measured agreement rate by roughly
-the amount the 51/45 loss split implies, which is a consistency check between
-two independent measurements.
+\paragraph{How the rate compares to published grounded-task benchmarks.} A
+per-round answer-error rate of 0--3.5\% for the five leading models is low
+against the closest published comparison. Vectara's hallucination leaderboard
+\citep{vectara2026} scores whether a summary of a short document contains claims
+unsupported by it, which shares this task's structure: one short document, one
+output that must remain faithful to it. Earlier-generation models score well
+there, with GPT-4o at 1.5\%, Llama-3.1-405B at 3.9\% and Claude 3.5 Sonnet at
+4.6\% \citep{bang2025hallulens}. Current reasoning models score considerably
+worse: GPT-5, Claude Sonnet 4.5, Grok-4 and Gemini-3-Pro all exceed 10\% on the
+revised dataset, one Grok variant reaches 20.2\%, and Gemini-3-Pro is reported
+at 13.6\% \citep{vectara2026}.
 
-\paragraph{The split does not shift with set size.}
+The comparison is not exact. Summarising a document requires many claims to
+remain supported, while our answerer makes one binary judgement, so a lower rate
+is expected. But the ordering is informative in both directions. Our five
+leading models sit below published rates for comparable reasoning models, and
+Opus 5's 3.3--20.8\% sits inside that published range rather than outside it.
+Neither figure is anomalous. What the comparison establishes is that a task this
+constrained still does not reach zero, and that the residual is enough to
+dominate outcomes once ten rounds must all go right.
 
-\begin{center}
+\paragraph{The two groups fail differently at every size.} Setting the per-round
+figures side by side:
+
+\begin{center}\small
+\begin{tabular}{lrr}
+\toprule
+& Five leading models & Claude Opus 5 \\
+\midrule
+$q$ (discrimination), range        & 0.966--0.992 & 0.931--1.000 \\
+$q$ against $\log_2 N$             & $r=-0.85$    & $r=+0.07$ \\
+Answer error per judged round      & 0--3.5\%     & 3.3--20.8\% \\
+Answer error per game at $N{=}16$  & \textbf{0\%} & \textbf{62.5\%} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Opus 5's discriminating power does not degrade with set size at all, and its
+failures are overwhelmingly answers rather than partitions. The $N{=}16$ row is the sharpest
+statement of the difference available in this data: across 40 games, the five
+leading models produce no answer errors whatever, while Opus 5 produces one in
+five of eight games.
+
+\paragraph{Total losses by size and cause.}
+
+\begin{center}\makebox[\textwidth][c]{%
 \begin{tikzpicture}
 \begin{axis}[
-  width=12cm, height=6cm, ybar stacked, bar width=16pt,
+  width=11cm, height=6cm, ybar stacked, bar width=15pt,
   xlabel={$N$}, ylabel={losses (mean of 3 judges)},
   symbolic x coords={4,8,16,32,64,128,256,512,1024},
-  xtick=data, ymin=0, legend style={font=\small, at={(0.02,0.98)},
-  anchor=north west}, legend cell align=left,
+  xtick=data, ymin=0,
+  legend style={font=\small, at={(1.02,1.0)}, anchor=north west,
+                draw=black!30, cells={anchor=west}},
+  legend cell align=left,
 ]
 \addplot+[fill=blue!55,draw=blue!70] coordinates
   {(4,0.7)(8,6.0)(16,5.0)(32,2.7)(64,9.7)(128,8.7)(256,9.0)(512,8.7)(1024,12.0)};
@@ -1176,19 +1282,14 @@ two independent measurements.
   {(4,0.0)(8,0.0)(16,0.0)(32,0.0)(64,0.7)(128,1.3)(256,0.3)(512,1.0)(1024,0.7)};
 \addlegendentry{prediction error}
 \end{axis}
-\end{tikzpicture}
+\end{tikzpicture}}
 \end{center}
 
-Total losses grow with $N$, as the win-rate curve requires. The \emph{share}
-attributable to each cause does not move detectably. Pooling $N\le32$ against
-$N\ge256$ gives answer shares of 54\% and 48\% (Fisher exact, $p=0.82$). The
-per-size shares run 70, 86, 45, 39, 63, 53, 46, 48 and 51 percent, which is
-consistent with sampling noise around a constant. Individual cells are small:
-$N{=}8$ contains seven losses in total, so its 6:1 ratio carries almost no
-weight.
-
-Prediction errors are the exception, being absent below $N{=}64$ and appearing
-sporadically above it. Even there the counts are one or two games per size.
+Total losses grow with $N$, as the win-rate curve requires, and the share
+attributable to each cause is stable: pooling $N\le32$ against $N\ge256$ gives
+answer shares of 54\% and 48\% (Fisher exact, $p=0.82$). Individual cells are
+small, with seven losses in total at $N{=}8$. Prediction errors are absent
+below $N{=}64$ and appear sporadically above it, one or two games per size.
 
 \paragraph{Where the target dies.} Among games lost to answer error, expressed
 as a fraction of the round budget: GPT 0.27--0.35, Kimi 0.34--0.52, Gemini
@@ -1456,6 +1557,16 @@ varies $4.5\times$ at $N{=}1024$ with little relation to success, and that
 Gemini at MEDIUM
 outperformed models at HIGH, is consistent with \citet{gema2025inverse}, who
 construct tasks where extending reasoning length \emph{degrades} accuracy.
+
+The same pattern appears on grounded generation. Vectara's revised hallucination
+leaderboard finds that reasoning models summarise short documents \emph{less}
+faithfully than their non-reasoning predecessors: GPT-5, Claude Sonnet 4.5,
+Grok-4 and Gemini-3-Pro all exceed 10\%, against 1.5\% for GPT-4o and 4.6\% for
+Claude 3.5 Sonnet, with one Grok variant at 20.2\%
+\citep{vectara2026,bang2025hallulens}. The proposed explanation is that
+reasoning models invest effort in thinking through an answer that faithful
+transcription does not require. That is a different task and a different
+failure, but it is the same direction on the same axis, observed independently.
 
 \paragraph{Lexical bisection is harder than it looks.} \citet{edman2024cute}
 find that models ``seem to know the spelling of their tokens, yet fail to use
@@ -1956,6 +2067,18 @@ language models in knowledge conflicts.
 Zhipu AI.
 \newblock {GLM-5}: From vibe coding to agentic engineering.
 \newblock \emph{arXiv:2602.15763}, 2026.
+
+
+\bibitem[Bang et al.(2025)]{bang2025hallulens}
+Y.~Bang, Z.~Ji, A.~Schelten, et al.
+\newblock {HalluLens}: {LLM} hallucination benchmark.
+\newblock \emph{arXiv:2504.17550}, 2025.
+
+\bibitem[Vectara(2026)]{vectara2026}
+Vectara.
+\newblock Hallucination leaderboard (HHEM).
+\newblock \url{https://github.com/vectara/hallucination-leaderboard}, accessed
+2026.
 
 \end{thebibliography}
 
