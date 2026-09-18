@@ -1,11 +1,17 @@
 \documentclass[11pt]{article}
+% cmap and T1 fontenc must precede any font or character package: together they
+% give the PDF a correct ToUnicode map, so section signs, ligatures and accents
+% survive copy-paste, search and automated indexing.
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{amssymb}
-% allow line breaks inside long \texttt identifiers so API
-% parameter names do not overflow a column
-\usepackage[htt]{hyphenat}
+% long \texttt identifiers are broken manually where needed;
+% \sloppy relaxes spacing rather than hyphenating them
 \sloppy
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -325,11 +331,12 @@ counts of 1.3--2.0M per game appear in our logs.
 
 \subsection{Nested sets and prefix-extensible targets}
 
-Document sets are nested: $\mathrm{docset}(512) \subset \mathrm{docset}(1024)$,
-down to $N=4$. Targets are emitted in bit-reversed order over 64 buckets, so any
-power-of-two prefix is evenly stratified across the set and
-$\mathrm{targets}[:8]$ is a strict prefix of $\mathrm{targets}[:16]$; raising
-the run count re-uses every completed game. Each size draws from an independent
+Document sets are nested. Writing $D_N$ for the document set used at size $N$,
+and $T_{1:k}$ for the first $k$ targets assigned to it, $D_{512} \subset
+D_{1024}$ and so on down to $N=4$. Targets are emitted in bit-reversed order
+over 64 buckets, so any power-of-two prefix is evenly stratified across the set
+and $T_{1:8} \subset T_{1:16}$. Raising the run count therefore re-uses every
+completed game. Each size draws from an independent
 RNG. No target is reused, so $N=4$ contributes 4 games and every larger size 8,
 for 68 per model.
 
@@ -422,7 +429,7 @@ Moonshot & --- & --- & no exposed control \\
 \end{tabular}
 \end{table}
 
-Two changed under us mid-project. Claude Opus 5 rejects
+Two API specifications were revised during our evaluation period. Claude Opus 5 rejects
 \texttt{thinking.type}\,=\,\texttt{enabled} in favour of an adaptive mode with a separate
 effort field; token budgets are ignored. Gemini 3 deprecates the integer
 \texttt{thinkingBudget} for a \texttt{thinkingLevel} enum, and --- critically ---
@@ -449,7 +456,7 @@ accounting normalises all usage fields to be disjoint.
 \subsection{Stop-reason vocabularies are not portable}
 \label{sec:stopreason}
 
-This cost an arm. Truncated replies must be treated as parse failures, since a
+This issue invalidated an entire experimental arm. Truncated replies must be treated as parse failures, since a
 reply cut off mid-sentence still satisfies a format regex --- the fragment ends
 its line. Our guard compared against the literal string \texttt{"max\_tokens"},
 Anthropic's spelling. The observed vocabulary is \texttt{stop},
@@ -578,10 +585,13 @@ Wall clock & 20.3\,h & 3.6\,h & 25.3\,h & 3.9\,h & 7.2\,h & 12.7\,h\,$^\dagger$ 
 $r$ vs $\log_2 N$ & $-0.88$ & $-0.83$ & $-0.90$ & $-0.82$ & $-0.63$ & $-0.46$ \\
 \bottomrule
 \end{tabular}
-\caption{Six complete arms, 68 games each on identical document sets and
-targets. $^\dagger$Opus 5 wall clock is inflated by a provider outage
+\begin{minipage}{\linewidth}\vspace{2pt}\footnotesize
+$^\dagger$Claude Opus 5's wall clock is inflated by a provider outage
 (\S\ref{sec:eng}) that forced long retry waits; its uninterrupted games ran
-comparably to GLM's.}
+comparably to GLM-5.3's.
+\end{minipage}
+\caption{Six complete arms, 68 games each on identical document sets and
+targets.}
 \end{table}
 
 The structure is a split, not a ranking. All five leading models beat Claude
@@ -599,7 +609,9 @@ with no accuracy penalty. Wall clock varies more sharply still: Grok's arm took
 25 hours against Gemini's 3.6, driven by reasoning volume rather than
 throughput.
 
-\begin{center}\makebox[\textwidth][c]{%
+\begin{figure}[tbp]
+\centering
+\makebox[\textwidth][c]{%
 \begin{tikzpicture}
 \begin{axis}[
   width=11.5cm, height=7.5cm,
@@ -637,7 +649,9 @@ throughput.
 \addlegendentry{chance $=1/N$}
 \end{axis}
 \end{tikzpicture}}
-\end{center}
+\caption{Win rate against set size for all six models, with the fitted $p^{\log_2 N}$ curve ($p=0.928$) and the $1/N$ chance baseline. Pooled over the five leading models the fit gives $r=-0.973$.}
+\label{fig:winrate}
+\end{figure}
 
 Because chance falls three orders of magnitude across this range, lift over
 baseline rises to $768\times$ at $N=1024$ for the leading models.
@@ -678,9 +692,9 @@ This is the central quantitative result of the report. Questions asked at
 $N{=}1024$ are not obviously harder than those asked at $N{=}32$. What grows
 with the task is the number of opportunities to fail. At $p=0.93$ three rounds
 are survivable and ten are not, and improving per-round reasoning quality
-changes nothing unless it raises $p$. \S\ref{sec:comm} argues on
-independent evidence that the failures being compounded are communicative
-rather than inferential.
+changes nothing unless it raises $p$. \S\ref{sec:comm} argues that the failures being
+compounded are single-agent task mistakes amplified by the asymmetric channel,
+not failures of mutual communication.
 
 Two caveats. We do not test the independence assumption. A wrong answer early
 may make later errors more or less likely, and these data cannot distinguish
@@ -740,7 +754,7 @@ is not losing rounds at a rate $p$, it is starting each round with less than a
 full bit available.
 
 Across the six arms, $H(p)$ correlates with win rate at $r=+0.88$. The
-relationship is not exact, and Grok is why: it achieves 75\% on 0.925 bits,
+relationship is not exact, with Grok 4.6 the exception, achieving 75\% on 0.925 bits,
 better than GLM-5.3 manages on 0.990. We report it as a counterexample rather
 than smoothing it. Partition quality is necessary but does not exhaust what
 determines success. Kimi K3, which tops the table, also has the
@@ -1183,7 +1197,7 @@ Is the subject a sports team? &
   country\dots'' \\
 Was the subject formerly an administrative municipality that has since been
   dissolved? &
-  ``H\o{}v\aa{}g \dots is a former municipality \dots existed from 1865 until its
+  ``H\o v\aa g \dots is a former municipality \dots existed from 1865 until its
   dissolution.'' \\
 \bottomrule
 \end{tabular}
@@ -1262,7 +1276,9 @@ five of eight games.
 
 \paragraph{Total losses by size and cause.}
 
-\begin{center}\makebox[\textwidth][c]{%
+\begin{figure}[tbp]
+\centering
+\makebox[\textwidth][c]{%
 \begin{tikzpicture}
 \begin{axis}[
   width=11cm, height=6cm, ybar stacked, bar width=15pt,
@@ -1284,7 +1300,9 @@ five of eight games.
 \addlegendentry{prediction error}
 \end{axis}
 \end{tikzpicture}}
-\end{center}
+\caption{Losses by set size and cause, averaged over three judges. Total losses grow with $N$ while the share attributable to each cause is stable.}
+\label{fig:losses}
+\end{figure}
 
 Total losses grow with $N$, as the win-rate curve requires, and the share
 attributable to each cause is stable: pooling $N\le32$ against $N\ge256$ gives
@@ -1413,9 +1431,51 @@ arrive as ordinary Yes/No replies. In a single-agent formulation of the same
 task, a model that mistakenly judged an actress not to be a woman would have the
 document in front of it and might catch the error on re-reading. Here it cannot.
 
+\begin{figure}[tbp]
+\centering\small
+\fbox{\begin{minipage}{0.93\textwidth}
+\textbf{A perfectly played game, lost to one wrong answer.} Claude Opus 5,
+$N{=}32$, target [1] \emph{Grupo Vocento} (``a Spanish mass media group'').
+Split sizes are the true partitions, adjudicated by hand against all 32
+documents.
+
+\medskip
+\begin{tabular}{clrl}
+\toprule
+R & Question & Split & Answer \\
+\midrule
+1 & Is the subject associated with the United States?  & \textbf{16 / 16} & No \quad$\checkmark$ \\
+2 & Is the subject associated with a country in Europe? & 8 / 8 & \textbf{No} \quad$\times$ \\
+3 & Is the subject associated with Asia or Oceania?     & 4 / 3 & No \\
+4 & Is the subject a species?                            & 2 / 2 & No \\
+5 & Is the subject an individual human?                  & 1 / 1 & No \\
+\bottomrule
+\end{tabular}
+
+\medskip
+The questioner executed a textbook binary search: $32 \to 16 \to 8 \to 4 \to 2
+\to 1$, with an exact 16/16 first split. Its final guess, \emph{Sea Shepherd
+II}, is the \emph{uniquely correct} document given the five answers it
+received. It lost because Vocento is Spanish, Spain is in Europe, and the
+answerer, the same model holding only that one document, said No.
+
+The questioner cannot detect this. There is no contradiction to notice: rounds
+3, 4 and 5 were spent bisecting a set that could no longer contain the target,
+and every question in them was well chosen.
+\end{minipage}}
+\caption{An \textbf{answer error}: the model incorrectly excludes the target at
+round 2, and every later round partitions a set that cannot contain it.
+Round-of-death: 2. This game was played during the pilot, under the first
+answerer instruction, which forbade world knowledge, so the round-2 answer is
+what that instruction required. It is shown to illustrate how one answer
+propagates through the remaining rounds, not as evidence about the model.}
+\label{fig:vocento}
+\end{figure}
+
 \paragraph{Errors are unrecoverable.} The game has exactly $\log_2 N$ questions
 and no mechanism for revisiting an answer. Once an answer eliminates the target,
-every remaining round partitions a set that cannot contain it. The questions
+every remaining round partitions a set that cannot contain it
+(Figure~\ref{fig:vocento}). The questions
 asked in those rounds are often good ones, and \S\ref{sec:errors} shows the
 target dies at 0.27 to 0.62 of the round budget depending on the model, so
 roughly half the work in a lost game is expended after the game is already
@@ -1478,8 +1538,7 @@ Our ordering does not match published general-intelligence leaderboards, and
 the discrepancy is worth stating plainly rather than leaving for a reader to
 discover.
 
-\paragraph{The outlier is a top-ranked model elsewhere.} At release, Claude
-Claude Opus 5 took first place on the Artificial Analysis Intelligence Index
+\paragraph{The outlier is a top-ranked model elsewhere.} At release, Claude Opus 5 took first place on the Artificial Analysis Intelligence Index
 (61 at launch, rescored to 63), holding the lead until Claude Fable 5.1 scored
 66. Our leading models sit \emph{below} it on that index: Kimi K3 at 57.1,
 Gemini 3.8 Flash at 59, Grok 4.6 at 61. On aggregate intelligence, our result
@@ -1785,7 +1844,8 @@ Pilots, probes and debugging & --- & $\approx$\$20 & & --- & \\
 \end{tabular}
 \end{table}
 
-\begin{center}
+\begin{figure}[tbp]
+\centering
 \begin{tikzpicture}
 \begin{axis}[
   width=11cm, height=6.5cm,
@@ -1804,7 +1864,9 @@ Pilots, probes and debugging & --- & $\approx$\$20 & & --- & \\
 };
 \end{axis}
 \end{tikzpicture}
-\end{center}
+\caption{Arm cost against win rate. The two are uncorrelated ($r=-0.05$): the two cheapest arms are among the three most accurate.}
+\label{fig:cost}
+\end{figure}
 
 Four observations. First, cost and performance are unrelated ($r=-0.05$):
 the two cheapest arms are also two of the three best, and GPT costs $7\times$
@@ -1832,6 +1894,22 @@ Code, corpus and all per-game logs:
 
 \begin{thebibliography}{99}
 
+\bibitem[Andon Labs(2025)]{backlund2025}
+A.~Backlund and L.~Petersson.
+\newblock Vending-Bench: A benchmark for long-term coherence of autonomous
+agents.
+\newblock \emph{arXiv:2502.15840}, 2025.
+
+\bibitem[Bai et al.(2022)]{bai2022cai}
+Y.~Bai et al.
+\newblock Constitutional {AI}: Harmlessness from {AI} feedback.
+\newblock \emph{arXiv:2212.08073}, 2022.
+
+\bibitem[Bang et al.(2025)]{bang2025hallulens}
+Y.~Bang, Z.~Ji, A.~Schelten, et al.
+\newblock {HalluLens}: {LLM} hallucination benchmark.
+\newblock \emph{arXiv:2504.17550}, 2025.
+
 \bibitem[Beltagy et al.(2020)]{beltagy2020}
 I.~Beltagy, M.~E. Peters, and A.~Cohan.
 \newblock Longformer: The long-document transformer.
@@ -1842,16 +1920,31 @@ R.~Child, S.~Gray, A.~Radford, and I.~Sutskever.
 \newblock Generating long sequences with sparse transformers.
 \newblock \emph{arXiv:1904.10509}, 2019.
 
+\bibitem[Edman et al.(2024)]{edman2024cute}
+L.~Edman, H.~Schmid, and A.~Fraser.
+\newblock {CUTE}: Measuring {LLM}s' understanding of their tokens.
+\newblock In \emph{EMNLP}, pages 3017--3026, 2024.
+
 \bibitem[Foerster et al.(2016)]{foerster2016}
 J.~Foerster, I.~A. Assael, N.~de~Freitas, and S.~Whiteson.
 \newblock Learning to communicate with deep multi-agent reinforcement learning.
 \newblock In \emph{NeurIPS}, 2016.
+
+\bibitem[Gema et al.(2025)]{gema2025inverse}
+A.~P. Gema, A.~H\"{a}gele, Y.~Chen, et al.
+\newblock Inverse scaling in test-time compute.
+\newblock \emph{arXiv:2507.14417}; \emph{TMLR}, 2025.
 
 \bibitem[Hsieh et al.(2024)]{hsieh2024}
 C.-P. Hsieh, S.~Sun, S.~Kriman, S.~Acharya, D.~Rekesh, F.~Jia, and B.~Ginsburg.
 \newblock {RULER}: What's the real context size of your long-context language
 models?
 \newblock \emph{arXiv:2404.06654}, 2024.
+
+\bibitem[Kadavath et al.(2022)]{kadavath2022}
+S.~Kadavath et al.
+\newblock Language models (mostly) know what they know.
+\newblock \emph{arXiv:2207.05221}, 2022.
 
 \bibitem[Kamradt(2023)]{kamradt2023}
 G.~Kamradt.
@@ -1868,11 +1961,21 @@ S.~Kottur, J.~M.~F. Moura, S.~Lee, and D.~Batra.
 \newblock Natural language does not emerge `naturally' in multi-agent dialog.
 \newblock In \emph{EMNLP}, 2017.
 
+\bibitem[Kwa et al.(2025)]{kwa2025horizons}
+T.~Kwa et al. (METR).
+\newblock Measuring {AI} ability to complete long tasks.
+\newblock \emph{arXiv:2503.14499}, 2025.
+
 \bibitem[Laban et al.(2024)]{laban2024}
 P.~Laban, A.~R. Fabbri, C.~Xiong, and C.-S. Wu.
 \newblock Summary of a haystack: A challenge to long-context {LLM}s and {RAG}
 systems.
 \newblock In \emph{EMNLP}, 2024.
+
+\bibitem[Laban et al.(2025)]{laban2025multiturn}
+P.~Laban, H.~Hayashi, Y.~Zhou, and J.~Neville.
+\newblock {LLM}s get lost in multi-turn conversation.
+\newblock \emph{arXiv:2505.06120}; ICLR, 2026.
 
 \bibitem[Lazaridou and Baroni(2020)]{lazaridou2020}
 A.~Lazaridou and M.~Baroni.
@@ -1890,128 +1993,15 @@ P.~Liang.
 \newblock Lost in the middle: How language models use long contexts.
 \newblock \emph{TACL}, 12:157--173, 2024.
 
-\bibitem[Lu et al.(2025)]{lu2025moba}
-E.~Lu et al.
-\newblock {MoBA}: Mixture of block attention for long-context {LLM}s.
-\newblock \emph{arXiv:2502.13189}, 2025.
-
-\bibitem[Potash and Suleman(2019)]{potash2019}
-P.~Potash and K.~Suleman.
-\newblock Playing log($N$)-questions over sentences.
-\newblock \emph{arXiv:1908.04660}, 2019.
-
-\bibitem[Snell et al.(2024)]{snell2024}
-C.~Snell, J.~Lee, K.~Xu, and A.~Kumar.
-\newblock Scaling {LLM} test-time compute optimally can be more effective than
-scaling model parameters.
-\newblock \emph{arXiv:2408.03314}, 2024.
-
-\bibitem[Ullman(2023)]{ullman2023}
-T.~Ullman.
-\newblock Large language models fail on trivial alterations to theory-of-mind
-tasks.
-\newblock \emph{arXiv:2302.08399}, 2023.
-
-\bibitem[Wei et al.(2022)]{wei2022cot}
-J.~Wei, X.~Wang, D.~Schuurmans, M.~Bosma, B.~Ichter, F.~Xia, E.~Chi, Q.~Le, and
-D.~Zhou.
-\newblock Chain-of-thought prompting elicits reasoning in large language models.
-\newblock In \emph{NeurIPS}, 2022.
-
-\bibitem[Welbl et al.(2018)]{welbl2018}
-J.~Welbl, P.~Stenetorp, and S.~Riedel.
-\newblock Constructing datasets for multi-hop reading comprehension across
-documents.
-\newblock \emph{TACL}, 6:287--302, 2018.
-
-\bibitem[Yang et al.(2018)]{yang2018hotpotqa}
-Z.~Yang, P.~Qi, S.~Zhang, Y.~Bengio, W.~W. Cohen, R.~Salakhutdinov, and C.~D.
-Manning.
-\newblock {HotpotQA}: A dataset for diverse, explainable multi-hop question
-answering.
-\newblock In \emph{EMNLP}, 2018.
-
-\bibitem[Yuan et al.(2025)]{yuan2025nsa}
-J.~Yuan, H.~Gao, D.~Dai, J.~Luo, L.~Zhao, Z.~Zhang, Z.~Xie, Y.~X. Wei, L.~Wang,
-Z.~Xiao, Y.~Wang, C.~Ruan, M.~Zhang, W.~Liang, and W.~Zeng.
-\newblock Native sparse attention: Hardware-aligned and natively trainable
-sparse attention.
-\newblock In \emph{ACL}, pages 23078--23097, 2025.
-
-\bibitem[Zaheer et al.(2020)]{zaheer2020}
-M.~Zaheer, G.~Guruganesh, A.~Dubey, J.~Ainslie, C.~Alberti, S.~Ontanon,
-P.~Pham, A.~Ravula, Q.~Wang, L.~Yang, and A.~Ahmed.
-\newblock Big Bird: Transformers for longer sequences.
-\newblock In \emph{NeurIPS}, 2020.
-
-
-\bibitem[Andon Labs(2025)]{backlund2025}
-A.~Backlund and L.~Petersson.
-\newblock Vending-Bench: A benchmark for long-term coherence of autonomous
-agents.
-\newblock \emph{arXiv:2502.15840}, 2025.
-
-\bibitem[Edman et al.(2024)]{edman2024cute}
-L.~Edman, H.~Schmid, and A.~Fraser.
-\newblock {CUTE}: Measuring {LLM}s' understanding of their tokens.
-\newblock In \emph{EMNLP}, pages 3017--3026, 2024.
-
-\bibitem[Gema et al.(2025)]{gema2025inverse}
-A.~P. Gema, A.~H\"agele, Y.~Chen, et al.
-\newblock Inverse scaling in test-time compute.
-\newblock \emph{arXiv:2507.14417}; \emph{TMLR}, 2025.
-
-\bibitem[Kwa et al.(2025)]{kwa2025horizons}
-T.~Kwa et al. (METR).
-\newblock Measuring {AI} ability to complete long tasks.
-\newblock \emph{arXiv:2503.14499}, 2025.
-
-\bibitem[Laban et al.(2025)]{laban2025multiturn}
-P.~Laban, H.~Hayashi, Y.~Zhou, and J.~Neville.
-\newblock {LLM}s get lost in multi-turn conversation.
-\newblock \emph{arXiv:2505.06120}; ICLR, 2026.
-
-\bibitem[Pan and Xu(2026)]{pan2026censorship}
-J.~Pan and X.~Xu.
-\newblock Political censorship in large language models originating from China.
-\newblock \emph{PNAS Nexus}, 5(2):pgag013, 2026.
-
-\bibitem[Panickssery et al.(2024)]{panickssery2024}
-A.~Panickssery, S.~R. Bowman, and S.~Feng.
-\newblock {LLM} evaluators recognize and favor their own generations.
-\newblock In \emph{NeurIPS}, 2024. \emph{arXiv:2404.13076}.
-
-\bibitem[Stephenson et al.(2024)]{stephenson2024codenames}
-M.~Stephenson et al.
-\newblock Codenames as a benchmark for large language models.
-\newblock \emph{arXiv:2412.11373}, 2024.
-
-\bibitem[Xu et al.(2024)]{xu2024tombench}
-H.~Xu et al.
-\newblock {ToMBench}: Benchmarking theory of mind in large language models.
-\newblock \emph{arXiv:2402.15052}, 2024.
-
-\bibitem[Yang et al.(2025)]{yang2025moderation}
-Y.~Yang et al.
-\newblock Revealing hidden mechanisms of cross-country content moderation with
-natural language processing.
-\newblock \emph{arXiv:2503.05280}, 2025.
-
-
-\bibitem[Bai et al.(2022)]{bai2022cai}
-Y.~Bai et al.
-\newblock Constitutional {AI}: Harmlessness from {AI} feedback.
-\newblock \emph{arXiv:2212.08073}, 2022.
-
-\bibitem[Kadavath et al.(2022)]{kadavath2022}
-S.~Kadavath et al.
-\newblock Language models (mostly) know what they know.
-\newblock \emph{arXiv:2207.05221}, 2022.
-
 \bibitem[Longpre et al.(2021)]{longpre2021}
 S.~Longpre, K.~Perisetla, A.~Chen, N.~Ramesh, C.~DuBois, and S.~Singh.
 \newblock Entity-based knowledge conflicts in question answering.
 \newblock In \emph{EMNLP}, 2021.
+
+\bibitem[Lu et al.(2025)]{lu2025moba}
+E.~Lu et al.
+\newblock {MoBA}: Mixture of block attention for long-context {LLM}s.
+\newblock \emph{arXiv:2502.13189}, 2025.
 
 \bibitem[Modarressi et al.(2025)]{modarressi2025nolima}
 A.~Modarressi et al.
@@ -2029,28 +2019,97 @@ P.~Nawrot et al.
 {LLM}s.
 \newblock \emph{arXiv:2504.17768}; Findings of ACL, 2026.
 
-\bibitem[Xie et al.(2024)]{xie2024conflict}
-J.~Xie, K.~Zhang, J.~Chen, R.~Lou, and Y.~Su.
-\newblock Adaptive chameleon or stubborn sloth: Revealing the behavior of large
-language models in knowledge conflicts.
-\newblock In \emph{ICLR}, 2024.
+\bibitem[Pan and Xu(2026)]{pan2026censorship}
+J.~Pan and X.~Xu.
+\newblock Political censorship in large language models originating from China.
+\newblock \emph{PNAS Nexus}, 5(2):pgag013, 2026.
 
-\bibitem[Zhipu AI(2026)]{zhipu2026glm5}
-Zhipu AI.
-\newblock {GLM-5}: From vibe coding to agentic engineering.
-\newblock \emph{arXiv:2602.15763}, 2026.
+\bibitem[Panickssery et al.(2024)]{panickssery2024}
+A.~Panickssery, S.~R. Bowman, and S.~Feng.
+\newblock {LLM} evaluators recognize and favor their own generations.
+\newblock In \emph{NeurIPS}, 2024. \emph{arXiv:2404.13076}.
 
+\bibitem[Potash and Suleman(2019)]{potash2019}
+P.~Potash and K.~Suleman.
+\newblock Playing log($N$)-questions over sentences.
+\newblock \emph{arXiv:1908.04660}, 2019.
 
-\bibitem[Bang et al.(2025)]{bang2025hallulens}
-Y.~Bang, Z.~Ji, A.~Schelten, et al.
-\newblock {HalluLens}: {LLM} hallucination benchmark.
-\newblock \emph{arXiv:2504.17550}, 2025.
+\bibitem[Snell et al.(2024)]{snell2024}
+C.~Snell, J.~Lee, K.~Xu, and A.~Kumar.
+\newblock Scaling {LLM} test-time compute optimally can be more effective than
+scaling model parameters.
+\newblock \emph{arXiv:2408.03314}, 2024.
+
+\bibitem[Stephenson et al.(2024)]{stephenson2024codenames}
+M.~Stephenson et al.
+\newblock Codenames as a benchmark for large language models.
+\newblock \emph{arXiv:2412.11373}, 2024.
+
+\bibitem[Ullman(2023)]{ullman2023}
+T.~Ullman.
+\newblock Large language models fail on trivial alterations to theory-of-mind
+tasks.
+\newblock \emph{arXiv:2302.08399}, 2023.
 
 \bibitem[Vectara(2026)]{vectara2026}
 Vectara.
 \newblock Hallucination leaderboard (HHEM).
 \newblock \url{https://github.com/vectara/hallucination-leaderboard}, accessed
 2026.
+
+\bibitem[Wei et al.(2022)]{wei2022cot}
+J.~Wei, X.~Wang, D.~Schuurmans, M.~Bosma, B.~Ichter, F.~Xia, E.~Chi, Q.~Le, and
+D.~Zhou.
+\newblock Chain-of-thought prompting elicits reasoning in large language models.
+\newblock In \emph{NeurIPS}, 2022.
+
+\bibitem[Welbl et al.(2018)]{welbl2018}
+J.~Welbl, P.~Stenetorp, and S.~Riedel.
+\newblock Constructing datasets for multi-hop reading comprehension across
+documents.
+\newblock \emph{TACL}, 6:287--302, 2018.
+
+\bibitem[Xie et al.(2024)]{xie2024conflict}
+J.~Xie, K.~Zhang, J.~Chen, R.~Lou, and Y.~Su.
+\newblock Adaptive chameleon or stubborn sloth: Revealing the behavior of large
+language models in knowledge conflicts.
+\newblock In \emph{ICLR}, 2024.
+
+\bibitem[Xu et al.(2024)]{xu2024tombench}
+H.~Xu et al.
+\newblock {ToMBench}: Benchmarking theory of mind in large language models.
+\newblock \emph{arXiv:2402.15052}, 2024.
+
+\bibitem[Yang et al.(2018)]{yang2018hotpotqa}
+Z.~Yang, P.~Qi, S.~Zhang, Y.~Bengio, W.~W. Cohen, R.~Salakhutdinov, and C.~D.
+Manning.
+\newblock {HotpotQA}: A dataset for diverse, explainable multi-hop question
+answering.
+\newblock In \emph{EMNLP}, 2018.
+
+\bibitem[Yang et al.(2025)]{yang2025moderation}
+Y.~Yang et al.
+\newblock Revealing hidden mechanisms of cross-country content moderation with
+natural language processing.
+\newblock \emph{arXiv:2503.05280}, 2025.
+
+\bibitem[Yuan et al.(2025)]{yuan2025nsa}
+J.~Yuan, H.~Gao, D.~Dai, J.~Luo, L.~Zhao, Z.~Zhang, Z.~Xie, Y.~X. Wei, L.~Wang,
+Z.~Xiao, Y.~Wang, C.~Ruan, M.~Zhang, W.~Liang, and W.~Zeng.
+\newblock Native sparse attention: Hardware-aligned and natively trainable
+sparse attention.
+\newblock In \emph{ACL}, pages 23078--23097, 2025.
+
+\bibitem[Zaheer et al.(2020)]{zaheer2020}
+M.~Zaheer, G.~Guruganesh, A.~Dubey, J.~Ainslie, C.~Alberti, S.~Ontanon,
+P.~Pham, A.~Ravula, Q.~Wang, L.~Yang, and A.~Ahmed.
+\newblock Big Bird: Transformers for longer sequences.
+\newblock In \emph{NeurIPS}, 2020.
+
+\bibitem[Zhipu AI(2026)]{zhipu2026glm5}
+Zhipu AI.
+\newblock {GLM-5}: From vibe coding to agentic engineering.
+\newblock \emph{arXiv:2602.15763}, 2026.
 
 \end{thebibliography}
 
